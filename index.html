@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Adam Britsch Web Design Portfolio - DWDD 2590</title>
+    <meta name="description" content="Adam Britsch's DWDD 2590 web design portfolio showcasing responsive coursework, storytelling prototypes, and accessibility-focused builds.">
+    <meta name="author" content="Adam Britsch">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Site styles -->
+    <link href="css/styles.min.css" rel="stylesheet">
+    <link href="css/nav-overrides.css" rel="stylesheet">
+
+<!-- favicon stuff --> 
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest"> </head>
+<body>
+
+    <div id="headerWrapper">
+        <header class="site-header">
+            <a class="brand" href="#about">
+                <img src="images/logo1x.png" srcset="images/logo1x.png 1x, images/logo2x.png 2x, images/logo3x.png 3x" alt="Adam Britsch monogram" width="64" height="64">
+                <div class="brand-text">
+                    <h1>Adam Britsch Portfolio</h1>
+                    <p>DWDD 2590 web design coursework hub.</p> </div> </a>
+            <nav class="primary-nav" aria-label="Primary">
+                <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="nav-toggle__box">
+                        <span class="nav-toggle__line"></span>
+                        <span class="nav-toggle__line"></span>
+                        <span class="nav-toggle__line"></span> </span> </button>
+                <div class="nav-groups" id="primary-menu">
+                    <div class="nav-group">
+                        <button class="nav-group__trigger" type="button" aria-expanded="false">
+                            <span>Overview</span>
+                            <span class="nav-caret" aria-hidden="true"></span> </button>
+                        <div class="nav-group__panel">
+                            <a href="#about">About</a>
+                            <a href="#resume">Resume</a> </div> </div>
+                    <div class="nav-group">
+                        <button class="nav-group__trigger" type="button" aria-expanded="false">
+                            <span>Coursework</span>
+                            <span class="nav-caret" aria-hidden="true"></span> </button>
+                        <div class="nav-group__panel">
+                            <a href="#courses">Course hubs</a>
+                            
+                            <a href="#dwdd1600">DWDD 1600</a>
+                            <a href="#dwdd1720">DWDD 1720</a>
+                            <a href="#dwdd2610">DWDD 2610</a>
+                            <a href="#case-studies">Case studies</a> </div> </div>
+                    <div class="nav-group">
+                        <a class="nav-group__link" href="#contact">Contact</a> </div> </div> </nav> </header> </div>
+    
+    <div id="mainWrapper">
+        <main>
+            <section class="hero" id="about">
+                <div class="row">
+                    <div class="column small-12 medium-12 large-12 hero-content">
+                        <p class="hero-eyebrow">Adam Britsch · UVU DWDD portfolio</p>
+                        <h2>Building class-to-portfolio web experiences with production polish</h2>
+                        <p class="hero-lede">This hub curates live coursework, responsive prototypes, and case studies from DWDD 1600, 1720, and 2610. Every page is presented in an OLED-ready interface so reviewers can dive into the details without hunting for links or screenshots.</p>
+                        <div class="hero-meta">
+                            <div class="hero-meta__item">
+                                <span class="hero-meta__label">Course hubs</span>
+                                <span class="hero-meta__value">3 classes · 25+ live assignments</span>
+                            </div>
+                            <div class="hero-meta__item">
+                                <span class="hero-meta__label">Case studies</span>
+                                <span class="hero-meta__value">6 PDF deep dives</span>
+                            </div>
+                            <div class="hero-meta__item">
+                                <span class="hero-meta__label">Focus</span>
+                                <span class="hero-meta__value">Accessibility · storytelling · SCSS systems</span>
+                            </div>
+                        </div>
+                        <div class="cta-group">
+                            <a class="btn btn-primary" href="#courses">Browse course table</a>
+                            <a class="btn btn-outline" href="#case-studies">Review case studies</a> </div>
+                         </div> </div> </section>
+
+            <section class="resume" id="resume">
+                <h2>Resume</h2>
+                <p class="section-intro">Download my latest resume to review experience across coursework, client collaborations, and technical skill development.</p>
+                <article class="card resume-card">
+                    <div class="resume-details">
+                        <h3>Adam Britsch · Web Design &amp; Front-End Development</h3>
+                        <p>Highlights coursework progression across DWDD 1600, 1720, and 2610 alongside professional milestones.</p> </div>
+                    <div class="resume-preview">
+                        <iframe src="pdfs/Resume%20Adam%20Britsch-5.pdf#view=FitH" title="Preview of Adam Britsch Resume" loading="lazy"></iframe> </div>
+                    <div class="resume-actions">
+                        <a class="btn btn-primary" href="pdfs/Resume%20Adam%20Britsch-5.pdf" target="_blank" rel="noopener noreferrer">View resume</a>
+                        <a class="btn btn-outline" href="pdfs/Resume%20Adam%20Britsch-5.pdf" download>Download PDF</a> </div> </article> </section>
+
+            <section class="courses" id="courses">
+                <h2>Course table of contents</h2>
+                <div class="row">
+                    <div class="column small-12 medium-12 large-4">
+                        <article class="card plan-card course-card">
+                            <h3>DWDD 1600 · Design Fundamentals</h3>
+                            <p class="price"><span>Course Hub</span> Foundations in Web</p>
+                            <p class="subtitle">Assignments, exercises, and coursework links that build the core HTML/CSS skill set.</p>
+                            <ul class="plan-features">
+                                <li>Weekly briefs with direct links to live prototypes</li>
+                                <li>Reference materials for layout, typography, and color</li>
+                                <li>Coursework notes outlining research and iteration</li>
+                            </ul>
+                            <a class="btn btn-primary" href="https://adamkbritsch.github.io/dwdd1600/" target="_blank" rel="noopener noreferrer">Open DWDD 1600 hub</a>
+                        </article>
+                    </div>
+                    <div class="column small-12 medium-12 large-4">
+                        <article class="card plan-card course-card">
+                            <h3>DWDD 1720 · Front-End Development</h3>
+                            <p class="price"><span>Course Hub</span> Responsive Systems</p>
+                            <p class="subtitle">Showcases component-based builds, progressive enhancement, and SCSS architecture.</p>
+                            <ul class="plan-features">
+                                <li>Coursework index with desktop, tablet, and mobile views</li>
+                                <li>Documentation of JavaScript enhancements and testing</li>
+                                <li>Links to Git repos and critique-ready presentations</li>
+                            </ul>
+                            <a class="btn btn-primary" href="https://adamkbritsch-web-design.netlify.app/" target="_blank" rel="noopener noreferrer">Open DWDD 1720 hub</a>
+                        </article>
+                    </div>
+                    <div class="column small-12 medium-12 large-4">
+                        <article class="card plan-card course-card">
+                            <h3>DWDD 2610 · Advanced Web Production</h3>
+                            <p class="price"><span>Coursework</span> Storytelling & Performance</p>
+                            <p class="subtitle">Multi-week builds that layer narrative, motion, and optimized performance across rich layouts.</p>
+                            <ul class="plan-features">
+                                <li>Festival, product, and admissions experiences with live previews</li>
+                                <li>Focus on SCSS architecture, performance, and accessibility</li>
+                                <li>Jump directly to each assignment for quick reviewing</li>
+                            </ul>
+                            <a class="btn btn-primary" href="#dwdd2610">View DWDD 2610 coursework</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            
+
+            <section class="assignments" id="dwdd1600">
+                <h2>DWDD 1600 coursework</h2>
+                <p class="section-intro">Foundational HTML and CSS exercises that established layout, typography, and accessibility habits early in the program.</p>
+                <ul class="assignment-list">
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 01 · Test Assignment</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/01test/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Initial environment check and semantic HTML practice.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/01test/" title="DWDD 1600 Module 01 preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 03 · Follow Along</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/03follow-along/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Guided build reinforcing document structure and semantic tags.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/03follow-along/" title="DWDD 1600 Module 03 follow-along preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 03 · Hand Coding</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/03hand-coding/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Standalone hand-coded page applying structural HTML without templates.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/03hand-coding/" title="DWDD 1600 Module 03 hand coding preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 04 · Follow Along</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/04follow-along/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Walkthrough introducing cascading stylesheets and base typography.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/04follow-along/" title="DWDD 1600 Module 04 follow-along preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 04 · Introduction to CSS</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/04intro-css/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Applies foundational CSS selectors, color, and spacing systems.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/04intro-css/" title="DWDD 1600 Module 04 CSS intro preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 05 · Follow Along</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/05follow-along/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Practice with imagery, figure elements, and responsive scaling.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/05follow-along/" title="DWDD 1600 Module 05 follow-along preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 05 · Images Assignment</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/05images/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Image optimization, captions, and responsive art direction.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/05images/" title="DWDD 1600 Module 05 images preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 06 · Follow Along</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/06follow-along/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Multi-column layouts using flexbox and responsive gutters.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/06follow-along/" title="DWDD 1600 Module 06 follow-along preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 06 · Web Form</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/06form/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Accessible form controls with labels, validation, and layout.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/06form/" title="DWDD 1600 Module 06 form preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 07 · Follow Along</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/07follow-along/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Progressive enhancement with advanced selectors and pseudo-classes.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/07follow-along/" title="DWDD 1600 Module 07 follow-along preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 07 · Advanced CSS</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/07advanced-css/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Exercises applying transitions, transforms, and media queries.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/07advanced-css/" title="DWDD 1600 Module 07 advanced CSS preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 08 · Follow Along</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/08follow-along/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Responsive layout refinements and component cleanup.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/08follow-along/" title="DWDD 1600 Module 08 follow-along preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Module 08 · Media Assignment</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/08media/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Embedding multimedia and ensuring captions, transcripts, and controls.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/08media/" title="DWDD 1600 Module 08 media preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Optional · Vacation Website</h3>
+                                <p><a href="https://adamkbritsch.github.io/dwdd1600/vacation/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Capstone-style layout reinforcing information hierarchy and imagery.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/dwdd1600/vacation/" title="DWDD 1600 optional vacation site preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li> </ul> </section>
+
+            <section class="assignments" id="dwdd1720">
+                <h2>DWDD 1720 coursework</h2>
+                <p class="section-intro">Front-end development labs focused on JavaScript, APIs, and component-driven layouts that expand on DWDD 1600 foundations.</p>
+                <ul class="assignment-list">
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 02 · Counter App</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/counterapp/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Interactive counter introducing DOM querying and event handling.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/counterapp/" title="DWDD 1720 counter app preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 03 · Personal Portfolio</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/personal-portfolio/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Single-page portfolio applying modular SCSS and responsive patterns.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/personal-portfolio/" title="DWDD 1720 personal portfolio preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 05 · Black Jack</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/blackjackstart/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Game mechanics lab featuring array methods and conditional logic.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/blackjackstart/" title="DWDD 1720 blackjack preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 06 · Wellness</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/wellness/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Responsive wellness dashboard combining content sections and forms.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/wellness/" title="DWDD 1720 wellness preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 07 · Presidents</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/presidents/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Data filtering UI built with fetch requests and accessible tables.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/presidents/" title="DWDD 1720 presidents preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 08 · Posters</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/starwarswebsite/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Poster gallery leveraging JSON data and responsive card layouts.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/starwarswebsite/" title="DWDD 1720 posters preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 09 · People Directory</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/peoplepractice/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Directory filtering and card templating using JavaScript loops.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/peoplepractice/" title="DWDD 1720 people directory preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 10 · Senators</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/senators/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Data visualization exercise with filtering, cards, and grids.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/senators/" title="DWDD 1720 senators preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 11 · Ships</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/ships/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>API-powered list with templating, sorting, and responsive media.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/ships/" title="DWDD 1720 ships preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 12 · Weather</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/weather-app/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Weather application consuming third-party APIs with error handling.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/weather-app/" title="DWDD 1720 weather app preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 13 · Store</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/storeapp/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>E-commerce layout showcasing state management and filtering.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/storeapp/" title="DWDD 1720 store app preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Unit 20 · Final Recipes</h3>
+                                <p><a href="https://adamkbritsch-web-design.netlify.app/recipes/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Capstone recipe app consolidating routing, API data, and responsive UI.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch-web-design.netlify.app/recipes/" title="DWDD 1720 recipes preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li> </ul> </section>
+
+            <section class="assignments" id="dwdd2610">
+                <h2>DWDD 2610 coursework</h2>
+                <p class="section-intro">Content-rich, multi-week builds exploring storytelling, motion, and performance across advanced layouts.</p>
+                <ul class="assignment-list">
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Performing Arts Festival</h3>
+                                <p><a href="https://adamkbritsch.github.io/Performing-Arts-Project-02/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Multi-page festival experience with ticketing, schedules, and artist spotlights.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/Performing-Arts-Project-02/" title="DWDD 2610 performing arts preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Explorer Video Narrative</h3>
+                                <p><a href="https://adamkbritsch.github.io/explorer_video/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Interactive storytelling experience integrating video and supporting content.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/explorer_video/" title="DWDD 2610 explorer video preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Diner Brand Refresh</h3>
+                                <p><a href="https://adamkbritsch.github.io/04-Diner/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Responsive restaurant site balancing typography, menu design, and imagery.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/04-Diner/" title="DWDD 2610 diner preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>Auto Dealer Browse</h3>
+                                <p><a href="https://adamkbritsch.github.io/05-Auto-Dealer/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Inventory browsing flow showcasing vehicle details and comparisons.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/05-Auto-Dealer/" title="DWDD 2610 auto dealer preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>X-Mobile Landing Concept</h3>
+                                <p><a href="https://adamkbritsch.github.io/06-X-Mobile/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Marketing landing page with modular sections and device highlights.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/06-X-Mobile/" title="DWDD 2610 X-Mobile preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li>
+                    <li>
+                        <article class="card assignment-item">
+                            <header>
+                                <h3>University Admissions Microsite</h3>
+                                <p><a href="https://adamkbritsch.github.io/07-University-Admissions/" target="_blank" rel="noopener noreferrer">Open coursework</a></p> </header>
+                            <p>Admissions overview blending statistics, pathways, and application CTAs.</p>
+                            <div class="assignment-preview">
+                                <iframe src="https://adamkbritsch.github.io/07-University-Admissions/" title="DWDD 2610 admissions preview" loading="lazy" referrerpolicy="no-referrer"></iframe> </div> </article> </li> </ul> </section>
+
+            <section class="case-studies" id="case-studies">
+                <h2>Portfolio case studies (PDF)</h2>
+                <p class="section-intro">Downloadable PDFs documenting process, research artifacts, and final outcomes for the DWDD 2590 portfolio course.</p>
+                <ul class="case-study-list">
+                    <li>
+                        <article class="card case-study-item">
+                            <h3>Case Study 01 · Web Design Foundations</h3>
+                            <p>Overview of the first DWDD portfolio assignment, highlighting research, early sketches, and site planning.</p>
+                            <div class="case-study-preview">
+                                <iframe src="pdfs/Assignment_%20Case%20Study%201.pdf#view=FitH" title="Preview of Case Study 01 PDF" loading="lazy"></iframe> </div>
+                            <a class="btn btn-outline" href="pdfs/Assignment_%20Case%20Study%201.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a> </article> </li>
+                    <li>
+                        <article class="card case-study-item">
+                            <h3>Case Study 02 · UVU CET Website Redesign</h3>
+                            <p>Interaction Design deliverable covering stakeholder insights, wireframes, and the redesigned CET experience.</p>
+                            <div class="case-study-preview">
+                                <iframe src="pdfs/Assignment_%20Case%20Study%202_%20UVU%20CET%20Website%20Redesign%20for%20Interaction%20Design%20Class.pdf#view=FitH" title="Preview of Case Study 02 PDF" loading="lazy"></iframe> </div>
+                            <a class="btn btn-outline" href="pdfs/Assignment_%20Case%20Study%202_%20UVU%20CET%20Website%20Redesign%20for%20Interaction%20Design%20Class.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a> </article> </li>
+                    <li>
+                        <article class="card case-study-item">
+                            <h3>Case Study 03 · Learning HTML in DWDD 1600</h3>
+                            <p>Reflection on foundational HTML coursework, including semantic structure, accessibility, and early projects.</p>
+                            <div class="case-study-preview">
+                                <iframe src="pdfs/Assignment_%20Case%20Study%203_%20Learning%20HTML%20in%20DWDD%201600.pdf#view=FitH" title="Preview of Case Study 03 PDF" loading="lazy"></iframe> </div>
+                            <a class="btn btn-outline" href="pdfs/Assignment_%20Case%20Study%203_%20Learning%20HTML%20in%20DWDD%201600.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a> </article> </li>
+                    <li>
+                        <article class="card case-study-item">
+                            <h3>Case Study 04 · Learning CSS in DWDD 1720</h3>
+                            <p>Documentation of advancing CSS skills with responsive layouts, component styling, and SCSS workflows.</p>
+                            <div class="case-study-preview">
+                                <iframe src="pdfs/Assignment_%20Case%20Study%204_%20Learning%20CSS%20in%20DWDD%201720.pdf#view=FitH" title="Preview of Case Study 04 PDF" loading="lazy"></iframe> </div>
+                            <a class="btn btn-outline" href="pdfs/Assignment_%20Case%20Study%204_%20Learning%20CSS%20in%20DWDD%201720.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a> </article> </li>
+                    <li>
+                        <article class="card case-study-item">
+                            <h3>Case Study 05 · Learning Figma in Interaction Design</h3>
+                            <p>Process notes on using Figma for prototyping, data visualization, and design system exploration.</p>
+                            <div class="case-study-preview">
+                                <iframe src="pdfs/Assignment_%20Case%20Study%205_%20Learning%20Figma%20in%20Interaction%20Design.pdf#view=FitH" title="Preview of Case Study 05 PDF" loading="lazy"></iframe> </div>
+                            <a class="btn btn-outline" href="pdfs/Assignment_%20Case%20Study%205_%20Learning%20Figma%20in%20Interaction%20Design.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a> </article> </li>
+                    <li>
+                        <article class="card case-study-item">
+                            <h3>Case Study 06 · Learning SCSS in DWDD 2610</h3>
+                            <p>Deep dive into advanced SCSS architecture, performance improvements, and the DWDD 2610 build process.</p>
+                            <div class="case-study-preview">
+                                <iframe src="pdfs/Assignment_%20Case%20Study%206_%20Learning%20SCSS%20in%20DWDD%202610-1.pdf#view=FitH" title="Preview of Case Study 06 PDF" loading="lazy"></iframe> </div>
+                            <a class="btn btn-outline" href="pdfs/Assignment_%20Case%20Study%206_%20Learning%20SCSS%20in%20DWDD%202610-1.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a> </article> </li> </ul> </section>
+
+            
+
+            <section class="support contact" id="contact">
+                <h2>Contact</h2>
+                <div class="row">
+                    <div class="column small-12 medium-4 large-4">
+                        <article class="card support-card">
+                            <div class="contact-card__header">
+                                <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.75 4.5h16.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H3.75a.75.75 0 0 1-.75-.75V5.25a.75.75 0 0 1 .75-.75Zm8.198 9.317 8.052-6.488a.25.25 0 0 0-.155-.454H4.155a.25.25 0 0 0-.155.454l8.052 6.488a.75.75 0 0 0 .946 0Zm-8.198-4.57v8.863a.25.25 0 0 0 .25.25h16.5a.25.25 0 0 0 .25-.25V9.247l-7.104 5.723a2.25 2.25 0 0 1-2.792 0L3.75 9.247Z"/></svg>
+                                <h3>School email</h3>
+                            </div>
+                            <p><a href="mailto:10987507@uvu.edu">10987507@uvu.edu</a></p>
+                        </article>
+                    </div>
+                    <div class="column small-12 medium-4 large-4">
+                        <article class="card support-card">
+                            <div class="contact-card__header">
+                                <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.983 3.5a2.323 2.323 0 1 1 .001 4.646A2.323 2.323 0 0 1 4.983 3.5ZM4.25 8.75h1.466c.138 0 .25.112.25.25v11.5c0 .138-.112.25-.25.25H4.25a.25.25 0 0 1-.25-.25V9c0-.138.112-.25.25-.25Zm4.75 0h1.442c.138 0 .25.112.25.25v1.02h.024c.418-.74 1.44-1.52 2.966-1.52 3.171 0 3.758 2.088 3.758 4.8v6.2c0 .138-.112.25-.25.25h-1.517a.25.25 0 0 1-.25-.25V13.85c0-1.171-.024-2.676-1.633-2.676-1.637 0-1.887 1.278-1.887 2.594v6.732c0 .138-.112.25-.25.25H9.25a.25.25 0 0 1-.25-.25V9c0-.138.112-.25.25-.25Z"/></svg>
+                                <h3>LinkedIn</h3>
+                            </div>
+                            <p><a href="https://www.linkedin.com/in/adamkbritsch" target="_blank" rel="noopener noreferrer">linkedin.com/in/adamkbritsch</a></p>
+                        </article>
+                    </div>
+                    <div class="column small-12 medium-4 large-4">
+                        <article class="card support-card">
+                            <div class="contact-card__header">
+                                <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 5.25h3a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-.75.75h-1.348c-.9 0-1.352.45-1.352 1.35V12h2.6a.75.75 0 0 1 .741.858l-.492 3A.75.75 0 0 1 15.51 16h-2.01v6.25a.75.75 0 0 1-.75.75H10a.75.75 0 0 1-.75-.75V16H8a.75.75 0 0 1-.75-.75v-3A.75.75 0 0 1 8 11.5h1.25V9.9c0-2.215 1.535-3.65 3.9-3.65Z"/></svg>
+                                <h3>Facebook</h3>
+                            </div>
+                            <p><a href="https://www.facebook.com/adamkbritsch" target="_blank" rel="noopener noreferrer">facebook.com/adamkbritsch</a></p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+             </main> </div>
+
+    <div id="footerWrapper">
+        <footer>
+            <div class="row">
+                <div class="column small-12 medium-6 large-3">
+                    <section class="contact">
+                        <h3>About this portfolio</h3>
+                        <p>Showcasing DWDD coursework focused on responsive design, accessibility, and storytelling-driven web experiences.</p>
+                        <p><a href="mailto:adamkbritsch@gmail.com">adamkbritsch@gmail.com</a></p> </section> </div>
+                <div class="column small-12 medium-6 large-3">
+                    <section class="social">
+                        <h3>Quick links</h3>
+                        <ul>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#resume">Resume</a></li>
+                            <li><a href="#courses">Courses</a></li>
+                            
+                            <li><a href="#dwdd1600">DWDD 1600 coursework</a></li>
+                            <li><a href="#dwdd1720">DWDD 1720 coursework</a></li>
+                            <li><a href="#dwdd2610">DWDD 2610 assignments</a></li>
+                            <li><a href="#case-studies">Case Studies (PDF)</a></li>
+                            
+                            <li><a href="#contact">Contact</a></li> </ul> </section> </div>
+                <div class="column small-12 medium-6 large-6">
+                    <section class="connect-summary">
+                        <h3>Connect</h3>
+                        <p>Reach out anytime for course walkthroughs, collaborations, or accessibility feedback. I respond fastest by email, and keep LinkedIn/Facebook open for quick updates.</p>
+                    </section>
+                </div>
+                <div class="column small-12 medium-6 large-6">
+                    <section class="footer-actions">
+                        <a class="btn btn-primary" href="mailto:10987507@uvu.edu">Email Adam</a>
+                        <a class="btn btn-outline" href="https://www.linkedin.com/in/adamkbritsch" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
+                        <a class="btn btn-outline" href="https://www.facebook.com/adamkbritsch" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    </section>
+                </div>
+            </div>
+            <p>&copy; <span id="year">x</span> &bull; Adam Britsch Web Design Portfolio</p> </footer> </div>
+    <script src="js/scripts.js"></script>
+</body>
+</html>

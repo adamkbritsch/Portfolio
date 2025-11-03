@@ -1,0 +1,25 @@
+// OLED dark palette
+// Base surfaces
+$bgPrimary: #000000;   // pure black for OLED
+$bgSurface: #0f1117;   // deep charcoal surface
+
+// Accents
+$accentPrimary: #6366f1;   // indigo glow
+$accentHighlight: #22d3ee; // electric cyan highlight
+
+// Text and borders
+$textPrimary: #f8fafc;   // soft white for contrast
+$textSecondary: #9ca3af; // muted cool gray
+$borderColor: #1f2937;   // subtle charcoal divider
+
+// Back-compat variables used across partials
+$primaryColor: $accentHighlight;
+$secondaryColor: $accentPrimary;
+$fontColor: $textPrimary;
+
+$defaultFont: "-apple-system", "SF Pro Display", "SF Pro Text", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$lightWeight:300;
+$normalWeight:500;
+$boldWeight:700;
+
+$gutter: 16px;

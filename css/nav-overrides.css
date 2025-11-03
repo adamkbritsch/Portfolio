@@ -1,0 +1,307 @@
+/* Temporary overrides until SCSS is recompiled */
+
+#headerWrapper {
+  background-color: #08122d;
+  border-bottom: 1px solid #1b2a47;
+}
+
+#headerWrapper .site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(12px, 4vw, 32px);
+  padding: 1.5rem 12px;
+  position: relative;
+  z-index: 20;
+}
+
+#headerWrapper .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+#headerWrapper .brand img {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(37, 99, 235, 0.2);
+  padding: 6px;
+}
+
+#headerWrapper .brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#headerWrapper .brand-text h1 {
+  margin: 0;
+  font-size: 1.85rem;
+  color: #22d3ee;
+}
+
+#headerWrapper .brand-text p {
+  margin: 0;
+  color: #9fb4d8;
+  font-size: 0.95rem;
+}
+
+#headerWrapper .primary-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex: 0 0 auto;
+  padding: 0;
+}
+
+#headerWrapper .primary-nav .nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid #1b2a47;
+  background: rgba(37, 99, 235, 0.18);
+  color: #f4f8ff;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+#headerWrapper .primary-nav .nav-toggle:hover,
+#headerWrapper .primary-nav .nav-toggle:focus-visible {
+  background: rgba(37, 99, 235, 0.28);
+}
+
+#headerWrapper .primary-nav .nav-toggle:active {
+  transform: scale(0.97);
+}
+
+#headerWrapper .primary-nav .nav-toggle__box {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+#headerWrapper .primary-nav .nav-toggle__line {
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 999px;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+#headerWrapper .primary-nav .nav-toggle__line:not(:last-child) {
+  margin-bottom: 0.35rem;
+}
+
+#headerWrapper .primary-nav .nav-toggle[aria-expanded=\"true\"] .nav-toggle__line:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+#headerWrapper .primary-nav .nav-toggle[aria-expanded=\"true\"] .nav-toggle__line:nth-child(2) {
+  opacity: 0;
+}
+
+#headerWrapper .primary-nav .nav-toggle[aria-expanded=\"true\"] .nav-toggle__line:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+#headerWrapper .primary-nav ul {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: -12px;
+  width: min(24rem, calc(100vw - 24px));
+  display: none;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  margin: 0;
+  list-style: none;
+  background: rgba(8, 18, 45, 0.98);
+  border: 1px solid #1b2a47;
+  border-radius: 16px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  z-index: 40;
+}
+
+#headerWrapper .primary-nav ul li {
+  width: 100%;
+  border: 1px solid #1b2a47;
+  border-radius: 999px;
+  overflow: hidden;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+#headerWrapper .primary-nav ul li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+#headerWrapper .primary-nav ul.is-open {
+  display: flex;
+}
+
+#headerWrapper .primary-nav li.active {
+  background-color: #2563eb;
+  border-color: #1b3fb2;
+}
+
+#headerWrapper .primary-nav a {
+  display: block;
+  padding: 0.65rem 1.2rem;
+  color: #f4f8ff;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 500;
+}
+
+#headerWrapper .primary-nav a:hover {
+  color: #5ae2f2;
+  background-color: rgba(37, 99, 235, 0.2);
+}
+
+#mainWrapper main {
+  padding: 1.75rem 12px 3.5rem;
+}
+
+#footerWrapper footer {
+  padding: 2rem 12px;
+  text-align: center;
+  align-items: center;
+}
+
+#footerWrapper footer .row {
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+#footerWrapper footer .column,
+#footerWrapper footer section {
+  align-items: center;
+  text-align: center;
+}
+
+.btn {
+  margin: 8px 0;
+}
+
+.device-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.device-card img {
+  width: clamp(160px, 82vw, 260px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(34, 211, 238, 0.14);
+}
+
+@media (min-width: 35rem) {
+  #headerWrapper .site-header {
+    padding: 2.1rem 20px;
+  }
+
+  #headerWrapper .primary-nav {
+    gap: 16px;
+  }
+
+  #headerWrapper .primary-nav .nav-toggle {
+    display: none;
+  }
+
+  #headerWrapper .primary-nav ul {
+    position: static;
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    width: auto;
+  }
+
+  #headerWrapper .primary-nav ul li {
+    width: auto;
+  }
+
+  #mainWrapper main {
+    padding: 2.75rem 20px 4.5rem;
+  }
+
+  #footerWrapper footer {
+    padding: 2.5rem 20px;
+  }
+
+  .device-card img {
+    width: clamp(200px, 35vw, 240px);
+  }
+}
+
+@media (min-width: 60rem) {
+  #headerWrapper .site-header {
+    padding: 3rem clamp(16px, 6vw, 48px);
+  }
+
+  #headerWrapper .primary-nav {
+    gap: 20px;
+  }
+
+  #headerWrapper .primary-nav ul {
+    gap: 1.25rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  #headerWrapper .site-header,
+  #mainWrapper main,
+  #footerWrapper footer {
+    max-width: 94rem;
+    margin: 0 auto;
+  }
+
+  #footerWrapper footer {
+    padding: 3rem clamp(16px, 5vw, 48px);
+  }
+
+  .device-card img {
+    width: clamp(220px, 24vw, 260px);
+  }
+
+  .benefits .row,
+  .devices .row,
+  .support .row {
+    flex-wrap: nowrap;
+    column-gap: 24px;
+  }
+
+  .benefits .column,
+  .devices .column,
+  .support .column {
+    flex: 0 1 calc((100% - 72px) / 4);
+    max-width: calc((100% - 72px) / 4);
+  }
+}
