@@ -99,6 +99,49 @@ if (navToggle && primaryMenu) {
   }
 }
 
+// compact nav toggle (page nav)
+const simpleNavToggle = document.querySelector('.page-nav__toggle');
+const pageNav = document.querySelector('.page-nav');
+const pageNavMenu = document.querySelector('.page-nav__list');
+
+if (simpleNavToggle && pageNav && pageNavMenu) {
+  const toggleSimpleNav = () => {
+    const expanded = simpleNavToggle.getAttribute('aria-expanded') === 'true';
+    if (expanded) {
+      simpleNavToggle.setAttribute('aria-expanded', 'false');
+      pageNav.classList.remove('is-open');
+    } else {
+      simpleNavToggle.setAttribute('aria-expanded', 'true');
+      pageNav.classList.add('is-open');
+    }
+  };
+
+  simpleNavToggle.addEventListener('click', toggleSimpleNav);
+
+  pageNavMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (simpleNavToggle.getAttribute('aria-expanded') === 'true') {
+        simpleNavToggle.setAttribute('aria-expanded', 'false');
+        pageNav.classList.remove('is-open');
+      }
+    });
+  });
+
+  const mdSwitch = window.matchMedia('(min-width: 40rem)');
+  const handleMdSwitch = event => {
+    if (event.matches) {
+      simpleNavToggle.setAttribute('aria-expanded', 'false');
+      pageNav.classList.remove('is-open');
+    }
+  };
+
+  if (typeof mdSwitch.addEventListener === 'function') {
+    mdSwitch.addEventListener('change', handleMdSwitch);
+  } else if (typeof mdSwitch.addListener === 'function') {
+    mdSwitch.addListener(handleMdSwitch);
+  }
+}
+
 // intersection observer for section wayfinding
 const pageSections = Array.from(document.querySelectorAll('.page-section'));
 const pageNavLinks = Array.from(document.querySelectorAll('.page-nav__item a'));

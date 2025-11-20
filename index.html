@@ -30,8 +30,12 @@
                 <div class="brand-text">
                     <h1>Adam Britsch Portfolio</h1>
                     <p>Web design, UX, and front-end portfolio hub.</p> </div> </a>
-            <nav class="page-nav" aria-label="Page navigation">
-                <ul class="page-nav__list">
+           <nav class="page-nav" aria-label="Page navigation">
+                <button class="page-nav__toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="page-nav__toggle-lines" aria-hidden="true"><span></span></span>
+                </button>
+                <ul class="page-nav__list" id="primary-menu">
                     <li class="page-nav__item">
                         <a href="#about" aria-label="About section">
                             <img class="page-nav__icon" src="images/nav-home.svg" alt="">
