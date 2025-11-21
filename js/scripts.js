@@ -145,10 +145,31 @@ if (simpleNavToggle && pageNav && pageNavMenu) {
 // intersection observer for section wayfinding
 const pageSections = Array.from(document.querySelectorAll('.page-section'));
 const pageNavLinks = Array.from(document.querySelectorAll('.page-nav__item a'));
+let lastActiveSectionId = null;
+
+let sectionPositions = [];
+const offsetAnchor = 200; // keeps long sections active as you scroll
+const sectionNavAlias = {
+  dwdd1600: 'courses',
+  dwdd1720: 'courses',
+  dwdd2610: 'courses',
+  'case-studies': 'courses'
+};
+
+const computeSectionPositions = () => {
+  sectionPositions = pageSections.map(section => {
+    const rect = section.getBoundingClientRect();
+    const top = rect.top + window.scrollY;
+    const bottom = rect.bottom + window.scrollY;
+    return { id: section.id, top, bottom };
+  });
+};
 
 const setActiveNav = (sectionId) => {
+  const navId = sectionNavAlias[sectionId] || sectionId;
+  lastActiveSectionId = navId;
   pageNavLinks.forEach(link => {
-    const isMatch = link.getAttribute('href') === `#${sectionId}`;
+    const isMatch = link.getAttribute('href') === `#${navId}`;
     const parentItem = link.parentElement;
 
     if (isMatch) {
@@ -187,6 +208,107 @@ if (pageSections.length && pageNavLinks.length) {
   pageSections.forEach(section => sectionObserver.observe(section));
   setActiveNav(pageSections[0].id);
 }
+
+// fallback: ensure a section is always marked active on scroll
+const findActiveByAnchor = () => {
+  if (!sectionPositions.length) computeSectionPositions();
+  // ensure the section runs until the next section starts
+  const scrollPos = window.scrollY + offsetAnchor;
+  let activeId = lastActiveSectionId;
+
+  // pick the last section whose top has passed the offset
+  const passed = sectionPositions.filter(pos => scrollPos >= pos.top);
+  if (passed.length) {
+    const last = passed[passed.length - 1];
+    activeId = sectionNavAlias[last.id] || last.id || activeId;
+  } else {
+    // fallback to nearest center if none passed yet
+    const viewportCenter = window.scrollY + window.innerHeight / 2;
+    let smallestDist = Infinity;
+    sectionPositions.forEach(pos => {
+      const center = (pos.top + pos.bottom) / 2;
+      const dist = Math.abs(center - viewportCenter);
+      if (dist < smallestDist) {
+        smallestDist = dist;
+        activeId = sectionNavAlias[pos.id] || pos.id || activeId;
+      }
+    });
+  }
+
+  if (activeId) setActiveNav(activeId);
+};
+
+let scrollTick = false;
+if (pageSections.length) {
+  computeSectionPositions();
+  window.addEventListener('scroll', () => {
+    if (!scrollTick) {
+      scrollTick = true;
+      window.requestAnimationFrame(() => {
+        findActiveByAnchor();
+        scrollTick = false;
+      });
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    computeSectionPositions();
+    findActiveByAnchor();
+  });
+
+  window.addEventListener('load', () => {
+    computeSectionPositions();
+    findActiveByAnchor();
+    setTimeout(computeSectionPositions, 800);
+    setTimeout(computeSectionPositions, 2000);
+  });
+}
+
+// make previews clickable and non-scrollable
+const makePreviewClickable = (previewSelector, linkSelector) => {
+  const items = document.querySelectorAll(previewSelector);
+
+  const addTouchOverlay = (el) => {
+    const activate = () => el.classList.add('is-pressed');
+    const deactivate = () => el.classList.remove('is-pressed');
+
+    el.addEventListener('touchstart', activate, { passive: true });
+    el.addEventListener('touchend', deactivate);
+    el.addEventListener('touchcancel', deactivate);
+    el.addEventListener('pointerdown', (evt) => {
+      if (evt.pointerType === 'touch') activate();
+    });
+    el.addEventListener('pointerup', deactivate);
+    el.addEventListener('pointercancel', deactivate);
+    el.addEventListener('pointerleave', deactivate);
+  };
+
+  items.forEach(item => {
+    const parentArticle = item.closest('article');
+    let href = null;
+    if (parentArticle) {
+      const link = parentArticle.querySelector(linkSelector);
+      if (link) href = link.getAttribute('href');
+    }
+    const iframe = item.querySelector('iframe');
+    if (iframe) {
+      iframe.setAttribute('scrolling', 'no');
+      iframe.style.pointerEvents = 'none';
+      if (!href) href = iframe.getAttribute('src');
+    }
+    if (href) {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', () => {
+        window.open(href, '_blank', 'noopener,noreferrer');
+      });
+    }
+
+    addTouchOverlay(item);
+  });
+};
+
+makePreviewClickable('.assignment-preview', 'header a[href]');
+makePreviewClickable('.case-study-preview', 'a[href$=\".pdf\"], .card a.btn');
 
 // about section stats count-up
 const statNumbers = Array.from(document.querySelectorAll('#about .stat-number'));
