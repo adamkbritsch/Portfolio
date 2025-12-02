@@ -152,8 +152,7 @@ const offsetAnchor = 200; // keeps long sections active as you scroll
 const sectionNavAlias = {
   dwdd1600: 'courses',
   dwdd1720: 'courses',
-  dwdd2610: 'courses',
-  'case-studies': 'courses'
+  dwdd2610: 'courses'
 };
 
 const computeSectionPositions = () => {
@@ -265,7 +264,7 @@ if (pageSections.length) {
 }
 
 // make previews clickable and non-scrollable
-const makePreviewClickable = (previewSelector, linkSelector) => {
+const makePreviewClickable = (previewSelector, linkSelector, opener) => {
   const items = document.querySelectorAll(previewSelector);
 
   const addTouchOverlay = (el) => {
@@ -299,16 +298,17 @@ const makePreviewClickable = (previewSelector, linkSelector) => {
     if (href) {
       item.style.cursor = 'pointer';
       item.addEventListener('click', () => {
-        window.open(href, '_blank', 'noopener,noreferrer');
+        if (typeof opener === 'function') {
+          opener(href);
+        } else {
+          window.open(href, '_blank', 'noopener,noreferrer');
+        }
       });
     }
 
     addTouchOverlay(item);
   });
 };
-
-makePreviewClickable('.assignment-preview', 'header a[href]');
-makePreviewClickable('.case-study-preview', 'a[href$=\".pdf\"], .card a.btn');
 
 // about section stats count-up
 const statNumbers = Array.from(document.querySelectorAll('#about .stat-number'));
@@ -331,7 +331,9 @@ const animateStat = (el, target, suffix = '') => {
 const updateStatTargets = () => {
   const totalAssignments = document.querySelectorAll('.assignments .assignment-list > li').length;
   const assignments2610 = document.querySelectorAll('#dwdd2610 .assignment-list > li').length;
-  const caseStudyCount = document.querySelectorAll('#case-studies .case-study-list > li').length;
+  const caseStudyCountFromBody = parseInt(document.body?.dataset.caseStudyCount || document.body?.dataset.caseStudiesCount || '0', 10);
+  const caseStudyListCount = document.querySelectorAll('#case-studies .case-study-list > li').length || document.querySelectorAll('.case-study-hub__list > li').length;
+  const caseStudyCount = (Number.isFinite(caseStudyCountFromBody) && caseStudyCountFromBody > 0) ? caseStudyCountFromBody : caseStudyListCount;
 
   statNumbers.forEach(el => {
     const type = el.dataset.stat;
@@ -394,3 +396,335 @@ if (statNumbers.length) {
     });
   });
 }
+
+// case study modal overlay
+const caseStudyModal = document.querySelector('#case-study-modal');
+const caseStudyFrame = caseStudyModal ? caseStudyModal.querySelector('iframe') : null;
+const caseStudyOpeners = Array.from(document.querySelectorAll('[data-open-case-study]'));
+const caseStudyClosers = Array.from(document.querySelectorAll('[data-close-case-study]'));
+
+const closeCaseStudyModal = () => {
+  if (!caseStudyModal) return;
+  caseStudyModal.classList.remove('is-open');
+  caseStudyModal.setAttribute('hidden', 'hidden');
+  document.body.classList.remove('modal-open');
+};
+
+const openCaseStudyModal = (url) => {
+  if (!caseStudyModal || !caseStudyFrame) return;
+  if (url) {
+    caseStudyFrame.src = url;
+  } else if (!caseStudyFrame.src) {
+    caseStudyFrame.src = 'case-studies/index.html';
+  }
+  caseStudyModal.removeAttribute('hidden');
+  caseStudyModal.classList.add('is-open');
+  document.body.classList.add('modal-open');
+};
+
+if (caseStudyOpeners.length && caseStudyModal) {
+  caseStudyOpeners.forEach(trigger => {
+    trigger.addEventListener('click', evt => {
+      const url = trigger.getAttribute('data-open-case-study');
+      if (url) {
+        evt.preventDefault();
+        openCaseStudyModal(url);
+      }
+    });
+  });
+
+  caseStudyClosers.forEach(closeEl => {
+    closeEl.addEventListener('click', () => closeCaseStudyModal());
+  });
+
+  document.addEventListener('keydown', evt => {
+    if (evt.key === 'Escape' && caseStudyModal.classList.contains('is-open')) {
+      closeCaseStudyModal();
+    }
+  });
+}
+
+// assignment modal overlay
+const assignmentModal = document.querySelector('#assignment-modal');
+const assignmentFrame = assignmentModal ? assignmentModal.querySelector('iframe') : null;
+const assignmentClosers = assignmentModal ? assignmentModal.querySelectorAll('[data-close-assignment]') : [];
+const assignmentExternal = assignmentModal ? assignmentModal.querySelector('[data-open-assignment-external]') : null;
+
+const closeAssignmentModal = () => {
+  if (!assignmentModal) return;
+  assignmentModal.classList.remove('is-open');
+  assignmentModal.setAttribute('hidden', 'hidden');
+  document.body.classList.remove('modal-open');
+};
+
+const openAssignmentModal = (url) => {
+  if (!assignmentModal || !assignmentFrame) return;
+  if (url) {
+    assignmentFrame.src = url;
+    assignmentFrame.dataset.currentHref = url;
+  }
+  assignmentModal.removeAttribute('hidden');
+  assignmentModal.classList.add('is-open');
+  document.body.classList.add('modal-open');
+};
+
+assignmentClosers.forEach(btn => btn.addEventListener('click', closeAssignmentModal));
+
+document.addEventListener('keydown', evt => {
+  if (evt.key === 'Escape' && assignmentModal && assignmentModal.classList.contains('is-open')) {
+    closeAssignmentModal();
+  }
+});
+
+if (assignmentExternal && assignmentFrame) {
+  assignmentExternal.addEventListener('click', () => {
+    const href = assignmentFrame.dataset.currentHref || assignmentFrame.getAttribute('src');
+    if (href) window.open(href, '_blank', 'noopener,noreferrer');
+  });
+}
+// assignment previews open in coursework modal (handler wired above)
+makePreviewClickable('.assignment-preview', 'header a[href]', openAssignmentModal);
+// case studies still open new window
+makePreviewClickable('.case-study-preview', 'a[href$=".pdf"], .card a.btn');
+
+// share buttons for case studies
+const shareButtons = Array.from(document.querySelectorAll('.btn-share-case-study'));
+if (shareButtons.length) {
+  const ensureShareSheet = () => {
+    let sheet = document.querySelector('.share-sheet');
+    if (sheet) return sheet;
+
+    sheet = document.createElement('div');
+    sheet.className = 'share-sheet';
+    sheet.innerHTML = `
+      <div class="share-sheet__backdrop" data-share-close></div>
+      <div class="share-sheet__dialog" role="dialog" aria-modal="true" aria-label="Share this page">
+        <header class="share-sheet__header">
+          <h3>Share</h3>
+          <button class="share-sheet__close" type="button" aria-label="Close share options" data-share-close>&times;</button>
+        </header>
+        <div class="share-sheet__body">
+          <button class="share-sheet__option" data-share-target="copy">Copy link</button>
+          <button class="share-sheet__option" data-share-target="email">Email</button>
+          <button class="share-sheet__option" data-share-target="facebook">Facebook</button>
+          <button class="share-sheet__option" data-share-target="linkedin">LinkedIn</button>
+          <button class="share-sheet__option" data-share-target="twitter">Twitter/X</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(sheet);
+    return sheet;
+  };
+
+  const openShareSheet = (url, title) => {
+    const sheet = ensureShareSheet();
+    sheet.classList.add('is-open');
+    const close = () => sheet.classList.remove('is-open');
+
+    const options = sheet.querySelectorAll('.share-sheet__option');
+    options.forEach(btn => {
+      btn.onclick = null;
+      btn.addEventListener('click', async () => {
+        const target = btn.dataset.shareTarget;
+        if (target === 'copy') {
+          if (navigator.clipboard?.writeText) {
+            try {
+              await navigator.clipboard.writeText(url);
+              btn.textContent = 'Copied!';
+              setTimeout(() => (btn.textContent = 'Copy link'), 1000);
+            } catch (_) {
+              window.prompt('Copy this link:', url);
+            }
+          } else {
+            window.prompt('Copy this link:', url);
+          }
+        }
+        if (target === 'email') {
+          window.open(`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`, '_blank');
+        }
+        if (target === 'facebook') {
+          window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener');
+        }
+        if (target === 'linkedin') {
+          window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank', 'noopener');
+        }
+        if (target === 'twitter') {
+          window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank', 'noopener');
+        }
+        close();
+      });
+    });
+
+    sheet.querySelectorAll('[data-share-close]').forEach(closeEl => {
+      closeEl.onclick = close;
+    });
+
+    document.addEventListener('keydown', function escClose(evt) {
+      if (evt.key === 'Escape') {
+        close();
+        document.removeEventListener('keydown', escClose);
+      }
+    });
+  };
+
+  const handleShare = async (button) => {
+    const rawUrl = button.dataset.shareUrl || window.location.href;
+    const url = (() => {
+      try {
+        return new URL(rawUrl, window.location.href).href;
+      } catch (err) {
+        return window.location.href;
+      }
+    })();
+    const title = button.dataset.shareTitle || document.title;
+    const text = button.dataset.shareText || '';
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+        return;
+      } catch (err) {
+        // ignore cancellations
+      }
+    }
+
+    openShareSheet(url, title);
+  };
+
+  shareButtons.forEach(btn => {
+    btn.addEventListener('click', () => handleShare(btn));
+  });
+}
+
+// highlight Introduction nav button on modal open
+const animateIntroButtons = () => {
+  document.querySelectorAll('.page-nav__list--inline .page-nav__item:first-child a').forEach(btn => {
+    btn.classList.remove('animate-glow');
+    // force reflow to restart animation
+    void btn.offsetWidth;
+    btn.classList.add('animate-glow');
+  });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  animateIntroButtons();
+});
+
+// restart the glow when opening the modal on the main page
+const modalOpenButtons = Array.from(document.querySelectorAll('.js-open-case-study'));
+if (modalOpenButtons.length) {
+  modalOpenButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setTimeout(animateIntroButtons, 500);
+    });
+  });
+}
+
+// coursework collapsible cards
+const courseSections = Array.from(document.querySelectorAll('.assignments'));
+const courseData = [];
+courseSections.forEach(section => {
+  const toggle = section.querySelector('.course-toggle');
+  const list = section.querySelector('.assignment-list');
+  if (!toggle || !list) return;
+
+  // build mini icon list
+  const miniList = document.createElement('div');
+  miniList.className = 'assignment-icons';
+  const items = Array.from(list.querySelectorAll('.assignment-item'));
+  items.forEach(item => {
+    const titleEl = item.querySelector('h3');
+    const iframe = item.querySelector('iframe');
+    const link = iframe ? iframe.getAttribute('src') : '#';
+    const mini = document.createElement('a');
+    mini.className = 'assignment-icon';
+    mini.href = link;
+    mini.target = '_blank';
+    mini.rel = 'noopener noreferrer';
+    mini.textContent = titleEl ? titleEl.textContent.trim() : 'View';
+    miniList.appendChild(mini);
+  });
+  miniList.hidden = false;
+  miniList.style.display = '';
+  list.insertAdjacentElement('afterend', miniList);
+
+  // default to collapsed (mini cards shown)
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.textContent = 'Expand to full previews';
+  list.hidden = true;
+  list.style.display = 'none';
+
+  const collapse = () => {
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = 'Expand to full previews';
+    list.hidden = true;
+    list.style.display = 'none';
+    miniList.hidden = false;
+    miniList.style.display = '';
+  };
+
+  const expand = () => {
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.textContent = 'Collapse to mini cards';
+    list.hidden = false;
+    list.style.display = '';
+    miniList.hidden = true;
+    miniList.style.display = 'none';
+  };
+
+  toggle.addEventListener('click', () => {
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+    if (isExpanded) {
+      collapse();
+    } else {
+      expand();
+    }
+  });
+
+  // intercept mini icon clicks to open modal
+  miniList.addEventListener('click', evt => {
+    const link = evt.target.closest('a.assignment-icon');
+    if (link && link.href) {
+      evt.preventDefault();
+      openAssignmentModal(link.href);
+    }
+  });
+
+  courseData.push({ section, toggle, list, miniList, expand, collapse });
+});
+
+const expandCourseSection = (sectionId) => {
+  const data = courseData.find(entry => `#${entry.section.id}` === sectionId);
+  if (data) data.expand();
+};
+
+// expand when navigating to section anchors
+const courseAnchors = Array.from(document.querySelectorAll('a[href^="#dwdd"]'));
+courseAnchors.forEach(link => {
+  link.addEventListener('click', () => {
+    const targetId = link.getAttribute('href') || '';
+    if (targetId.startsWith('#dwdd')) {
+      setTimeout(() => expandCourseSection(targetId), 200);
+    }
+  });
+});
+
+if (location.hash && location.hash.startsWith('#dwdd')) {
+  expandCourseSection(location.hash);
+}
+
+// auto-collapse when section leaves viewport
+if ('IntersectionObserver' in window && courseData.length) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        const data = courseData.find(d => d.section === entry.target);
+        if (data) data.collapse();
+      }
+    });
+  }, { threshold: 0.1 });
+
+  courseData.forEach(data => observer.observe(data.section));
+}
+
+// Case studies: open directly from cards (no toggle needed)
