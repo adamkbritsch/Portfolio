@@ -470,14 +470,12 @@
   padding: var(--case-modal-gap);
   z-index: 999;
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 220ms ease, transform 240ms ease;
+  transition: opacity 220ms ease;
 }
 
 .case-study-modal.is-open {
   display: flex;
   opacity: 1;
-  transform: translateY(0);
 }
 
 .case-study-modal__backdrop {
@@ -837,6 +835,8 @@
   border: 1px solid var(--nav-border);
   border-radius: 24px;
   box-shadow: 0 24px 40px rgba(0, 0, 0, 0.35);
+  position: relative;
+  min-height: 90vh;
 }
 
 .case-study-detail__grid {
@@ -850,6 +850,52 @@
 
 .case-study-copy p {
   margin: 0 0 0.45rem;
+}
+
+@keyframes scrollBounce {
+  0% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -6px);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 42rem) {
+  .case-study-hero::after {
+    display: none;
+  }
+
+  .case-study-detail::after {
+    content: "Scroll to read ↓";
+    position: fixed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    top: 74%;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
+    color: #f4f6ff;
+    background: linear-gradient(180deg, rgba(5, 10, 25, 0.65), rgba(5, 10, 25, 0));
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    opacity: 0.95;
+  animation: scrollBounce 1.6s ease-in-out infinite;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+  transition: opacity 200ms ease;
+}
+
+.case-study-detail[data-scrollprompt="hidden"]::after {
+  opacity: 0;
+}
 }
 
 .case-study-artifacts {

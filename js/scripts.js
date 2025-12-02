@@ -728,3 +728,17 @@ if ('IntersectionObserver' in window && courseData.length) {
 }
 
 // Case studies: open directly from cards (no toggle needed)
+
+// hide scroll prompt after user scrolls a bit on case study pages
+if (document.body.classList.contains('case-study-detail')) {
+  const handleScrollPrompt = () => {
+    const scrolled = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+    if (scrolled > 10) {
+      document.body.setAttribute('data-scrollprompt', 'hidden');
+    } else {
+      document.body.removeAttribute('data-scrollprompt');
+    }
+  };
+  handleScrollPrompt();
+  window.addEventListener('scroll', handleScrollPrompt, { passive: true });
+}
