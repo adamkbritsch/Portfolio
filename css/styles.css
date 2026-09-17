@@ -317,7 +317,7 @@ template {
 
 body {
   margin: 0;
-  background: #fbfaf7;
+  background: #f4f1ea;
   color: #1d1c1a;
   font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 1.0625rem;
@@ -389,7 +389,7 @@ a:focus-visible {
   z-index: 10;
   padding: 0.5rem 0.75rem;
   background: #1d1c1a;
-  color: #fbfaf7;
+  color: #f4f1ea;
   font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 .skip-link:focus {
@@ -417,7 +417,7 @@ a:focus-visible {
 }
 
 .site-header {
-  border-bottom: 1px solid #dedad2;
+  border-bottom: 1px solid #d9d4c9;
 }
 .site-header .wrap {
   display: flex;
@@ -476,7 +476,7 @@ a:focus-visible {
 
 .section {
   padding: 2.5rem 0;
-  border-top: 1px solid #dedad2;
+  border-top: 1px solid #d9d4c9;
 }
 
 .section__intro {
@@ -502,7 +502,7 @@ a:focus-visible {
 }
 
 .shot {
-  border: 1px solid #dedad2;
+  border: 1px solid #d9d4c9;
   border-radius: 4px;
 }
 
@@ -547,7 +547,7 @@ a:focus-visible {
 }
 .course li {
   padding: 0.3rem 0;
-  border-top: 1px solid #dedad2;
+  border-top: 1px solid #d9d4c9;
 }
 
 .resume {
@@ -563,7 +563,7 @@ a:focus-visible {
 
 .entry {
   padding: 1rem 0;
-  border-top: 1px solid #dedad2;
+  border-top: 1px solid #d9d4c9;
 }
 .entry p {
   margin-bottom: 0.25rem;
@@ -592,7 +592,7 @@ a:focus-visible {
   grid-template-columns: 5.5rem 1fr;
   gap: 1rem;
   padding: 0.6rem 0;
-  border-top: 1px solid #dedad2;
+  border-top: 1px solid #d9d4c9;
   overflow-wrap: anywhere;
 }
 .contact-list span {
@@ -602,7 +602,7 @@ a:focus-visible {
 
 .site-footer {
   padding: 2rem 0 2.5rem;
-  border-top: 1px solid #dedad2;
+  border-top: 1px solid #d9d4c9;
   color: #5b5852;
   font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.9375rem;
@@ -664,7 +664,7 @@ a:focus-visible {
 .article__links {
   margin-top: 2rem;
   padding-top: 1.25rem;
-  border-top: 1px solid #dedad2;
+  border-top: 1px solid #d9d4c9;
 }
 
 .pager {
@@ -694,7 +694,7 @@ a:focus-visible {
 }
 .study-list li {
   padding: 1rem 0;
-  border-top: 1px solid #dedad2;
+  border-top: 1px solid #d9d4c9;
 }
 .study-list h2 {
   margin-bottom: 0.25rem;
