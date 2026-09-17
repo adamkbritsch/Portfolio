@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UVU Review website | Adam Britsch</title>
+    <meta name="description" content="What Adam Britsch changed on uvureview.com as senior web editor: the homepage, menu, footer, page speed and link fixes.">
+    <meta name="author" content="Adam Britsch">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+    <link href="../css/styles.min.css" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="manifest" href="../site.webmanifest">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="wrap">
+            <a class="site-header__name" href="../index.html">Adam Britsch</a>
+            <nav aria-label="Main">
+                <ul class="site-nav">
+                    <li><a href="../index.html#work">Work</a></li>
+                    <li><a href="../index.html#coursework">Coursework</a></li>
+                    <li><a href="../index.html#resume">Resume</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main" class="article">
+        <p class="article__back"><a href="../index.html#work">Back to work</a></p>
+        <h1>UVU Review website</h1>
+        <p class="article__meta">Senior web editor, 2026</p>
+
+        <p>The UVU Review is the independent student newspaper of Utah Valley University, published by students since 1962. As senior web editor, I'm responsible for uvureview.com: what readers see first, how they find their way around, and how quickly the pages load. These are the changes I made in August and September 2026. All of them are live on the site.</p>
+
+        <h2>Homepage</h2>
+        <p>The top of the homepage now fills the first screen on a laptop, and the stories in it are chosen automatically. The theme's featured and most-read lists weren't pulling the right stories, so I replaced them with a ranking that weighs how new a story is, how many people have read it, how many comments it has, and which section it's in. I also moved News up so it sits right under the top stories.</p>
+        <figure>
+            <img class="shot" src="../images/work/uvu-review-home.webp" width="1600" height="689" alt="The top of the UVU Review homepage: a large lead story, two smaller stories and a list of recent headlines">
+            <figcaption>The top of the homepage in September 2026.</figcaption>
+        </figure>
+
+        <h2>Menu</h2>
+        <p>The site had a hover menu on desktop and a separate slide-out drawer on phones. I replaced both with one menu button that works the same at every screen size. It opens a full-width panel with every section, the About and Advertise pages, our Instagram and the latest episodes. I sketched the layout on a whiteboard before building it. Taking out the old second header row also brought the header down from 119 pixels tall to 82.</p>
+        <figure>
+            <img class="shot" src="../images/work/uvu-review-menu.webp" width="1600" height="883" alt="The open menu panel, with columns for sections, About Us, Advertisers, Opinion, Instagram and Latest Episodes" loading="lazy">
+            <figcaption>The open menu.</figcaption>
+        </figure>
+
+        <h2>Footer, logo and type</h2>
+        <p>The footer now uses the same green shard artwork as the header, one step lighter and greener, with the shards kept at the artwork's original 241 degree angle. The header uses the brass-and-green version of the logo.</p>
+        <p>Headlines are set in Playfair Display and body text in Source Sans 3. Playfair looks lighter than the typeface it replaced, especially at small sizes, so I made the small headlines bolder instead of giving up on the serif.</p>
+        <figure>
+            <img class="shot" src="../images/work/uvu-review-footer.webp" width="1600" height="653" alt="The green site footer with columns of links for sections, games, shows and company" loading="lazy">
+            <figcaption>The footer.</figcaption>
+        </figure>
+
+        <h2>Speed</h2>
+        <p>Part of every page was code that loaded but was never used. I removed 20.6 KB of inline styles for an author box that never appeared on the page (42% of each page's head), a 98 KB sign-in script, and two image preloads that didn't help. The homepage's HTML went from 364,697 bytes to 340,415, and a typical article from 214,099 to 190,592. Images are now sized for the reader's screen.</p>
+
+        <h2>Pages and fixes</h2>
+        <ul>
+            <li>I rewrote the About, Advertise, Contact and Work for Us pages in plain language and rebuilt their layouts.</li>
+            <li>Articles now end with related stories that share specific tags. When nothing is a good match, the section doesn't show up at all, instead of filling the space with unrelated stories.</li>
+            <li>"More by" links for guest writers were sending readers to an article from 2010. They now go to the writer's own page.</li>
+        </ul>
+        <figure>
+            <img class="shot" src="../images/work/uvu-review-about.webp" width="1600" height="689" alt="The About The UVU Review page, with a photo header and sections titled How the paper works and Get involved" loading="lazy">
+            <figcaption>The rebuilt About page.</figcaption>
+        </figure>
+
+        <h2>How changes go live</h2>
+        <p>The site's theme is maintained by a separate web team, so I don't edit it directly. Each change is a small plugin that loads alongside the theme, which means any one of them can be switched off without touching the theme.</p>
+
+        <p class="article__links link-row">
+            <a href="https://www.uvureview.com/">Visit uvureview.com</a>
+        </p>
+
+        <nav class="pager" aria-label="Case studies">
+            <a href="case-study-01.html" rel="next"><span>Next</span>Chuck Rack store</a>
+        </nav>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>Adam Britsch, Orem, Utah. Last updated September 2026.</p>
+            <p><a href="https://github.com/adamkbritsch/Portfolio">The code for this site is on GitHub</a></p>
+        </div>
+    </footer>
+</body>
+</html>

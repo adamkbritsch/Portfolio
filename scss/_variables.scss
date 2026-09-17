@@ -1,25 +1,22 @@
-// OLED dark palette
-// Base surfaces
-$bgPrimary: #000000;   // pure black for OLED
-$bgSurface: #0f1117;   // deep charcoal surface
+// Colors: warm paper, dark ink, and one green for links
+$paper: #fbfaf7;
+$ink: #1d1c1a;
+$inkSoft: #5b5852;   // secondary text, 6.8:1 on $paper
+$rule: #dedad2;      // hairlines between things
+$accent: #1f5c46;    // links and focus rings, 7.5:1 on $paper
+$accentDark: #143d2f;
 
-// Accents
-$accentPrimary: #6366f1;   // indigo glow
-$accentHighlight: #22d3ee; // electric cyan highlight
+// Type: sans-serif titles, serif body text
+$serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+$sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+$titleFont: $sans;
+$bodyFont: $serif;
+$uiFont: $sans;      // nav, labels, captions and other small text
+$normalWeight: 400;
+$boldWeight: 600;
 
-// Text and borders
-$textPrimary: #f8fafc;   // soft white for contrast
-$textSecondary: #9ca3af; // muted cool gray
-$borderColor: #1f2937;   // subtle charcoal divider
-
-// Back-compat variables used across partials
-$primaryColor: $accentHighlight;
-$secondaryColor: $accentPrimary;
-$fontColor: $textPrimary;
-
-$defaultFont: "-apple-system", "SF Pro Display", "SF Pro Text", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-$lightWeight:300;
-$normalWeight:500;
-$boldWeight:700;
-
+// Layout
 $gutter: 16px;
+$pageWidth: 72rem;
+$textWidth: 42rem;
+$figureWidth: 60rem;

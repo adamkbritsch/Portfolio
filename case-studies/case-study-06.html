@@ -1,93 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Case Study 06 · Learning SCSS in DWDD 2610 | Adam Britsch Portfolio</title>
-    <meta name="description" content="Case Study 06: Learning SCSS in DWDD 2610. Advanced SCSS architecture, performance tweaks, and workflow notes.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning SCSS in DWDD 2610 | Adam Britsch</title>
+    <meta name="description" content="Adam Britsch on learning SCSS in DWDD 2610 with Paul Cheney at Utah Valley University.">
     <meta name="author" content="Adam Britsch">
 
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Site styles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
     <link href="../css/styles.min.css" rel="stylesheet">
-    <link href="../css/nav-overrides.css" rel="stylesheet">
 
-<!-- favicon stuff --> 
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-    <link rel="manifest" href="../site.webmanifest"> </head>
-<body data-case-study-count="6" class="case-study-detail">
+    <link rel="manifest" href="../site.webmanifest">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
 
-    <div id="headerWrapper">
-        <header class="site-header">
-            <a class="brand" href="index.html">
-                <img src="../images/logo1x.png" srcset="../images/logo1x.png 1x, ../images/logo2x.png 2x, ../images/logo3x.png 3x" alt="Adam Britsch monogram" width="40" height="40">
-                <div class="brand-text">
-                    <h1>Case Study 06</h1>
-                    <p>Learning SCSS in DWDD 2610</p> </div> </a>
-           <nav class="page-nav" aria-label="Case study navigation">
-                <ul class="page-nav__list page-nav__list--inline" id="primary-menu">
-                    <li class="page-nav__item">
-                        <a href="#introduction" aria-label="Introduction section">
-                            <img class="page-nav__icon" src="../images/nav-home.svg" alt="">
-                            <span class="page-nav__text">Introduction</span> </a> </li>
-                    <li class="page-nav__item">
-                        <a href="#what-happened" aria-label="What happened section">
-                            <img class="page-nav__icon" src="../images/nav-courses.svg" alt="">
-                            <span class="page-nav__text">What happened</span> </a> </li>
-                    <li class="page-nav__item">
-                        <a href="#conclusion" aria-label="Conclusion section">
-                            <img class="page-nav__icon" src="../images/nav-resume.svg" alt="">
-                            <span class="page-nav__text">Conclusion</span> </a> </li> </ul> </nav>
-         </header> </div>
-    
-    <div id="mainWrapper">
-        <main>
-            <section class="hero page-section case-study-hero" id="overview">
-                <div class="row">
-                    <div class="column small-12 medium-12 large-12 hero-content">
-                        <p class="hero-eyebrow">Case Study 06 · DWDD 2610</p>
-                        <h2>Learning SCSS in DWDD 2610</h2>
-                        <p class="hero-lede">Advanced SCSS architecture, performance improvements, and workflow lessons presented without leaving the site.</p>
-                        <div class="tag-list">
-                            <span class="tag">Course: DWDD 2610</span>
-                            <span class="tag">Focus: SCSS architecture</span>
-                            <span class="tag">Format: HTML + PDF</span>
-                        </div>
-                        <div class="cta-group">
-                            <a class="btn btn-outline" href="../pdfs/Assignment_%20Case%20Study%206_%20Learning%20SCSS%20in%20DWDD%202610-1.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a>
-                            <button class="btn btn-outline btn-share-case-study" type="button" data-share-title="Case Study 06 · Learning SCSS in DWDD 2610">Share</button> </div>
-                         </div> </div> </section>
+    <header class="site-header">
+        <div class="wrap">
+            <a class="site-header__name" href="../index.html">Adam Britsch</a>
+            <nav aria-label="Main">
+                <ul class="site-nav">
+                    <li><a href="../index.html#work">Work</a></li>
+                    <li><a href="../index.html#coursework">Coursework</a></li>
+                    <li><a href="../index.html#resume">Resume</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-            <section class="page-section case-study-body" id="introduction">
-                <article class="card case-study-card">
-                    <h3>Introduction</h3>
-                    <p>In Fall 2025 (DWDD 2610 with Paul Cheney) I learned SCSS, a superset of CSS that allows nesting and variables. SCSS lets you reuse colors via $brand-color values and nest styles for cleaner structure, making broad theme changes easier.</p>
-                </article>
-            </section>
+    <main id="main" class="article">
+        <p class="article__back"><a href="../index.html#coursework">Back to coursework</a></p>
+        <h1>Learning SCSS in DWDD 2610</h1>
+        <p class="article__meta">DWDD 2610 with Paul Cheney, Fall 2025</p>
 
-            <section class="page-section case-study-body" id="what-happened">
-                <article class="card case-study-card">
-                    <h3>What happened</h3>
-                    <p>Throughout the semester I layered SCSS into my sites as a major upgrade from vanilla CSS. I reused components across projects, changing themes quickly by updating $brand-color variables. SCSS helpers like color opacity functions made overlays and icon animations easier to control.</p>
-                    <p>Reusing previous site elements while swapping brand values saved time and kept designs consistent with new themes as assignments progressed.</p>
-                </article>
-            </section>
+        <h2>Introduction</h2>
+        <p>In Fall 2025, I learned a variation of CSS called SCSS in my DWDD 2610 class with Paul Cheney. The main change between CSS and SCSS is SCSS's ability to nest styles inside other styles. Designers have significantly more freedom with SCSS; for example, they can set a color once and have it apply to all of the elements nested inside.</p>
+        <p>Another very useful thing is replacing individual colors with $brand-color values, so you can change what those values equal and effectively revamp an entire site while only changing a few words in the SCSS variables sheet. SCSS stands for Sassy Cascading Style Sheets.</p>
 
-            <section class="page-section case-study-body" id="conclusion">
-                <article class="card case-study-card">
-                    <h3>Conclusion</h3>
-                    <p>SCSS enabled more intricate, well-structured, and visually consistent sites. The organizational benefits felt closer to HTML’s clarity than traditional CSS.</p>
-                    <p>Recent DWDD 2610 assignments: <a href="https://github.com/adamkbritsch?tab=repositories" target="_blank" rel="noopener noreferrer">GitHub repositories</a> · Module 6 X-Mobile · Module 4 Diner.</p>
-                </article>
-            </section>
-             </main> </div>
+        <h2>What happened</h2>
+        <p>Over the semester I learned more about SCSS, and it was a major and useful step up from regular CSS because of its wide capabilities. As the semester progressed, I added more useful SCSS elements to my sites. Rather than start a new file every time, I used the elements from my previous sites, and because of the $brand-color values in the variables sheet, I could easily change the colors and styles of those elements to fit each new site's theme.</p>
+        <p>Another benefit of SCSS is its ability to generate percentages of color opacity. I was able to overlay colors more easily because of this feature, and it works with the $brand-color variables in the variables sheet.</p>
+        <p>The impacts of SCSS are versatile. I applied SCSS to icon animations, and was able to edit them much more easily because of it.</p>
 
-    <script src="../js/scripts.js"></script>
+        <figure>
+            <img class="shot" src="../images/case-studies/sunrise-diner.webp" width="1600" height="717" alt="The Sunrise Diner homepage, with menu cards for breakfast, a burger, a blue plate special, milkshakes and late-night bites" loading="lazy">
+            <figcaption>Module 4: Sunrise Diner.</figcaption>
+        </figure>
+
+        <h2>Conclusion</h2>
+        <p>Because of what I learned about SCSS, I was able to create more intricate and visually pleasing websites. I was able to stick more closely to the structure of these sites, and their inner logic made more sense to me.</p>
+        <p>SCSS is more similar to HTML in that way, as it smiles upon organization more than traditional CSS does.</p>
+
+        <p class="article__links link-row">
+            <a href="https://github.com/adamkbritsch?tab=repositories">My GitHub repositories</a>
+            <a href="https://adamkbritsch.github.io/06-X-Mobile/">Module 6: X-Mobile</a>
+            <a href="https://adamkbritsch.github.io/04-Diner/">Module 4: Diner</a>
+            <a href="../pdfs/Assignment_%20Case%20Study%206_%20Learning%20SCSS%20in%20DWDD%202610-1.pdf">Original assignment (PDF)</a>
+        </p>
+
+        <nav class="pager" aria-label="Case studies">
+            <a href="case-study-05.html" rel="prev"><span>Previous</span>Learning Figma in Interaction Design</a>
+        </nav>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>Adam Britsch, Orem, Utah. Last updated September 2026.</p>
+            <p><a href="https://github.com/adamkbritsch/Portfolio">The code for this site is on GitHub</a></p>
+        </div>
+    </footer>
 </body>
 </html>
