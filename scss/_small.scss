@@ -203,6 +203,14 @@ a {
     color: $inkSoft;
 }
 
+.prose {
+    max-width: $textWidth;
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
 .subhead {
     margin-top: 3rem;
     margin-bottom: 0.75rem;

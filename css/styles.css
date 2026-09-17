@@ -498,6 +498,13 @@ a:focus-visible {
   color: #5b5852;
 }
 
+.prose {
+  max-width: 42rem;
+}
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
 .subhead {
   margin-top: 3rem;
   margin-bottom: 0.75rem;
