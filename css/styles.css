@@ -331,6 +331,10 @@ img {
   height: auto;
 }
 
+html {
+  scroll-padding-top: 99px;
+}
+
 h1,
 h2,
 h3,
@@ -417,7 +421,11 @@ a:focus-visible {
 }
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
   border-bottom: 1px solid #d9d4c9;
+  background: #f4f1ea;
 }
 .site-header .wrap {
   display: flex;
@@ -705,6 +713,9 @@ a:focus-visible {
 }
 
 @media only screen and (min-width: 35rem) {
+  html {
+    scroll-padding-top: 65px;
+  }
   body {
     font-size: 1.125rem;
   }

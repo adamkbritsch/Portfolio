@@ -22,6 +22,11 @@ img {
     height: auto;
 }
 
+// Keep anchor jumps and keyboard focus from landing under the sticky header
+html {
+    scroll-padding-top: 99px;   // header height (two rows) minus its 1px border
+}
+
 h1,
 h2,
 h3,
@@ -114,7 +119,11 @@ a {
 // Header
 
 .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
     border-bottom: 1px solid $rule;
+    background: $paper;
 
     .wrap {
         display: flex;

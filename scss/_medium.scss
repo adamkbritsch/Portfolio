@@ -1,5 +1,9 @@
 // 35rem and wider: tablets and small laptops
 
+html {
+    scroll-padding-top: 65px;   // the header fits on one row from here up
+}
+
 body {
     font-size: 1.125rem;
 }
