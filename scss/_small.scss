@@ -164,6 +164,11 @@ a {
             text-decoration: underline;
         }
     }
+
+    // Keep the links on one row on the narrowest phones, so the sticky header stays short
+    @media (max-width: 22rem) {
+        gap: 0 0.75rem;
+    }
 }
 
 // Home page intro
