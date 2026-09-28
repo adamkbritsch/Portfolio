@@ -1583,7 +1583,12 @@ a:focus-visible {
   .rail__turn,
   .section > .wrap::after,
   .project:not(.project--last)::after {
+    --p: 1;
+    clip-path: none;
     mask-image: none;
+    background-attachment: scroll;
+  }
+  :root {
     animation: none;
   }
   .intro h1 .name__band {

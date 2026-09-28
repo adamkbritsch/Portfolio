@@ -865,7 +865,7 @@ h1 {
     --b: 1.0087;
 }
 
-// Anyone who asked for less motion gets the finished path
+// Anyone who asked for less motion gets the finished path, drawn in full and not windowed
 @media (prefers-reduced-motion: reduce) {
     .intro h1 .name__band,
     .intro h1::after,
@@ -879,7 +879,14 @@ h1 {
     .rail__turn,
     .section > .wrap::after,
     .project:not(.project--last)::after {
+        --p: 1;
+
+        clip-path: none;
         mask-image: none;
+        background-attachment: scroll;
+    }
+
+    :root {
         animation: none;
     }
 
