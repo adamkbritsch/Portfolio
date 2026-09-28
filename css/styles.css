@@ -510,11 +510,11 @@ a:focus-visible {
 /*
  * My name, with the bands running through it.
  *
- * Three layers that cannot drift apart because they share one box: the band behind everything,
- * a cream copy of the name drawn with a fat cream stroke so the band is cut away around each
- * letter and between one letter and the next, and the name itself on top, white where the band
- * runs behind it and navy above and below it. White holds up on all three: 12.2:1 on the navy,
- * 4.8:1 on the orange, 3.5:1 on the sage (the 3:1 large-text threshold).
+ * Two layers that cannot drift apart because they share one box: the band behind, and the name
+ * on top, filled white where the band runs behind it and navy above and below it. White holds
+ * up on all three bands: 12.2:1 on the navy, 4.8:1 on the orange, 3.5:1 on the sage (the 3:1
+ * large-text threshold). No stroke around the letters: a cream outline around white letters
+ * eats the edge that makes them readable.
  *
  * Stops are in em, so everything scales with the name. The band's stops are measured from the
  * top of the h1; the fill's from the top of the text, which sits 0.22em lower.
@@ -532,14 +532,6 @@ a:focus-visible {
   height: 0.63em;
   border-radius: 0.315em 0 0 0.315em;
   background-image: linear-gradient(to bottom, #113854 0 33.333%, #b8550f 33.333% 66.667%, #858f4f 66.667% 100%);
-}
-
-.name__halo {
-  position: absolute;
-  top: 0.22em;
-  left: 0.42em;
-  color: #f4f1ea;
-  -webkit-text-stroke: 0.1em #f4f1ea;
 }
 
 .name__text {
