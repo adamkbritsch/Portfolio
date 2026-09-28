@@ -122,8 +122,19 @@ a {
     position: sticky;
     top: 0;
     z-index: 5;
-    border-bottom: 1px solid $rule;
+    border-bottom: 0;
     background: $paper;
+
+    // A supergraphic band instead of a hairline
+    &::after {
+        content: "";
+        display: block;
+        height: 12px;
+        background-image: linear-gradient(to bottom,
+            $navy 0 4px,
+            $orange 4px 8px,
+            $sage 8px 12px);
+    }
 
     .wrap {
         display: flex;
@@ -171,6 +182,41 @@ a {
     }
 }
 
+// 70s supergraphics: navy and burnt orange bands on cream, in three places —
+// under the header, above the footer, beside a heading, and through my name.
+
+.site-footer::before {
+    content: "";
+    display: block;
+    height: 12px;
+    margin-bottom: 2rem;
+    background-image: linear-gradient(to bottom,
+        $navy 0 4px,
+        $orange 4px 8px,
+        $sage 8px 12px);
+}
+
+// A short run of bands that marks the start of a section
+%stripe-mark {
+    content: "";
+    display: block;
+    width: 76px;
+    height: 10px;
+    margin-bottom: 0.9rem;
+    background-image: linear-gradient(90deg,
+        $navy 0 25px,
+        $orange 25px 50px,
+        $sage 50px 76px);
+}
+
+.section > .wrap > h2::before {
+    @extend %stripe-mark;
+}
+
+.article > h1::before {
+    @extend %stripe-mark;
+}
+
 // Home page intro
 
 .intro {
@@ -182,7 +228,67 @@ a {
     width: 96px;
     height: 96px;
     margin-bottom: 1.25rem;
+    border: 4px solid $navy;
     border-radius: 50%;
+    box-shadow: 0 0 0 3px $orange;
+}
+
+/*
+ * My name, with the bands running through it.
+ *
+ * Three layers that cannot drift apart because they share one box: the band behind everything,
+ * a cream copy of the name drawn with a fat cream stroke so the band is cut away around each
+ * letter and between one letter and the next, and the name itself on top, filled from a
+ * gradient whose stops match the band in 60% versions of the same three colours. So a band is
+ * solid around a letter and washed out inside it.
+ *
+ * Stops are in em, so everything scales with the name. The band's stops are measured from the
+ * top of the h1; the fill's from the top of the text, which sits 0.22em lower.
+ */
+.intro h1 {
+    position: relative;
+    padding: 0.22em 0 0.22em 0.42em;
+}
+
+// The band is its own box, so its left end can round into a half circle
+.name__band {
+    position: absolute;
+    top: 0.52em;
+    right: 0;
+    left: 0;
+    height: 0.63em;
+    border-radius: 0.315em 0 0 0.315em;
+    background-image: linear-gradient(to bottom,
+        $navy 0 33.333%,
+        $orange 33.333% 66.667%,
+        $sage 66.667% 100%);
+}
+
+.name__halo {
+    position: absolute;
+    top: 0.22em;
+    left: 0.42em;
+    color: $paper;
+    -webkit-text-stroke: 0.1em $paper;
+}
+
+.name__text {
+    position: relative;
+    background-image: linear-gradient(to bottom,
+        $navy 0 0.30em,
+        $navy60 0.30em 0.51em,
+        $orange60 0.51em 0.72em,
+        $sage60 0.72em 0.93em,
+        $navy 0.93em 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .name__text {
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+    }
 }
 
 .intro__lede {
@@ -339,7 +445,7 @@ a {
 
 .site-footer {
     padding: 2rem 0 2.5rem;
-    border-top: 1px solid $rule;
+    border-top: 0;
     color: $inkSoft;
     font-family: $uiFont;
     font-size: 0.9375rem;

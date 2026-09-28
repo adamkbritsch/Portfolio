@@ -1,10 +1,23 @@
-// Colors: warm off-white paper, dark ink, and one green for links
-$paper: #f4f1ea;
+// Colors: 70s supergraphics — navy, burnt orange and cream
+$paper: #f4f1ea;     // cream
 $ink: #1d1c1a;
 $inkSoft: #5b5852;   // secondary text, 6.3:1 on $paper
 $rule: #d9d4c9;      // hairlines between things
-$accent: #1f5c46;    // links and focus rings, 6.9:1 on $paper
-$accentDark: #143d2f;
+$navy: #1b3a5c;      // 10.3:1 on $paper
+$orange: #c8401a;    // stripes only: too light for body text at any size
+$sage: #b7bf87;      // the greenish cream, the lightest of the three
+$orangeInk: #8f3f12; // the orange dark enough to read as text, 6.5:1
+
+// The same three colours at 60% over cream, for the parts of a letter a band crosses
+$navy60: #718395;
+$orange60: #da876d;
+$sage60: #cfd3af;
+$accent: $navy;      // links and focus rings
+$accentDark: $orangeInk;
+
+// Stripe geometry, shared by every supergraphic on the site
+$stripe: 18px;       // band thickness
+$stripeGap: 10px;    // cream between bands
 
 // Type: serif titles, sans-serif body text
 $serif: "Source Serif 4", Georgia, "Times New Roman", serif;
