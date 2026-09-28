@@ -317,11 +317,28 @@ template {
  * Recompute these if $paper ever changes.
  */
 /*
+ * A straight run loses a little colour towards its middle and keeps it at the ends, so the
+ * bends read as the bright part of the ribbon. It is a grey veil laid over the stripes and
+ * blended in `saturation` mode: that blend takes the veil's saturation (none) together with
+ * the stripes' own hue and LUMINOSITY, so the colour drains without the run getting lighter
+ * or darker, and white on it keeps exactly the contrast it had. The veil's alpha says how
+ * far it goes; it is flat and clear for the first and last seventh of a run, so the ends
+ * meet their corners at full strength.
+ *
+ * $along is the direction the ribbon travels: `to right` for a run through a title, `to
+ * bottom` for a run down a margin.
+ */
+/*
  * The window the ribbon is seen through: a cream cover over the top tenth of the screen, where
  * the sticky header is, so the ribbon runs up under it and out of sight. It is painted as the
  * ribbon's own first background layer with background-attachment fixed, so it is pinned to the
  * viewport and clipped to the ribbon. No script, no animation, works in every browser. The
  * bottom is open: the ribbon runs all the way to the foot of the screen.
+ */
+/*
+ * How far the run down into the first piece reaches above that piece. By the same arithmetic
+ * it is exactly how far a section title's turn sits above whatever comes after the title, so
+ * the one number both hangs that run and bridges a title followed by a line of introduction.
  */
 *,
 *::before,
@@ -549,8 +566,9 @@ a:focus-visible {
   height: 1.32em;
   overflow: hidden;
   border-radius: 0.66em;
-  background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, #314e63 0 50%, #be723b 50% 80.9%, #919968 80.9% 100%);
-  background-attachment: fixed, scroll;
+  background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, #314e63 0 50%, #be723b 50% 80.9%, #919968 80.9% 100%);
+  background-attachment: fixed, scroll, scroll;
+  background-blend-mode: normal, saturation, normal;
   pointer-events: none;
   user-select: none;
 }
@@ -935,8 +953,9 @@ a:focus-visible {
   }
   .rail__band {
     display: block;
-    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, #314e63 0 50%, #be723b 50% 80.9%, #919968 80.9% 100%);
-    background-attachment: fixed, scroll;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, #314e63 0 50%, #be723b 50% 80.9%, #919968 80.9% 100%);
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
   }
   /*
    * The white copy of a title. The letters are painted white and shadowed the ordinary way -
@@ -960,8 +979,9 @@ a:focus-visible {
     background-attachment: fixed;
   }
   .rail--back .rail__band {
-    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
-    background-attachment: fixed, scroll;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
   }
   /*
    * The turns. Each is a quarter of concentric arcs: transparent inside the bend, then the three
@@ -1035,8 +1055,9 @@ a:focus-visible {
     width: 2.64rem;
     top: calc((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem - 1px);
     bottom: calc(-1 * (3.5rem * 2 + (2.3rem - 2.64rem) / 2 - 1.1rem) - 2px);
-    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to right, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
-    background-attachment: fixed, scroll;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to right, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
     pointer-events: none;
   }
   .rail--down-right > .wrap::after {
@@ -1056,12 +1077,14 @@ a:focus-visible {
    * thickness happens in one step at the turn it has just come out of, rather than tapering
    * along the run.
    */
-  .rail__drop {
+  .rail__drop,
+  .rail--pieces > .wrap > .section__intro::after {
     display: block;
     position: absolute;
     width: calc(var(--rail-w) * 1rem);
-    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to right, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
-    background-attachment: fixed, scroll;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to right, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
     pointer-events: none;
   }
   .rail__drop--name {
@@ -1102,12 +1125,14 @@ a:focus-visible {
   }
   .rail__run {
     display: block;
-    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, #314e63 0 50%, #be723b 50% 80.9%, #919968 80.9% 100%);
-    background-attachment: fixed, scroll;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, #314e63 0 50%, #be723b 50% 80.9%, #919968 80.9% 100%);
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
   }
   .project--west .rail__run {
-    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
-    background-attachment: fixed, scroll;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
   }
   /*
    * The title starts exactly where the piece's words start, so it reads as the head of that
@@ -1187,8 +1212,9 @@ a:focus-visible {
     top: calc((1.4375rem - 1.65rem) / 2 + 1.65rem + 1.1rem - 1px);
     bottom: calc(-4rem + (1.65rem - 1.4375rem) / 2 + 1.1rem - 1px);
     width: 1.65rem;
-    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to right, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
-    background-attachment: fixed, scroll;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to right, #919968 0 calc(100% - 80.9%), #be723b calc(100% - 80.9%) calc(100% - 50%), #314e63 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
     pointer-events: none;
   }
   .project--east:not(.project--last)::after {
@@ -1199,8 +1225,35 @@ a:focus-visible {
   }
   .rail__drop--in {
     --rail-w: 1.65;
-    top: calc(-1 * (2.3rem + 5.5rem - ((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem)) - 1px);
+    top: calc(-1 * calc(2.3rem + 5.5rem - ((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem)) - 1px);
     bottom: calc(100% + (1.65rem - 1.4375rem) / 2 + 1.1rem - 1px);
+  }
+  /*
+   * A pieces section whose title is followed by a line of introduction. The ribbon has to
+   * cross that paragraph to reach the first piece, and how tall the paragraph is depends on
+   * how its text wraps, so no fixed distance can span it. The run is hung on the paragraph
+   * instead - down from the title's turn above it, to meet the run coming up out of the first
+   * piece - so it stretches with however many lines the paragraph takes.
+   *
+   * The paragraph's box is opened out to the whole column to do it, its measure held by
+   * padding rather than by max-width, so the run can sit in the lane the way a piece's does.
+   */
+  .rail--pieces > .wrap > .section__intro {
+    position: relative;
+    max-width: none;
+    padding-right: calc(100% - 42rem);
+  }
+  .rail--pieces > .wrap > .section__intro::after {
+    --rail-w: 1.65;
+    content: "";
+    top: calc(-1 * calc(2.3rem + 5.5rem - ((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem)) - 1px);
+    bottom: calc(calc(2.3rem + 5.5rem - ((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem)) - 2rem);
+  }
+  .rail--down-right > .wrap > .section__intro::after {
+    right: -6.5rem;
+  }
+  .rail--down-left > .wrap > .section__intro::after {
+    left: -6.5rem;
   }
   .project--east .rail__drop--in {
     left: -6.5rem;

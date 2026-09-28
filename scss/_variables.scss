@@ -44,6 +44,29 @@ $orangeLine: #be723b;   // 3.7:1
 $sageLine: #919968;     // 3.0:1, just over the 3:1 large-text line
 
 /*
+ * A straight run loses a little colour towards its middle and keeps it at the ends, so the
+ * bends read as the bright part of the ribbon. It is a grey veil laid over the stripes and
+ * blended in `saturation` mode: that blend takes the veil's saturation (none) together with
+ * the stripes' own hue and LUMINOSITY, so the colour drains without the run getting lighter
+ * or darker, and white on it keeps exactly the contrast it had. The veil's alpha says how
+ * far it goes; it is flat and clear for the first and last seventh of a run, so the ends
+ * meet their corners at full strength.
+ *
+ * $along is the direction the ribbon travels: `to right` for a run through a title, `to
+ * bottom` for a run down a margin.
+ */
+$railSoft: 0.35;     // how far the middle of a run drains: 0 leaves it, 1 takes it to grey
+
+@function rail-soften($along) {
+    @return linear-gradient(#{$along},
+        rgba(128, 128, 128, 0) 0,
+        rgba(128, 128, 128, 0) 14%,
+        rgba(128, 128, 128, $railSoft) 50%,
+        rgba(128, 128, 128, 0) 86%,
+        rgba(128, 128, 128, 0) 100%);
+}
+
+/*
  * The window the ribbon is seen through: a cream cover over the top tenth of the screen, where
  * the sticky header is, so the ribbon runs up under it and out of sight. It is painted as the
  * ribbon's own first background layer with background-attachment fixed, so it is pinned to the
@@ -66,5 +89,15 @@ $railHead: 2.3rem;   // a section h2's line box: 2rem at line-height 1.15
 $railSub: 1.4375rem; // a piece h3's line box: 1.25rem at line-height 1.15
 $railPad: 3.5rem;    // a section's top padding
 $projectGap: 2.5rem; // between a piece's picture and its words; the rail's titles align to it
+$railTitleGap: 5.5rem; // between a pieces section's title and what follows it
+$introGap: 2rem;       // under a section's line of introduction
+
+/*
+ * How far the run down into the first piece reaches above that piece. By the same arithmetic
+ * it is exactly how far a section title's turn sits above whatever comes after the title, so
+ * the one number both hangs that run and bridges a title followed by a line of introduction.
+ */
+$railBridge: calc(#{$railHead} + #{$railTitleGap} - ((#{$railHead} - #{$railTitle}) / 2 + #{$railTitle} + #{$railTurn}));
+
 $textWidth: 42rem;
 $figureWidth: 60rem;

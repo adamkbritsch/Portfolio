@@ -95,11 +95,12 @@ h1 {
 
 .rail__band {
     display: block;
-    background-image: $railCover, linear-gradient(to bottom,
+    background-image: $railCover, rail-soften(to right), linear-gradient(to bottom,
         $navyLine 0 #{$stripeOne},
         $orangeLine #{$stripeOne} #{$stripeTwo},
         $sageLine #{$stripeTwo} 100%);
-    background-attachment: fixed, scroll;
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
 }
 
 /*
@@ -127,11 +128,12 @@ h1 {
 
 // Coming back the other way, the ribbon shows its other edge
 .rail--back .rail__band {
-    background-image: $railCover, linear-gradient(to bottom,
+    background-image: $railCover, rail-soften(to right), linear-gradient(to bottom,
         $sageLine 0 calc(100% - #{$stripeTwo}),
         $orangeLine calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
         $navyLine calc(100% - #{$stripeOne}) 100%);
-    background-attachment: fixed, scroll;
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
 }
 
 /*
@@ -216,11 +218,12 @@ h1 {
     width: $railTitle;
     top: calc((#{$railHead} - #{$railTitle}) / 2 + #{$railTitle} + #{$railTurn} - 1px);
     bottom: calc(-1 * (#{$railPad} * 2 + (#{$railHead} - #{$railTitle}) / 2 - #{$railTurn}) - 2px);
-    background-image: $railCover, linear-gradient(to right,
+    background-image: $railCover, rail-soften(to bottom), linear-gradient(to right,
         $sageLine 0 calc(100% - #{$stripeTwo}),
         $orangeLine calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
         $navyLine calc(100% - #{$stripeOne}) 100%);
-    background-attachment: fixed, scroll;
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
     pointer-events: none;
 }
 
@@ -245,15 +248,17 @@ h1 {
  * thickness happens in one step at the turn it has just come out of, rather than tapering
  * along the run.
  */
-.rail__drop {
+.rail__drop,
+.rail--pieces > .wrap > .section__intro::after {
     display: block;
     position: absolute;
     width: calc(var(--rail-w) * 1rem);
-    background-image: $railCover, linear-gradient(to right,
+    background-image: $railCover, rail-soften(to bottom), linear-gradient(to right,
         $sageLine 0 calc(100% - #{$stripeTwo}),
         $orangeLine calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
         $navyLine calc(100% - #{$stripeOne}) 100%);
-    background-attachment: fixed, scroll;
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
     pointer-events: none;
 }
 
@@ -274,7 +279,7 @@ h1 {
  * of the picture, which is pushed down to meet it — enough of a frame to get where it is going.
  */
 .rail--pieces > .wrap > h2 {
-    margin-bottom: 5.5rem;
+    margin-bottom: $railTitleGap;
 }
 
 // The straight run to the next section is replaced by the taper into the first piece
@@ -306,19 +311,21 @@ h1 {
 
 .rail__run {
     display: block;
-    background-image: $railCover, linear-gradient(to bottom,
+    background-image: $railCover, rail-soften(to right), linear-gradient(to bottom,
         $navyLine 0 #{$stripeOne},
         $orangeLine #{$stripeOne} #{$stripeTwo},
         $sageLine #{$stripeTwo} 100%);
-    background-attachment: fixed, scroll;
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
 }
 
 .project--west .rail__run {
-    background-image: $railCover, linear-gradient(to bottom,
+    background-image: $railCover, rail-soften(to right), linear-gradient(to bottom,
         $sageLine 0 calc(100% - #{$stripeTwo}),
         $orangeLine calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
         $navyLine calc(100% - #{$stripeOne}) 100%);
-    background-attachment: fixed, scroll;
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
 }
 
 /*
@@ -390,11 +397,12 @@ h1 {
     top: calc((#{$railSub} - #{$railPiece}) / 2 + #{$railPiece} + #{$railTurn} - 1px);
     bottom: calc(-4rem + (#{$railPiece} - #{$railSub}) / 2 + #{$railTurn} - 1px);
     width: $railPiece;
-    background-image: $railCover, linear-gradient(to right,
+    background-image: $railCover, rail-soften(to bottom), linear-gradient(to right,
         $sageLine 0 calc(100% - #{$stripeTwo}),
         $orangeLine calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
         $navyLine calc(100% - #{$stripeOne}) 100%);
-    background-attachment: fixed, scroll;
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
     pointer-events: none;
 }
 
@@ -411,8 +419,40 @@ h1 {
 .rail__drop--in {
     --rail-w: 1.65;
 
-    top: calc(-1 * (#{$railHead} + 5.5rem - ((#{$railHead} - #{$railTitle}) / 2 + #{$railTitle} + #{$railTurn})) - 1px);
+    top: calc(-1 * #{$railBridge} - 1px);
     bottom: calc(100% + (#{$railPiece} - #{$railSub}) / 2 + #{$railTurn} - 1px);
+}
+
+/*
+ * A pieces section whose title is followed by a line of introduction. The ribbon has to
+ * cross that paragraph to reach the first piece, and how tall the paragraph is depends on
+ * how its text wraps, so no fixed distance can span it. The run is hung on the paragraph
+ * instead - down from the title's turn above it, to meet the run coming up out of the first
+ * piece - so it stretches with however many lines the paragraph takes.
+ *
+ * The paragraph's box is opened out to the whole column to do it, its measure held by
+ * padding rather than by max-width, so the run can sit in the lane the way a piece's does.
+ */
+.rail--pieces > .wrap > .section__intro {
+    position: relative;
+    max-width: none;
+    padding-right: calc(100% - #{$textWidth});
+}
+
+.rail--pieces > .wrap > .section__intro::after {
+    --rail-w: 1.65;
+
+    content: "";
+    top: calc(-1 * #{$railBridge} - 1px);
+    bottom: calc(#{$railBridge} - #{$introGap});
+}
+
+.rail--down-right > .wrap > .section__intro::after {
+    right: -#{$railLane};
+}
+
+.rail--down-left > .wrap > .section__intro::after {
+    left: -#{$railLane};
 }
 
 .project--east .rail__drop--in {
