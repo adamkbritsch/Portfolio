@@ -436,7 +436,7 @@ a:focus-visible {
   height: 12px;
   margin: 0 auto;
   border-radius: 6px;
-  background-image: linear-gradient(to bottom, #1b3c54 0 4px, #b86428 4px 8px, #868f59 8px 12px);
+  background-image: linear-gradient(to bottom, #1b3c54 0 6px, #b86428 6px 9.7px, #868f59 9.7px 12px);
 }
 .site-header .wrap {
   display: flex;
@@ -489,7 +489,7 @@ a:focus-visible {
   height: 12px;
   margin: 0 auto 2rem;
   border-radius: 6px;
-  background-image: linear-gradient(to bottom, #1b3c54 0 4px, #b86428 4px 8px, #868f59 8px 12px);
+  background-image: linear-gradient(to bottom, #1b3c54 0 6px, #b86428 6px 9.7px, #868f59 9.7px 12px);
 }
 
 .article > h1::before, .section > .wrap > h2::before {
@@ -499,7 +499,7 @@ a:focus-visible {
   height: 10px;
   margin-bottom: 0.9rem;
   border-radius: 5px;
-  background-image: linear-gradient(90deg, #1b3c54 0 25px, #b86428 25px 50px, #868f59 50px 76px);
+  background-image: linear-gradient(90deg, #1b3c54 0 38px, #b86428 38px 61.5px, #868f59 61.5px 76px);
 }
 
 .intro {
@@ -548,7 +548,7 @@ a:focus-visible {
   height: 1.32em;
   overflow: hidden;
   border-radius: 0.66em;
-  background-image: linear-gradient(to bottom, #1b3c54 0 33.333%, #b86428 33.333% 66.667%, #868f59 66.667% 100%);
+  background-image: linear-gradient(to bottom, #1b3c54 0 50%, #b86428 50% 80.9%, #868f59 80.9% 100%);
   pointer-events: none;
   user-select: none;
 }
@@ -591,7 +591,7 @@ a:focus-visible {
 .rail__band,
 .rail__run,
 .rail__turn,
-.rail__taper {
+.rail__drop {
   display: none;
 }
 
@@ -925,26 +925,35 @@ a:focus-visible {
     right: calc(4.29rem + 1.1rem - 6.5rem);
     border-radius: 0.66em 0 0 0.66em;
   }
-  .rail__band {
+  /*
+   * A title's run. It stops short of each margin by exactly one turn, and the turns finish it.
+   * The run and the white copy of the title it carries are two boxes on the same geometry rather
+   * than one inside the other: the run is drawn in by scaling it, which a scaled box would do to
+   * its own letters too.
+   */
+  .rail__band,
+  .rail__band-text {
     position: absolute;
     top: calc((100% - 2.64rem) / 2);
     right: calc(2.64rem + 1.1rem - 6.5rem);
     left: calc(2.64rem + 1.1rem - 6.5rem);
-    display: flex;
-    align-items: center;
     height: 2.64rem;
-    overflow: hidden;
-    background-image: linear-gradient(to bottom, #1b3c54 0 33.333%, #b86428 33.333% 66.667%, #868f59 66.667% 100%);
     pointer-events: none;
     user-select: none;
   }
+  .rail__band {
+    display: block;
+    background-image: linear-gradient(to bottom, #1b3c54 0 50%, #b86428 50% 80.9%, #868f59 80.9% 100%);
+  }
   .rail__band-text {
+    display: flex;
+    align-items: center;
     padding-left: calc(6.5rem - 2.64rem - 1.1rem);
     color: #fff;
     white-space: nowrap;
   }
   .rail--back .rail__band {
-    background-image: linear-gradient(to bottom, #868f59 0 33.333%, #b86428 33.333% 66.667%, #1b3c54 66.667% 100%);
+    background-image: linear-gradient(to bottom, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
   }
   /*
    * The turns. Each is a quarter of concentric arcs: transparent inside the bend, then the three
@@ -965,7 +974,7 @@ a:focus-visible {
     height: calc(4.29rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 4.29rem / 3), #b86428 calc(1.1rem + 4.29rem / 3) calc(1.1rem + 4.29rem * 2 / 3), #1b3c54 calc(1.1rem + 4.29rem * 2 / 3) calc(1.1rem + 4.29rem), transparent calc(1.1rem + 4.29rem));
+    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 4.29rem * 0.191), #b86428 calc(1.1rem + 4.29rem * 0.191) calc(1.1rem + 4.29rem * 0.5), #1b3c54 calc(1.1rem + 4.29rem * 0.5) calc(1.1rem + 4.29rem), transparent calc(1.1rem + 4.29rem));
   }
   .section:not(.rail--back) > .wrap > h2::after {
     top: calc((100% - 2.64rem) / 2);
@@ -974,7 +983,7 @@ a:focus-visible {
     height: calc(2.64rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem / 3), #b86428 calc(1.1rem + 2.64rem / 3) calc(1.1rem + 2.64rem * 2 / 3), #1b3c54 calc(1.1rem + 2.64rem * 2 / 3) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem * 0.191), #b86428 calc(1.1rem + 2.64rem * 0.191) calc(1.1rem + 2.64rem * 0.5), #1b3c54 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
   }
   .rail--back > .wrap > h2::after {
     right: -6.5rem;
@@ -983,7 +992,7 @@ a:focus-visible {
     height: calc(2.64rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem / 3), #b86428 calc(1.1rem + 2.64rem / 3) calc(1.1rem + 2.64rem * 2 / 3), #1b3c54 calc(1.1rem + 2.64rem * 2 / 3) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-image: radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem * 0.191), #b86428 calc(1.1rem + 2.64rem * 0.191) calc(1.1rem + 2.64rem * 0.5), #1b3c54 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
   }
   .rail--back > .wrap > h2::before {
     top: calc((100% - 2.64rem) / 2);
@@ -992,7 +1001,7 @@ a:focus-visible {
     height: calc(2.64rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 100% 100%, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem / 3), #b86428 calc(1.1rem + 2.64rem / 3) calc(1.1rem + 2.64rem * 2 / 3), #868f59 calc(1.1rem + 2.64rem * 2 / 3) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-image: radial-gradient(circle at 100% 100%, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem * 0.5), #b86428 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem * 0.809), #868f59 calc(1.1rem + 2.64rem * 0.809) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
   }
   .section:not(.rail--back) > .wrap > h2::before {
     bottom: calc((100% - 2.64rem) / 2);
@@ -1001,7 +1010,7 @@ a:focus-visible {
     height: calc(2.64rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem / 3), #b86428 calc(1.1rem + 2.64rem / 3) calc(1.1rem + 2.64rem * 2 / 3), #868f59 calc(1.1rem + 2.64rem * 2 / 3) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-image: radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem * 0.5), #b86428 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem * 0.809), #868f59 calc(1.1rem + 2.64rem * 0.809) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
   }
   /*
    * The runs down the margins. Every one of them travels downward, so every one of them carries
@@ -1013,7 +1022,7 @@ a:focus-visible {
     width: 2.64rem;
     top: calc((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem - 1px);
     bottom: calc(-1 * (3.5rem * 2 + (2.3rem - 2.64rem) / 2 - 1.1rem) - 1px);
-    background-image: linear-gradient(to right, #868f59 0 33.333%, #b86428 33.333% 66.667%, #1b3c54 66.667% 100%);
+    background-image: linear-gradient(to right, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
     pointer-events: none;
   }
   .rail--down-right > .wrap::after {
@@ -1029,80 +1038,19 @@ a:focus-visible {
     border-radius: 0 0 calc(2.64rem / 2) calc(2.64rem / 2);
   }
   /*
-   * A run that changes thickness, because the title it is going to is set smaller or larger than
-   * the one it left. Three stripes, each its own trapezoid, so they narrow together and the east
-   * edge stays on the margin. --wide and --narrow are the two ends in rem, unitless so they can
-   * be divided; the stops are worked out from them as a share of the wide end.
+   * A run down a margin. The ribbon is as thick as the title it is going to, and the change of
+   * thickness happens in one step at the turn it has just come out of, rather than tapering
+   * along the run.
    */
-  .rail__taper {
-    --n: calc(var(--narrow) / var(--wide));
-    --s0: calc((1 - var(--n)) * 100%);
-    --s1: calc((1 - var(--n) + var(--n) / 3) * 100%);
-    --s2: calc((1 - var(--n) + var(--n) * 2 / 3) * 100%);
-    --w1: calc(var(--n) / 3 * 100%);
-    --w2: calc(var(--n) * 2 / 3 * 100%);
-    --w3: calc(var(--n) * 100%);
+  .rail__drop {
     display: block;
     position: absolute;
-    width: calc(var(--wide) * 1rem);
+    width: calc(var(--rail-w) * 1rem);
+    background-image: linear-gradient(to right, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
     pointer-events: none;
   }
-  .rail__taper > span, .rail__taper::before, .rail__taper::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-  }
-  .rail__taper > span {
-    background-color: #868f59;
-  }
-  .rail__taper::before {
-    background-color: #b86428;
-  }
-  .rail__taper::after {
-    background-color: #1b3c54;
-  }
-  .rail__taper--name > span,
-  .project--west .rail__taper--in > span {
-    clip-path: polygon(0 0, 33.333% 0, var(--s1) 100%, var(--s0) 100%);
-  }
-  .rail__taper--name::before,
-  .project--west .rail__taper--in::before {
-    clip-path: polygon(33.333% 0, 66.667% 0, var(--s2) 100%, var(--s1) 100%);
-  }
-  .rail__taper--name::after,
-  .project--west .rail__taper--in::after {
-    clip-path: polygon(66.667% 0, 100% 0, 100% 100%, var(--s2) 100%);
-  }
-  .project--east .rail__taper--in > span {
-    clip-path: polygon(0 0, 33.333% 0, var(--w1) 100%, 0 100%);
-  }
-  .project--east .rail__taper--in::before {
-    clip-path: polygon(33.333% 0, 66.667% 0, var(--w2) 100%, var(--w1) 100%);
-  }
-  .project--east .rail__taper--in::after {
-    clip-path: polygon(66.667% 0, 100% 0, var(--w3) 100%, var(--w2) 100%);
-  }
-  .project--west .rail__taper--out > span {
-    clip-path: polygon(0 0, var(--w1) 0, 33.333% 100%, 0 100%);
-  }
-  .project--west .rail__taper--out::before {
-    clip-path: polygon(var(--w1) 0, var(--w2) 0, 66.667% 100%, 33.333% 100%);
-  }
-  .project--west .rail__taper--out::after {
-    clip-path: polygon(var(--w2) 0, var(--w3) 0, 100% 100%, 66.667% 100%);
-  }
-  .project--east .rail__taper--out > span {
-    clip-path: polygon(var(--s0) 0, var(--s1) 0, 33.333% 100%, 0 100%);
-  }
-  .project--east .rail__taper--out::before {
-    clip-path: polygon(var(--s1) 0, var(--s2) 0, 66.667% 100%, 33.333% 100%);
-  }
-  .project--east .rail__taper--out::after {
-    clip-path: polygon(var(--s2) 0, 100% 0, 100% 100%, 66.667% 100%);
-  }
-  .rail__taper--name {
-    --wide: 4.29;
-    --narrow: 2.64;
+  .rail__drop--name {
+    --rail-w: 2.64;
     right: 0;
     top: calc(6.4425rem + 4.29rem + 1.1rem - 1px);
     bottom: calc(-1 * (3.5rem + (2.3rem - 2.64rem) / 2 - 1.1rem) - 1px);
@@ -1127,24 +1075,33 @@ a:focus-visible {
   .project .project__image {
     margin-top: calc((1.4375rem - 1.65rem) / 2 + 1.65rem);
   }
-  .rail__run {
+  .rail__run,
+  .rail__run-text {
     position: absolute;
     top: calc((1.4375rem - 1.65rem) / 2);
     right: calc(1.65rem + 1.1rem - 6.5rem);
     left: calc(1.65rem + 1.1rem - 6.5rem);
-    display: flex;
-    align-items: center;
     height: 1.65rem;
-    background-image: linear-gradient(to bottom, #1b3c54 0 33.333%, #b86428 33.333% 66.667%, #868f59 66.667% 100%);
     pointer-events: none;
     user-select: none;
   }
+  .rail__run {
+    display: block;
+    background-image: linear-gradient(to bottom, #1b3c54 0 50%, #b86428 50% 80.9%, #868f59 80.9% 100%);
+  }
   .project--west .rail__run {
-    background-image: linear-gradient(to bottom, #868f59 0 33.333%, #b86428 33.333% 66.667%, #1b3c54 66.667% 100%);
+    background-image: linear-gradient(to bottom, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
   }
   .rail__run-text {
+    display: flex;
+    align-items: center;
     padding-left: calc(60% + 0.25rem);
     color: #fff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    line-height: 1.15;
+    letter-spacing: normal;
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;
@@ -1172,7 +1129,7 @@ a:focus-visible {
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 1.65rem / 3), #b86428 calc(1.1rem + 1.65rem / 3) calc(1.1rem + 1.65rem * 2 / 3), #868f59 calc(1.1rem + 1.65rem * 2 / 3) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-image: radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 1.65rem * 0.5), #b86428 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem * 0.809), #868f59 calc(1.1rem + 1.65rem * 0.809) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
   }
   .project--east .rail__turn--out {
     right: -6.5rem;
@@ -1180,7 +1137,7 @@ a:focus-visible {
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem / 3), #b86428 calc(1.1rem + 1.65rem / 3) calc(1.1rem + 1.65rem * 2 / 3), #1b3c54 calc(1.1rem + 1.65rem * 2 / 3) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem * 0.191), #b86428 calc(1.1rem + 1.65rem * 0.191) calc(1.1rem + 1.65rem * 0.5), #1b3c54 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
   }
   .project--west .rail__turn--in {
     right: -6.5rem;
@@ -1188,7 +1145,7 @@ a:focus-visible {
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem / 3), #b86428 calc(1.1rem + 1.65rem / 3) calc(1.1rem + 1.65rem * 2 / 3), #1b3c54 calc(1.1rem + 1.65rem * 2 / 3) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-image: radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem * 0.191), #b86428 calc(1.1rem + 1.65rem * 0.191) calc(1.1rem + 1.65rem * 0.5), #1b3c54 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
   }
   .project--west .rail__turn--out {
     left: -6.5rem;
@@ -1196,7 +1153,7 @@ a:focus-visible {
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 100% 100%, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 1.65rem / 3), #b86428 calc(1.1rem + 1.65rem / 3) calc(1.1rem + 1.65rem * 2 / 3), #868f59 calc(1.1rem + 1.65rem * 2 / 3) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-image: radial-gradient(circle at 100% 100%, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 1.65rem * 0.5), #b86428 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem * 0.809), #868f59 calc(1.1rem + 1.65rem * 0.809) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
   }
   .project:not(.project--last)::after {
     content: "";
@@ -1204,7 +1161,7 @@ a:focus-visible {
     top: calc((1.4375rem - 1.65rem) / 2 + 1.65rem + 1.1rem - 1px);
     bottom: calc(-4rem + (1.4375rem - 1.65rem) / 2 + 1.1rem - 1px);
     width: 1.65rem;
-    background-image: linear-gradient(to right, #868f59 0 33.333%, #b86428 33.333% 66.667%, #1b3c54 66.667% 100%);
+    background-image: linear-gradient(to right, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
     pointer-events: none;
   }
   .project--east:not(.project--last)::after {
@@ -1213,44 +1170,84 @@ a:focus-visible {
   .project--west:not(.project--last)::after {
     left: -6.5rem;
   }
-  .rail__taper--in {
-    --wide: 2.64;
-    --narrow: 1.65;
+  .rail__drop--in {
+    --rail-w: 1.65;
     top: calc(-1 * (2.3rem + 5.5rem - ((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem)) - 1px);
     bottom: calc(100% + (1.65rem - 1.4375rem) / 2 + 1.1rem - 1px);
   }
-  .project--east .rail__taper--in {
+  .project--east .rail__drop--in {
     left: -6.5rem;
   }
-  .project--west .rail__taper--in {
+  .project--west .rail__drop--in {
     right: -6.5rem;
   }
-  .rail__taper--out {
-    --wide: 2.64;
-    --narrow: 1.65;
+  .rail__drop--out {
+    --rail-w: 2.64;
     top: calc((1.4375rem - 1.65rem) / 2 + 1.65rem + 1.1rem - 1px);
     bottom: calc(-1 * (3.5rem * 2 + (2.3rem - 2.64rem) / 2 - 1.1rem) - 1px);
   }
-  .project--east .rail__taper--out {
+  .project--east .rail__drop--out {
     right: -6.5rem;
   }
-  .project--west .rail__taper--out {
+  .project--west .rail__drop--out {
     left: -6.5rem;
   }
   /*
    * DRAWING THE RAIL
    *
-   * The path above is the whole path, always there. What moves is a mask on each piece of it,
-   * opening in the direction the ribbon travels, so the line appears to draw itself ahead of you
-   * as you scroll. Until it arrives, a title is the colour it always was.
+   * The path above is the whole path, always there. What moves is each piece of it being drawn
+   * in, in the direction the ribbon travels, and nothing starts until the piece before it has
+   * finished: a turn, then the run across the title, then the turn out of it, then the run down
+   * the margin, then the next turn.
    *
-   * Everything is keyed to one line across the viewport, 40% down: a piece of the path starts
-   * opening when it crosses that line. The runs down the margins open at exactly the rate you
-   * scroll, so their tip sits on that line; the runs across a title open faster, because a title
-   * is a thousand pixels wide and you would be scrolling all day.
+   * Every one of those is measured in pixels of scroll from the moment the piece crosses a line
+   * 40% down the viewport, and each piece's start is the one before it's finish. The runs across
+   * a title take 40px of scroll, because a title run is a thousand pixels wide and tracking the
+   * scroll would take all day; the runs down the margins take exactly as long as they are, so
+   * their end sits on the line.
    *
-   * My name and its turn are the exception. They are at the top of the page, above the line
-   * before you have scrolled at all, so they run off the page's own scroll instead.
+   * The long pieces are drawn by scaling, which the compositor can do on its own thread: a run's
+   * stripes are even along the way it travels, so scaling it that way does not show. The small
+   * ones are clipped, which is repainted, but they are small. Nothing here animates width or
+   * position, which would be laid out again every frame.
+   *
+   * My name and its turn are the exception. They sit above the line before you have scrolled at
+   * all, so they run off the page's own scroll.
+   */
+  @keyframes rail-sweep-right {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes rail-fall {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+  @property --rail-sweep {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+  @keyframes rail-turn-sweep {
+    from {
+      --rail-sweep: 0deg;
+    }
+    to {
+      --rail-sweep: 90deg;
+    }
+  }
+  /*
+   * A turn opens by rotating a quarter of a conic mask about the centre its own arcs are struck
+   * from: clockwise from where the ribbon comes in, anticlockwise when the bend goes the other
+   * way. $at is that centre, $from the direction the ribbon arrives from (clockwise) or leaves
+   * by (anticlockwise).
    */
   @keyframes rail-draw-right {
     from {
@@ -1279,23 +1276,22 @@ a:focus-visible {
   @supports (animation-timeline: view()) {
     .intro h1 .name__band,
     .intro h1::after,
-    .rail__taper,
+    .rail__drop,
     .rail__band,
+    .rail__band-text,
     .rail__run,
+    .rail__run-text,
     .section > .wrap > h2::before,
     .section > .wrap > h2::after,
     .rail__turn,
     .section > .wrap::after,
     .project:not(.project--last)::after {
-      animation-duration: auto;
       animation-timing-function: linear;
       animation-fill-mode: both;
-      animation-timeline: view(block auto 60%);
+      animation-timeline: scroll(root block);
     }
     .intro h1 .name__band {
       animation-name: band-extend-square;
-      animation-timeline: scroll(root block);
-      animation-range: 0 55px;
     }
     @keyframes band-extend-square {
       from {
@@ -1311,70 +1307,232 @@ a:focus-visible {
       }
     }
     .intro h1::after {
-      animation-name: rail-draw-right;
-      animation-timeline: scroll(root block);
-      animation-range: 55px 80px;
+      mask-image: conic-gradient(from 0deg at 0 100%, #000 0 var(--rail-sweep), transparent var(--rail-sweep) 360deg);
+      animation-name: rail-turn-sweep;
     }
-    .rail__taper--name {
-      animation-name: rail-draw-down;
-      animation-timeline: scroll(root block);
-      animation-range: 80px 30vh;
+    .rail--back > .wrap > h2::after,
+    .project--west .rail__turn--in {
+      mask-image: conic-gradient(from 90deg at 0 0, #000 0 var(--rail-sweep), transparent var(--rail-sweep) 360deg);
+      animation-name: rail-turn-sweep;
     }
-    /*
-     * A run down a margin opens at the rate you scroll, so its end sits just under the line.
-     * The 90px is the head start the run across the title above it needs to finish first;
-     * without it the margin starts drawing while the title is still filling in.
-     */
-    .rail__taper--out,
-    .section > .wrap::after,
-    .project:not(.project--last)::after {
-      animation-name: rail-draw-down;
-      animation-range: entry 40px entry 100%;
-    }
-    .rail__taper--in {
-      animation-name: rail-draw-down;
-      animation-range: cover 14% cover 22%;
+    .section:not(.rail--back) > .wrap > h2::before,
+    .project--east .rail__turn--in {
+      mask-image: conic-gradient(from 180deg at 100% 0, transparent 0 calc(90deg - var(--rail-sweep)), #000 calc(90deg - var(--rail-sweep)) 360deg);
+      animation-name: rail-turn-sweep;
     }
     .section:not(.rail--back) .rail__band,
     .project--east .rail__run {
-      animation-name: rail-draw-right;
-      animation-range: cover 0% cover 14%;
+      transform-origin: left center;
+      animation-name: rail-sweep-right;
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
     .rail--back .rail__band,
     .project--west .rail__run {
-      animation-name: rail-draw-left;
-      animation-range: cover 0% cover 14%;
+      transform-origin: right center;
+      animation-name: rail-sweep-right;
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
-    .section:not(.rail--back) > .wrap > h2::before,
-    .rail--back > .wrap > h2::after,
-    .rail__turn--in {
-      animation-name: rail-draw-down;
-      animation-range: cover 0% cover 5%;
+    .section:not(.rail--back) .rail__band-text,
+    .project--east .rail__run-text {
+      animation-name: rail-draw-right;
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .rail--back .rail__band-text,
+    .project--west .rail__run-text {
+      animation-name: rail-draw-left;
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
     .section:not(.rail--back) > .wrap > h2::after,
     .project--east .rail__turn--out {
-      animation-name: rail-draw-right;
-      animation-range: cover 12% cover 18%;
+      mask-image: conic-gradient(from 0deg at 0 100%, #000 0 var(--rail-sweep), transparent var(--rail-sweep) 360deg);
+      animation-name: rail-turn-sweep;
     }
     .rail--back > .wrap > h2::before,
     .project--west .rail__turn--out {
-      animation-name: rail-draw-left;
-      animation-range: cover 12% cover 18%;
+      mask-image: conic-gradient(from 270deg at 100% 100%, transparent 0 calc(90deg - var(--rail-sweep)), #000 calc(90deg - var(--rail-sweep)) 360deg);
+      animation-name: rail-turn-sweep;
+    }
+    .section > .wrap::after {
+      transform-origin: center top;
+      animation-name: rail-fall;
+    }
+    .project:not(.project--last)::after,
+    .rail__drop {
+      transform-origin: center top;
+      animation-name: rail-fall;
+    }
+    .rail--end > .wrap::after {
+      transform: none;
+      animation-name: rail-draw-down;
+    }
+    /*
+     * WHEN EACH PIECE IS DRAWN
+     *
+     * One timeline, the page's own scroll, cut into consecutive pieces: nothing starts before
+     * the piece before it has finished. Each piece's share is its own length, so the ribbon is
+     * drawn at one steady rate the whole way round - a run across a title takes as long as a
+     * run down a margin of the same length. At 6px of ribbon per px of scroll the whole path,
+     * which is about 17,000px long, is drawn over the first 2,800px of the page.
+     *
+     * Measured at 1440px wide. Narrower and the runs are shorter, so it finishes sooner.
+     */
+    .intro h1 .name__band {
+      animation-range: 0px 124px;
+    }
+    .intro h1::after {
+      animation-range: 124px 138px;
+    }
+    .rail__drop--name {
+      animation-range: 138px 188px;
+    }
+    #work > .wrap > h2::after {
+      animation-range: 188px 198px;
+    }
+    #work .rail__band,
+    #work .rail__band-text {
+      animation-range: 198px 370px;
+    }
+    #work > .wrap > h2::before {
+      animation-range: 370px 380px;
+    }
+    #work .rail__drop--in {
+      animation-range: 380px 389px;
+    }
+    #work .project--first .rail__turn--in {
+      animation-range: 389px 397px;
+    }
+    #work .project--first .rail__run,
+    #work .project--first .rail__run-text {
+      animation-range: 397px 574px;
+    }
+    #work .project--first .rail__turn--out {
+      animation-range: 574px 582px;
+    }
+    #work .project--first::after {
+      animation-range: 582px 642px;
+    }
+    #work .project--last .rail__turn--in {
+      animation-range: 642px 650px;
+    }
+    #work .project--last .rail__run,
+    #work .project--last .rail__run-text {
+      animation-range: 650px 827px;
+    }
+    #work .project--last .rail__turn--out {
+      animation-range: 827px 835px;
+    }
+    #work .rail__drop--out {
+      animation-range: 835px 904px;
+    }
+    #design > .wrap > h2::before {
+      animation-range: 904px 914px;
+    }
+    #design .rail__band,
+    #design .rail__band-text {
+      animation-range: 914px 1086px;
+    }
+    #design > .wrap > h2::after {
+      animation-range: 1086px 1096px;
+    }
+    #design .rail__drop--in {
+      animation-range: 1096px 1104px;
+    }
+    #design .project--first .rail__turn--in {
+      animation-range: 1104px 1112px;
+    }
+    #design .project--first .rail__run,
+    #design .project--first .rail__run-text {
+      animation-range: 1112px 1290px;
+    }
+    #design .project--first .rail__turn--out {
+      animation-range: 1290px 1298px;
+    }
+    #design .project--first::after {
+      animation-range: 1298px 1358px;
+    }
+    #design .project--last .rail__turn--in {
+      animation-range: 1358px 1366px;
+    }
+    #design .project--last .rail__run,
+    #design .project--last .rail__run-text {
+      animation-range: 1366px 1543px;
+    }
+    #design .project--last .rail__turn--out {
+      animation-range: 1543px 1551px;
+    }
+    #design .rail__drop--out {
+      animation-range: 1551px 1641px;
+    }
+    #how-i-work > .wrap > h2::after {
+      animation-range: 1641px 1652px;
+    }
+    #how-i-work .rail__band,
+    #how-i-work .rail__band-text {
+      animation-range: 1652px 1824px;
+    }
+    #how-i-work > .wrap > h2::before {
+      animation-range: 1824px 1834px;
+    }
+    #how-i-work > .wrap::after {
+      animation-range: 1834px 1897px;
+    }
+    #coursework > .wrap > h2::before {
+      animation-range: 1897px 1907px;
+    }
+    #coursework .rail__band,
+    #coursework .rail__band-text {
+      animation-range: 1907px 2079px;
+    }
+    #coursework > .wrap > h2::after {
+      animation-range: 2079px 2089px;
+    }
+    #coursework > .wrap::after {
+      animation-range: 2089px 2276px;
+    }
+    #resume > .wrap > h2::after {
+      animation-range: 2276px 2286px;
+    }
+    #resume .rail__band,
+    #resume .rail__band-text {
+      animation-range: 2286px 2458px;
+    }
+    #resume > .wrap > h2::before {
+      animation-range: 2458px 2468px;
+    }
+    #resume > .wrap::after {
+      animation-range: 2468px 2607px;
+    }
+    #contact > .wrap > h2::before {
+      animation-range: 2607px 2617px;
+    }
+    #contact .rail__band,
+    #contact .rail__band-text {
+      animation-range: 2617px 2789px;
+    }
+    #contact > .wrap > h2::after {
+      animation-range: 2789px 2800px;
+    }
+    #contact > .wrap::after {
+      animation-range: 2800px 2818px;
     }
   }
 }
 @media only screen and (min-width: 60rem) and (prefers-reduced-motion: reduce) {
   .intro h1 .name__band,
   .intro h1::after,
-  .rail__taper,
+  .rail__drop,
   .rail__band,
+  .rail__band-text,
   .rail__run,
+  .rail__run-text,
   .section > .wrap > h2::before,
   .section > .wrap > h2::after,
   .rail__turn,
   .section > .wrap::after,
   .project:not(.project--last)::after {
+    transform: none;
     clip-path: none;
+    mask-image: none;
     animation: none;
   }
   .intro h1 .name__band {

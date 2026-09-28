@@ -135,9 +135,9 @@ a {
         margin: 0 auto;
         border-radius: 6px;
         background-image: linear-gradient(to bottom,
-            $navy 0 4px,
-            $orange 4px 8px,
-            $sage 8px 12px);
+            $navy 0 6px,
+            $orange 6px 9.7px,
+            $sage 9.7px 12px);
     }
 
     .wrap {
@@ -198,9 +198,9 @@ a {
     margin: 0 auto 2rem;
     border-radius: 6px;
     background-image: linear-gradient(to bottom,
-        $navy 0 4px,
-        $orange 4px 8px,
-        $sage 8px 12px);
+        $navy 0 6px,
+        $orange 6px 9.7px,
+        $sage 9.7px 12px);
 }
 
 // A short run of bands that marks the start of a section
@@ -212,9 +212,9 @@ a {
     margin-bottom: 0.9rem;
     border-radius: 5px;
     background-image: linear-gradient(90deg,
-        $navy 0 25px,
-        $orange 25px 50px,
-        $sage 50px 76px);
+        $navy 0 38px,
+        $orange 38px 61.5px,
+        $sage 61.5px 76px);
 }
 
 .section > .wrap > h2::before {
@@ -274,9 +274,9 @@ a {
     overflow: hidden;
     border-radius: 0.66em;
     background-image: linear-gradient(to bottom,
-        $navy 0 33.333%,
-        $orange 33.333% 66.667%,
-        $sage 66.667% 100%);
+        $navy 0 #{$stripeOne},
+        $orange #{$stripeOne} #{$stripeTwo},
+        $sage #{$stripeTwo} 100%);
     pointer-events: none;
     user-select: none;
 }
@@ -326,7 +326,7 @@ a {
 .rail__band,
 .rail__run,
 .rail__turn,
-.rail__taper {
+.rail__drop {
     display: none;
 }
 

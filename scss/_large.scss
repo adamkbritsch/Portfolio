@@ -76,26 +76,34 @@ h1 {
     border-radius: 0.66em 0 0 0.66em;
 }
 
-// A title's run. It stops short of each margin by exactly one turn, and the turns finish it.
-.rail__band {
+/*
+ * A title's run. It stops short of each margin by exactly one turn, and the turns finish it.
+ * The run and the white copy of the title it carries are two boxes on the same geometry rather
+ * than one inside the other: the run is drawn in by scaling it, which a scaled box would do to
+ * its own letters too.
+ */
+.rail__band,
+.rail__band-text {
     position: absolute;
     top: calc((100% - #{$railTitle}) / 2);
     right: calc(#{$railTitle} + #{$railTurn} - #{$railLane});
     left: calc(#{$railTitle} + #{$railTurn} - #{$railLane});
-    display: flex;
-    align-items: center;
     height: $railTitle;
-    overflow: hidden;
-    background-image: linear-gradient(to bottom,
-        $navy 0 33.333%,
-        $orange 33.333% 66.667%,
-        $sage 66.667% 100%);
     pointer-events: none;
     user-select: none;
 }
 
-// The run carries its own copy of the title in white, clipped to itself
+.rail__band {
+    display: block;
+    background-image: linear-gradient(to bottom,
+        $navy 0 #{$stripeOne},
+        $orange #{$stripeOne} #{$stripeTwo},
+        $sage #{$stripeTwo} 100%);
+}
+
 .rail__band-text {
+    display: flex;
+    align-items: center;
     padding-left: calc(#{$railLane} - #{$railTitle} - #{$railTurn});
     color: #fff;
     white-space: nowrap;
@@ -104,9 +112,9 @@ h1 {
 // Coming back the other way, the ribbon shows its other edge
 .rail--back .rail__band {
     background-image: linear-gradient(to bottom,
-        $sage 0 33.333%,
-        $orange 33.333% 66.667%,
-        $navy 66.667% 100%);
+        $sage 0 calc(100% - #{$stripeTwo}),
+        $orange calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
+        $navy calc(100% - #{$stripeOne}) 100%);
 }
 
 /*
@@ -115,15 +123,25 @@ h1 {
  * the bend, which is the corner of the box the arcs are struck from.
  */
 @mixin rail-turn($at, $inner, $outer, $t) {
+    // The stripes keep their widths round the bend: the navy edge is half the ribbon, the
+    // orange 30.9% of it and the sage 19.1%, whichever way round the bend puts them.
+    $first: 0.191;
+    $second: 0.5;
+
+    @if $inner == $navy {
+        $first: 0.5;
+        $second: 0.809;
+    }
+
     width: calc(#{$t} + #{$railTurn});
     height: calc(#{$t} + #{$railTurn});
     margin: 0;
     border-radius: 0;
     background-image: radial-gradient(circle at #{$at},
         transparent 0 $railTurn,
-        $inner $railTurn calc(#{$railTurn} + #{$t} / 3),
-        $orange calc(#{$railTurn} + #{$t} / 3) calc(#{$railTurn} + #{$t} * 2 / 3),
-        $outer calc(#{$railTurn} + #{$t} * 2 / 3) calc(#{$railTurn} + #{$t}),
+        $inner $railTurn calc(#{$railTurn} + #{$t} * #{$first}),
+        $orange calc(#{$railTurn} + #{$t} * #{$first}) calc(#{$railTurn} + #{$t} * #{$second}),
+        $outer calc(#{$railTurn} + #{$t} * #{$second}) calc(#{$railTurn} + #{$t}),
         transparent calc(#{$railTurn} + #{$t}));
 }
 
@@ -181,9 +199,9 @@ h1 {
     top: calc((#{$railHead} - #{$railTitle}) / 2 + #{$railTitle} + #{$railTurn} - 1px);
     bottom: calc(-1 * (#{$railPad} * 2 + (#{$railHead} - #{$railTitle}) / 2 - #{$railTurn}) - 1px);
     background-image: linear-gradient(to right,
-        $sage 0 33.333%,
-        $orange 33.333% 66.667%,
-        $navy 66.667% 100%);
+        $sage 0 calc(100% - #{$stripeTwo}),
+        $orange calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
+        $navy calc(100% - #{$stripeOne}) 100%);
     pointer-events: none;
 }
 
@@ -204,113 +222,24 @@ h1 {
 }
 
 /*
- * A run that changes thickness, because the title it is going to is set smaller or larger than
- * the one it left. Three stripes, each its own trapezoid, so they narrow together and the east
- * edge stays on the margin. --wide and --narrow are the two ends in rem, unitless so they can
- * be divided; the stops are worked out from them as a share of the wide end.
+ * A run down a margin. The ribbon is as thick as the title it is going to, and the change of
+ * thickness happens in one step at the turn it has just come out of, rather than tapering
+ * along the run.
  */
-.rail__taper {
-    // Stops for a taper whose east edge stays put, and for one whose west edge does
-    --n: calc(var(--narrow) / var(--wide));
-    --s0: calc((1 - var(--n)) * 100%);
-    --s1: calc((1 - var(--n) + var(--n) / 3) * 100%);
-    --s2: calc((1 - var(--n) + var(--n) * 2 / 3) * 100%);
-    --w1: calc(var(--n) / 3 * 100%);
-    --w2: calc(var(--n) * 2 / 3 * 100%);
-    --w3: calc(var(--n) * 100%);
-
+.rail__drop {
     display: block;
     position: absolute;
-    width: calc(var(--wide) * 1rem);
+    width: calc(var(--rail-w) * 1rem);
+    background-image: linear-gradient(to right,
+        $sage 0 calc(100% - #{$stripeTwo}),
+        $orange calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
+        $navy calc(100% - #{$stripeOne}) 100%);
     pointer-events: none;
-
-    // Each stripe is clipped on its own: a clip on the parent would take the others with it
-    > span,
-    &::before,
-    &::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-    }
-
-    > span {
-        background-color: $sage;
-    }
-
-    &::before {
-        background-color: $orange;
-    }
-
-    &::after {
-        background-color: $navy;
-    }
 }
 
-// Narrowing as it falls down the right margin, where the east edge is the one that stays
-.rail__taper--name,
-.project--west .rail__taper--in {
-    > span {
-        clip-path: polygon(0 0, 33.333% 0, var(--s1) 100%, var(--s0) 100%);
-    }
-
-    &::before {
-        clip-path: polygon(33.333% 0, 66.667% 0, var(--s2) 100%, var(--s1) 100%);
-    }
-
-    &::after {
-        clip-path: polygon(66.667% 0, 100% 0, 100% 100%, var(--s2) 100%);
-    }
-}
-
-// Narrowing down the left margin, where the west edge is the one that stays
-.project--east .rail__taper--in {
-    > span {
-        clip-path: polygon(0 0, 33.333% 0, var(--w1) 100%, 0 100%);
-    }
-
-    &::before {
-        clip-path: polygon(33.333% 0, 66.667% 0, var(--w2) 100%, var(--w1) 100%);
-    }
-
-    &::after {
-        clip-path: polygon(66.667% 0, 100% 0, var(--w3) 100%, var(--w2) 100%);
-    }
-}
-
-// Widening down the left margin, on its way back to a bigger title
-.project--west .rail__taper--out {
-    > span {
-        clip-path: polygon(0 0, var(--w1) 0, 33.333% 100%, 0 100%);
-    }
-
-    &::before {
-        clip-path: polygon(var(--w1) 0, var(--w2) 0, 66.667% 100%, 33.333% 100%);
-    }
-
-    &::after {
-        clip-path: polygon(var(--w2) 0, var(--w3) 0, 100% 100%, 66.667% 100%);
-    }
-}
-
-// Widening down the right margin
-.project--east .rail__taper--out {
-    > span {
-        clip-path: polygon(var(--s0) 0, var(--s1) 0, 33.333% 100%, 0 100%);
-    }
-
-    &::before {
-        clip-path: polygon(var(--s1) 0, var(--s2) 0, 66.667% 100%, 33.333% 100%);
-    }
-
-    &::after {
-        clip-path: polygon(var(--s2) 0, 100% 0, 100% 100%, 66.667% 100%);
-    }
-}
-
-// Out of my name and down to the first title
-.rail__taper--name {
-    --wide: 4.29;
-    --narrow: 2.64;
+// Out of my name and down to the first title, at the titles' thickness
+.rail__drop--name {
+    --rail-w: 2.64;
 
     right: 0;
     top: calc(5.5rem + 0.29 * 3.25rem + #{$rail} + #{$railTurn} - 1px);
@@ -344,33 +273,43 @@ h1 {
 }
 
 // A piece's run, the same as a title's but thinner
-.rail__run {
+.rail__run,
+.rail__run-text {
     position: absolute;
     top: calc((#{$railSub} - #{$railPiece}) / 2);
     right: calc(#{$railPiece} + #{$railTurn} - #{$railLane});
     left: calc(#{$railPiece} + #{$railTurn} - #{$railLane});
-    display: flex;
-    align-items: center;
     height: $railPiece;
-    background-image: linear-gradient(to bottom,
-        $navy 0 33.333%,
-        $orange 33.333% 66.667%,
-        $sage 66.667% 100%);
     pointer-events: none;
     user-select: none;
 }
 
+.rail__run {
+    display: block;
+    background-image: linear-gradient(to bottom,
+        $navy 0 #{$stripeOne},
+        $orange #{$stripeOne} #{$stripeTwo},
+        $sage #{$stripeTwo} 100%);
+}
+
 .project--west .rail__run {
     background-image: linear-gradient(to bottom,
-        $sage 0 33.333%,
-        $orange 33.333% 66.667%,
-        $navy 66.667% 100%);
+        $sage 0 calc(100% - #{$stripeTwo}),
+        $orange calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
+        $navy calc(100% - #{$stripeOne}) 100%);
 }
 
 // The title sits in the right-hand column, three fifths of the way across the piece
 .rail__run-text {
+    display: flex;
+    align-items: center;
     padding-left: calc(60% + 0.25rem);
     color: #fff;
+    font-size: 1.25rem;
+    font-weight: $boldWeight;
+    font-family: $titleFont;
+    line-height: 1.15;
+    letter-spacing: normal;
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;
@@ -426,9 +365,9 @@ h1 {
     bottom: calc(-4rem + (#{$railSub} - #{$railPiece}) / 2 + #{$railTurn} - 1px);
     width: $railPiece;
     background-image: linear-gradient(to right,
-        $sage 0 33.333%,
-        $orange 33.333% 66.667%,
-        $navy 66.667% 100%);
+        $sage 0 calc(100% - #{$stripeTwo}),
+        $orange calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
+        $navy calc(100% - #{$stripeOne}) 100%);
     pointer-events: none;
 }
 
@@ -440,56 +379,117 @@ h1 {
     left: -#{$railLane};
 }
 
-// Down from the section title into the first piece, thinning as it goes. Held at both ends:
-// the title's turn above, the piece's turn below, so no seam can open between them.
-.rail__taper--in {
-    --wide: 2.64;
-    --narrow: 1.65;
+// Down from the section title into the first piece, at the pieces' thickness. Held at both
+// ends: the title's turn above, the piece's turn below, so no seam can open between them.
+.rail__drop--in {
+    --rail-w: 1.65;
 
     top: calc(-1 * (#{$railHead} + 5.5rem - ((#{$railHead} - #{$railTitle}) / 2 + #{$railTitle} + #{$railTurn})) - 1px);
     bottom: calc(100% + (#{$railPiece} - #{$railSub}) / 2 + #{$railTurn} - 1px);
 }
 
-.project--east .rail__taper--in {
+.project--east .rail__drop--in {
     left: -#{$railLane};
 }
 
-.project--west .rail__taper--in {
+.project--west .rail__drop--in {
     right: -#{$railLane};
 }
 
-// Out of the last piece and back up to the next section title's thickness
-.rail__taper--out {
-    --wide: 2.64;
-    --narrow: 1.65;
+// Out of the last piece to the next section title, at that title's thickness
+.rail__drop--out {
+    --rail-w: 2.64;
 
     top: calc((#{$railSub} - #{$railPiece}) / 2 + #{$railPiece} + #{$railTurn} - 1px);
     bottom: calc(-1 * (#{$railPad} * 2 + (#{$railHead} - #{$railTitle}) / 2 - #{$railTurn}) - 1px);
 }
 
-.project--east .rail__taper--out {
+.project--east .rail__drop--out {
     right: -#{$railLane};
 }
 
-.project--west .rail__taper--out {
+.project--west .rail__drop--out {
     left: -#{$railLane};
 }
 
 /*
  * DRAWING THE RAIL
  *
- * The path above is the whole path, always there. What moves is a mask on each piece of it,
- * opening in the direction the ribbon travels, so the line appears to draw itself ahead of you
- * as you scroll. Until it arrives, a title is the colour it always was.
+ * The path above is the whole path, always there. What moves is each piece of it being drawn
+ * in, in the direction the ribbon travels, and nothing starts until the piece before it has
+ * finished: a turn, then the run across the title, then the turn out of it, then the run down
+ * the margin, then the next turn.
  *
- * Everything is keyed to one line across the viewport, 40% down: a piece of the path starts
- * opening when it crosses that line. The runs down the margins open at exactly the rate you
- * scroll, so their tip sits on that line; the runs across a title open faster, because a title
- * is a thousand pixels wide and you would be scrolling all day.
+ * Every one of those is measured in pixels of scroll from the moment the piece crosses a line
+ * 40% down the viewport, and each piece's start is the one before it's finish. The runs across
+ * a title take 40px of scroll, because a title run is a thousand pixels wide and tracking the
+ * scroll would take all day; the runs down the margins take exactly as long as they are, so
+ * their end sits on the line.
  *
- * My name and its turn are the exception. They are at the top of the page, above the line
- * before you have scrolled at all, so they run off the page's own scroll instead.
+ * The long pieces are drawn by scaling, which the compositor can do on its own thread: a run's
+ * stripes are even along the way it travels, so scaling it that way does not show. The small
+ * ones are clipped, which is repainted, but they are small. Nothing here animates width or
+ * position, which would be laid out again every frame.
+ *
+ * My name and its turn are the exception. They sit above the line before you have scrolled at
+ * all, so they run off the page's own scroll.
  */
+@keyframes rail-sweep-right {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes rail-fall {
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@property --rail-sweep {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes rail-turn-sweep {
+    from {
+        --rail-sweep: 0deg;
+    }
+
+    to {
+        --rail-sweep: 90deg;
+    }
+}
+
+/*
+ * A turn opens by rotating a quarter of a conic mask about the centre its own arcs are struck
+ * from: clockwise from where the ribbon comes in, anticlockwise when the bend goes the other
+ * way. $at is that centre, $from the direction the ribbon arrives from (clockwise) or leaves
+ * by (anticlockwise).
+ */
+@mixin rail-sweep-cw($from, $at) {
+    mask-image: conic-gradient(from #{$from} at #{$at},
+        #000 0 var(--rail-sweep),
+        transparent var(--rail-sweep) 360deg);
+    animation-name: rail-turn-sweep;
+}
+
+@mixin rail-sweep-ccw($from, $at) {
+    mask-image: conic-gradient(from #{$from} at #{$at},
+        transparent 0 calc(90deg - var(--rail-sweep)),
+        #000 calc(90deg - var(--rail-sweep)) 360deg);
+    animation-name: rail-turn-sweep;
+}
+
 @keyframes rail-draw-right {
     from {
         clip-path: inset(0 100% 0 0);
@@ -523,25 +523,24 @@ h1 {
 @supports (animation-timeline: view()) {
     .intro h1 .name__band,
     .intro h1::after,
-    .rail__taper,
+    .rail__drop,
     .rail__band,
+    .rail__band-text,
     .rail__run,
+    .rail__run-text,
     .section > .wrap > h2::before,
     .section > .wrap > h2::after,
     .rail__turn,
     .section > .wrap::after,
     .project:not(.project--last)::after {
-        animation-duration: auto;
         animation-timing-function: linear;
         animation-fill-mode: both;
-        animation-timeline: view(block auto 60%);
+        animation-timeline: scroll(root block);
     }
 
     // The circle and its turn are above the line before the page has moved
     .intro h1 .name__band {
         animation-name: band-extend-square;
-        animation-timeline: scroll(root block);
-        animation-range: 0 55px;
     }
 
     @keyframes band-extend-square {
@@ -561,67 +560,287 @@ h1 {
     }
 
     .intro h1::after {
-        animation-name: rail-draw-right;
-        animation-timeline: scroll(root block);
-        animation-range: 55px 80px;
+        @include rail-sweep-cw(0deg, 0 100%);
+
     }
 
-    .rail__taper--name {
-        animation-name: rail-draw-down;
-        animation-timeline: scroll(root block);
-        animation-range: 80px 30vh;
+
+
+    // 1. the turn the ribbon arrives at, swept round its own centre
+    .section:not(.rail--back) > .wrap > h2::before,
+    .rail--back > .wrap > h2::after,
+    .rail__turn--in {
     }
 
-    /*
-     * A run down a margin opens at the rate you scroll, so its end sits just under the line.
-     * The 90px is the head start the run across the title above it needs to finish first;
-     * without it the margin starts drawing while the title is still filling in.
-     */
-    .rail__taper--out,
-    .section > .wrap::after,
-    .project:not(.project--last)::after {
-        animation-name: rail-draw-down;
-        animation-range: entry 40px entry 100%;
+    // coming down the right margin and turning left: clockwise about the turn's top left
+    .rail--back > .wrap > h2::after,
+    .project--west .rail__turn--in {
+        @include rail-sweep-cw(90deg, 0 0);
     }
 
-    // The drop from a section title into its first piece is too short to measure that way
-    .rail__taper--in {
-        animation-name: rail-draw-down;
-        animation-range: cover 14% cover 22%;
+    // coming down the left margin and turning right: anticlockwise about its top right
+    .section:not(.rail--back) > .wrap > h2::before,
+    .project--east .rail__turn--in {
+        @include rail-sweep-ccw(180deg, 100% 0);
     }
 
-    // A run across a title opens as the title comes up the page
+    // 2. the run across the title, and the white copy of the title it carries, together
     .section:not(.rail--back) .rail__band,
     .project--east .rail__run {
-        animation-name: rail-draw-right;
-        animation-range: cover 0% cover 14%;
+        transform-origin: left center;
+        animation-name: rail-sweep-right;
+        animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
     .rail--back .rail__band,
     .project--west .rail__run {
-        animation-name: rail-draw-left;
-        animation-range: cover 0% cover 14%;
+        transform-origin: right center;
+        animation-name: rail-sweep-right;
+        animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    // The turn the ribbon arrives at, before the run
-    .section:not(.rail--back) > .wrap > h2::before,
-    .rail--back > .wrap > h2::after,
-    .rail__turn--in {
-        animation-name: rail-draw-down;
-        animation-range: cover 0% cover 5%;
-    }
-
-    // And the turn it leaves by, after it
-    .section:not(.rail--back) > .wrap > h2::after,
-    .project--east .rail__turn--out {
+    .section:not(.rail--back) .rail__band-text,
+    .project--east .rail__run-text {
         animation-name: rail-draw-right;
-        animation-range: cover 12% cover 18%;
+        animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
+    .rail--back .rail__band-text,
+    .project--west .rail__run-text {
+        animation-name: rail-draw-left;
+        animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    // 3. the turn it leaves by
+    .section:not(.rail--back) > .wrap > h2::after,
+    .project--east .rail__turn--out,
     .rail--back > .wrap > h2::before,
     .project--west .rail__turn--out {
-        animation-name: rail-draw-left;
-        animation-range: cover 12% cover 18%;
+    }
+
+    // running right and turning down: clockwise about the turn's bottom left
+    .section:not(.rail--back) > .wrap > h2::after,
+    .project--east .rail__turn--out {
+        @include rail-sweep-cw(0deg, 0 100%);
+    }
+
+    // running left and turning down: anticlockwise about its bottom right
+    .rail--back > .wrap > h2::before,
+    .project--west .rail__turn--out {
+        @include rail-sweep-ccw(270deg, 100% 100%);
+    }
+
+    // 4. the run down the margin, which starts where that turn finished and ends on the line
+    .section > .wrap::after {
+        transform-origin: center top;
+        animation-name: rail-fall;
+    }
+
+    .project:not(.project--last)::after,
+    .rail__drop {
+        transform-origin: center top;
+        animation-name: rail-fall;
+    }
+
+
+
+    // The tail under the last title has a round end, which scaling would squash
+    .rail--end > .wrap::after {
+        transform: none;
+        animation-name: rail-draw-down;
+    }
+
+    /*
+     * WHEN EACH PIECE IS DRAWN
+     *
+     * One timeline, the page's own scroll, cut into consecutive pieces: nothing starts before
+     * the piece before it has finished. Each piece's share is its own length, so the ribbon is
+     * drawn at one steady rate the whole way round - a run across a title takes as long as a
+     * run down a margin of the same length. At 6px of ribbon per px of scroll the whole path,
+     * which is about 17,000px long, is drawn over the first 2,800px of the page.
+     *
+     * Measured at 1440px wide. Narrower and the runs are shorter, so it finishes sooner.
+     */
+    .intro h1 .name__band {
+        animation-range: 0px 124px;
+    }
+
+    .intro h1::after {
+        animation-range: 124px 138px;
+    }
+
+    .rail__drop--name {
+        animation-range: 138px 188px;
+    }
+
+    #work > .wrap > h2::after {
+        animation-range: 188px 198px;
+    }
+
+    #work .rail__band,
+    #work .rail__band-text {
+        animation-range: 198px 370px;
+    }
+
+    #work > .wrap > h2::before {
+        animation-range: 370px 380px;
+    }
+
+    #work .rail__drop--in {
+        animation-range: 380px 389px;
+    }
+
+    #work .project--first .rail__turn--in {
+        animation-range: 389px 397px;
+    }
+
+    #work .project--first .rail__run,
+    #work .project--first .rail__run-text {
+        animation-range: 397px 574px;
+    }
+
+    #work .project--first .rail__turn--out {
+        animation-range: 574px 582px;
+    }
+
+    #work .project--first::after {
+        animation-range: 582px 642px;
+    }
+
+    #work .project--last .rail__turn--in {
+        animation-range: 642px 650px;
+    }
+
+    #work .project--last .rail__run,
+    #work .project--last .rail__run-text {
+        animation-range: 650px 827px;
+    }
+
+    #work .project--last .rail__turn--out {
+        animation-range: 827px 835px;
+    }
+
+    #work .rail__drop--out {
+        animation-range: 835px 904px;
+    }
+
+    #design > .wrap > h2::before {
+        animation-range: 904px 914px;
+    }
+
+    #design .rail__band,
+    #design .rail__band-text {
+        animation-range: 914px 1086px;
+    }
+
+    #design > .wrap > h2::after {
+        animation-range: 1086px 1096px;
+    }
+
+    #design .rail__drop--in {
+        animation-range: 1096px 1104px;
+    }
+
+    #design .project--first .rail__turn--in {
+        animation-range: 1104px 1112px;
+    }
+
+    #design .project--first .rail__run,
+    #design .project--first .rail__run-text {
+        animation-range: 1112px 1290px;
+    }
+
+    #design .project--first .rail__turn--out {
+        animation-range: 1290px 1298px;
+    }
+
+    #design .project--first::after {
+        animation-range: 1298px 1358px;
+    }
+
+    #design .project--last .rail__turn--in {
+        animation-range: 1358px 1366px;
+    }
+
+    #design .project--last .rail__run,
+    #design .project--last .rail__run-text {
+        animation-range: 1366px 1543px;
+    }
+
+    #design .project--last .rail__turn--out {
+        animation-range: 1543px 1551px;
+    }
+
+    #design .rail__drop--out {
+        animation-range: 1551px 1641px;
+    }
+
+    #how-i-work > .wrap > h2::after {
+        animation-range: 1641px 1652px;
+    }
+
+    #how-i-work .rail__band,
+    #how-i-work .rail__band-text {
+        animation-range: 1652px 1824px;
+    }
+
+    #how-i-work > .wrap > h2::before {
+        animation-range: 1824px 1834px;
+    }
+
+    #how-i-work > .wrap::after {
+        animation-range: 1834px 1897px;
+    }
+
+    #coursework > .wrap > h2::before {
+        animation-range: 1897px 1907px;
+    }
+
+    #coursework .rail__band,
+    #coursework .rail__band-text {
+        animation-range: 1907px 2079px;
+    }
+
+    #coursework > .wrap > h2::after {
+        animation-range: 2079px 2089px;
+    }
+
+    #coursework > .wrap::after {
+        animation-range: 2089px 2276px;
+    }
+
+    #resume > .wrap > h2::after {
+        animation-range: 2276px 2286px;
+    }
+
+    #resume .rail__band,
+    #resume .rail__band-text {
+        animation-range: 2286px 2458px;
+    }
+
+    #resume > .wrap > h2::before {
+        animation-range: 2458px 2468px;
+    }
+
+    #resume > .wrap::after {
+        animation-range: 2468px 2607px;
+    }
+
+    #contact > .wrap > h2::before {
+        animation-range: 2607px 2617px;
+    }
+
+    #contact .rail__band,
+    #contact .rail__band-text {
+        animation-range: 2617px 2789px;
+    }
+
+    #contact > .wrap > h2::after {
+        animation-range: 2789px 2800px;
+    }
+
+    #contact > .wrap::after {
+        animation-range: 2800px 2818px;
     }
 }
 
@@ -629,15 +848,19 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
     .intro h1 .name__band,
     .intro h1::after,
-    .rail__taper,
+    .rail__drop,
     .rail__band,
+    .rail__band-text,
     .rail__run,
+    .rail__run-text,
     .section > .wrap > h2::before,
     .section > .wrap > h2::after,
     .rail__turn,
     .section > .wrap::after,
     .project:not(.project--last)::after {
+        transform: none;
         clip-path: none;
+        mask-image: none;
         animation: none;
     }
 
