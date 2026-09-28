@@ -4,6 +4,12 @@ h1 {
     font-size: 3.25rem;
 }
 
+// The whole run of the band happens in the first 170px of scroll, so the name needs to sit
+// far enough below the sticky header to still be there when the line turns
+.intro {
+    padding-top: 5.5rem;
+}
+
 .project {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -26,4 +32,55 @@ h1 {
 
 .article h1 {
     font-size: 2.75rem;
+}
+
+/*
+ * Where the line reaches the right margin it turns down it at a right angle. The drop is a
+ * second ribbon, a third of it each colour, running the other way: the navy that led the
+ * band along the top is on the outside of the turn, so it ends up on the right going down.
+ *
+ * The clip mitres the corner. It cuts the drop's first 1.32em on the diagonal, so the two
+ * ribbons meet the way a folded one would, each colour meeting its own.
+ */
+.name__drop {
+    display: block;
+    position: absolute;
+    top: 0.29em;
+    right: 0;
+    width: 1.32em;
+    height: 20rem;
+    border-radius: 0 0 0.66em 0.66em;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 1.32em);
+    background-image: linear-gradient(to right,
+        $sage 0 33.333%,
+        $orange 33.333% 66.667%,
+        $navy 66.667% 100%);
+    pointer-events: none;
+}
+
+// It falls once the band has arrived, and stops short of the first section
+@supports (animation-timeline: scroll()) {
+    .name__band {
+        animation-range: 0 55px;
+    }
+
+    .name__drop {
+        height: 0;
+        animation: drop-fall linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 55px 170px;
+    }
+
+    @keyframes drop-fall {
+        to {
+            height: 20rem;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .name__drop {
+        height: 20rem;
+        animation: none;
+    }
 }

@@ -555,6 +555,10 @@ a:focus-visible {
   color: #1b3c54;
 }
 
+.name__drop {
+  display: none;
+}
+
 /*
  * On scroll the band travels: at the top of the page it is a circle to the left of the name,
  * and scrolling stretches it into the line behind the name, squaring off its right end as it
@@ -867,6 +871,9 @@ a:focus-visible {
   h1 {
     font-size: 3.25rem;
   }
+  .intro {
+    padding-top: 5.5rem;
+  }
   .project {
     display: grid;
     grid-template-columns: 3fr 2fr;
@@ -885,5 +892,47 @@ a:focus-visible {
   }
   .article h1 {
     font-size: 2.75rem;
+  }
+  /*
+   * Where the line reaches the right margin it turns down it at a right angle. The drop is a
+   * second ribbon, a third of it each colour, running the other way: the navy that led the
+   * band along the top is on the outside of the turn, so it ends up on the right going down.
+   *
+   * The clip mitres the corner. It cuts the drop's first 1.32em on the diagonal, so the two
+   * ribbons meet the way a folded one would, each colour meeting its own.
+   */
+  .name__drop {
+    display: block;
+    position: absolute;
+    top: 0.29em;
+    right: 0;
+    width: 1.32em;
+    height: 20rem;
+    border-radius: 0 0 0.66em 0.66em;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 1.32em);
+    background-image: linear-gradient(to right, #868f59 0 33.333%, #b86428 33.333% 66.667%, #1b3c54 66.667% 100%);
+    pointer-events: none;
+  }
+  @supports (animation-timeline: scroll()) {
+    .name__band {
+      animation-range: 0 55px;
+    }
+    .name__drop {
+      height: 0;
+      animation: drop-fall linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 55px 170px;
+    }
+    @keyframes drop-fall {
+      to {
+        height: 20rem;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 60rem) and (prefers-reduced-motion: reduce) {
+  .name__drop {
+    height: 20rem;
+    animation: none;
   }
 }

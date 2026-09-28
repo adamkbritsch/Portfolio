@@ -285,6 +285,12 @@ a {
     color: $navy;
 }
 
+// The turn down the right margin needs clear space beside the lede, which only exists
+// from 60rem up: see _large.scss
+.name__drop {
+    display: none;
+}
+
 /*
  * On scroll the band travels: at the top of the page it is a circle to the left of the name,
  * and scrolling stretches it into the line behind the name, squaring off its right end as it
