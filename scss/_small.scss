@@ -122,7 +122,7 @@ a {
     position: sticky;
     top: 0;
     z-index: 5;
-    border-bottom: 0;
+    border-bottom: 1px solid $ink;
     background: $paper;
 
     .wrap {
@@ -171,22 +171,9 @@ a {
     }
 }
 
-// 70s supergraphics: navy and burnt orange bands on cream, in three places —
-// under the header, above the footer, beside a heading, and through my name.
-
-.site-footer::before {
-    content: "";
-    display: block;
-    width: calc(100% - #{$gutter * 2});
-    max-width: calc(#{$pageWidth} - #{$gutter * 2});
-    height: 12px;
-    margin: 0 auto 2rem;
-    border-radius: 6px;
-    background-image: linear-gradient(to bottom,
-        $navyLine 0 6px,
-        $orangeLine 6px 9.7px,
-        $sageLine 9.7px 12px);
-}
+// 70s supergraphics: navy and burnt orange bands on cream, beside a heading and through my
+// name. The header and the footer are marked by a hairline of ink instead, so the colour on
+// the page is the ribbon's alone.
 
 // A short run of bands that marks the start of a section
 %stripe-mark {
@@ -296,7 +283,9 @@ a {
 // _large.scss). Until then none of its parts are rendered at all: the copies of the titles it
 // carries would otherwise print a second time under every heading.
 .rail__band,
+.rail__band-text,
 .rail__run,
+.rail__run-text,
 .rail__turn,
 .rail__drop {
     display: none;
@@ -456,7 +445,7 @@ a {
 
 .site-footer {
     padding: 2rem 0 2.5rem;
-    border-top: 0;
+    border-top: 1px solid $ink;
     color: $inkSoft;
     font-family: $uiFont;
     font-size: 0.9375rem;

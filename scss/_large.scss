@@ -235,12 +235,50 @@ h1 {
     left: 0;
 }
 
-// The last title has nowhere to go, so the ribbon runs out and ends the way it began, round
+/*
+ * THE TAIL
+ *
+ * The last title has nowhere further to go, so the ribbon comes down the right of the
+ * contact section, turns west along its foot and stops at the bottom left corner, ending
+ * round the way it began at my name. The section is given room under its words to hold the
+ * run, with a turn's clearance above it and the same below, so the ribbon lies clear of both
+ * the contact list and the hairline under it.
+ */
+.rail--end {
+    padding-bottom: calc(#{$railTitle} + #{$railTurn} * 2);
+}
+
+// Down the right lane, no longer stopping short
 .rail--end > .wrap::after {
     right: 0;
-    bottom: auto;
-    height: 7rem;
-    border-radius: 0 0 calc(#{$railTitle} / 2) calc(#{$railTitle} / 2);
+    bottom: -1px;
+    height: auto;
+    border-radius: 0;
+}
+
+// The corner at the foot of that lane, arriving from above and turning west
+.rail__turn--tail {
+    right: 0;
+    bottom: calc(-1 * (#{$railTitle} + #{$railTurn}));
+    @include rail-turn(0 0, $sageLine, $navyLine, $railTitle);
+}
+
+// West along the foot of the section, ending round in the left lane
+.rail--end > .wrap::before {
+    content: "";
+    position: absolute;
+    right: calc(#{$railTitle} + #{$railTurn} - 1px);
+    bottom: calc(-1 * (#{$railTitle} + #{$railTurn}));
+    left: 0;
+    height: $railTitle;
+    border-radius: calc(#{$railTitle} / 2) 0 0 calc(#{$railTitle} / 2);
+    background-image: $railCover, rail-soften(to right), linear-gradient(to bottom,
+        $sageLine 0 calc(100% - #{$stripeTwo}),
+        $orangeLine calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
+        $navyLine calc(100% - #{$stripeOne}) 100%);
+    background-attachment: fixed, scroll, scroll;
+    background-blend-mode: normal, saturation, normal;
+    pointer-events: none;
 }
 
 /*
@@ -550,6 +588,8 @@ h1 {
     .section > .wrap > h2::after,
     .rail__turn,
     .section > .wrap::after,
+    .rail--end > .wrap::before,
+    .rail--pieces > .wrap > .section__intro::after,
     .project:not(.project--last)::after {
         background-attachment: scroll;
     }
