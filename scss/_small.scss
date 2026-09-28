@@ -247,7 +247,7 @@ a {
  */
 .intro h1 {
     position: relative;
-    padding: 0.35em 0 0.35em 0.78em;
+    padding: 0.35em 0 0.35em 1.62em;
 }
 
 // The band is its own box, so its left end can round into a half circle
@@ -268,6 +268,68 @@ a {
 .name__text {
     position: relative;
     color: #fff;
+}
+
+/*
+ * On scroll the band travels: at the top of the page it is just a circle to the left of the
+ * name, and scrolling stretches it into the line behind the name. The letters are filled from a gradient whose white/navy edge moves with the band, so
+ * a letter turns white exactly when the band arrives behind it — before that it is navy on
+ * cream, which is what keeps the name readable at the top of the page.
+ *
+ * Scroll-driven animation, so none of it costs JavaScript. Browsers without it, and anyone who
+ * asked for less motion, get the finished line, which is the resting state.
+ */
+@property --band-edge {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 100%;
+}
+
+@supports (animation-timeline: scroll()) {
+    .name__band {
+        width: 1.32em;
+        animation: band-extend linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 38vh;
+    }
+
+    .name__text {
+        --band-edge: 0%;
+        color: transparent;
+        background-image: linear-gradient(to right,
+            #fff 0 var(--band-edge),
+            $navy var(--band-edge) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        animation: band-fill linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 38vh;
+    }
+
+    @keyframes band-extend {
+        to {
+            width: 100%;
+        }
+    }
+
+    @keyframes band-fill {
+        to {
+            --band-edge: 100%;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .name__band {
+        width: 100%;
+        animation: none;
+    }
+
+    .name__text {
+        color: #fff;
+        background-image: none;
+        animation: none;
+    }
 }
 
 .intro__lede {
