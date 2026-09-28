@@ -3,14 +3,14 @@ $paper: #f4f1ea;     // cream
 $ink: #1d1c1a;
 $inkSoft: #5b5852;   // secondary text, 6.3:1 on $paper
 $rule: #d9d4c9;      // hairlines between things
-$navy: #1b3a5c;      // 10.3:1 on $paper
-$orange: #c8401a;    // stripes only: too light for body text at any size
-$sage: #b7bf87;      // the greenish cream, the lightest of the three
-$orangeInk: #8f3f12; // the orange dark enough to read as text, 6.5:1
+$navy: #1b415c;      // hue 205, 9.5:1 on $paper
+$orange: #c8621a;    // hue 25, the direct complement of the navy; stripes only
+$sage: #b7bf87;      // hue 69, the odd one out, and the lightest of the three
+$orangeInk: #8f4613; // the same orange dark enough to read as text, 6.1:1
 
 // The same three colours at 60% over cream, for the parts of a letter a band crosses
-$navy60: #718395;
-$orange60: #da876d;
+$navy60: #728795;
+$orange60: #da9b6d;
 $sage60: #cfd3af;
 $accent: $navy;      // links and focus rings
 $accentDark: $orangeInk;

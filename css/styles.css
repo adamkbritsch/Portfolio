@@ -372,16 +372,16 @@ figure {
 }
 
 a {
-  color: #1b3a5c;
+  color: #1b415c;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
 }
 a:hover {
-  color: #8f3f12;
+  color: #8f4613;
   text-decoration-thickness: 2px;
 }
 a:focus-visible {
-  outline: 3px solid #1b3a5c;
+  outline: 3px solid #1b415c;
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -431,7 +431,7 @@ a:focus-visible {
   content: "";
   display: block;
   height: 12px;
-  background-image: linear-gradient(to bottom, #1b3a5c 0 4px, #c8401a 4px 8px, #b7bf87 8px 12px);
+  background-image: linear-gradient(to bottom, #1b415c 0 4px, #c8621a 4px 8px, #b7bf87 8px 12px);
 }
 .site-header .wrap {
   display: flex;
@@ -467,7 +467,7 @@ a:focus-visible {
   text-decoration: none;
 }
 .site-nav a:hover {
-  color: #1b3a5c;
+  color: #1b415c;
   text-decoration: underline;
 }
 @media (max-width: 22rem) {
@@ -481,7 +481,7 @@ a:focus-visible {
   display: block;
   height: 12px;
   margin-bottom: 2rem;
-  background-image: linear-gradient(to bottom, #1b3a5c 0 4px, #c8401a 4px 8px, #b7bf87 8px 12px);
+  background-image: linear-gradient(to bottom, #1b415c 0 4px, #c8621a 4px 8px, #b7bf87 8px 12px);
 }
 
 .article > h1::before, .section > .wrap > h2::before {
@@ -490,7 +490,7 @@ a:focus-visible {
   width: 76px;
   height: 10px;
   margin-bottom: 0.9rem;
-  background-image: linear-gradient(90deg, #1b3a5c 0 25px, #c8401a 25px 50px, #b7bf87 50px 76px);
+  background-image: linear-gradient(90deg, #1b415c 0 25px, #c8621a 25px 50px, #b7bf87 50px 76px);
 }
 
 .intro {
@@ -502,9 +502,9 @@ a:focus-visible {
   width: 96px;
   height: 96px;
   margin-bottom: 1.25rem;
-  border: 4px solid #1b3a5c;
+  border: 4px solid #1b415c;
   border-radius: 50%;
-  box-shadow: 0 0 0 3px #c8401a;
+  box-shadow: 0 0 0 3px #c8621a;
 }
 
 /*
@@ -531,7 +531,7 @@ a:focus-visible {
   left: 0;
   height: 0.63em;
   border-radius: 0.315em 0 0 0.315em;
-  background-image: linear-gradient(to bottom, #1b3a5c 0 33.333%, #c8401a 33.333% 66.667%, #b7bf87 66.667% 100%);
+  background-image: linear-gradient(to bottom, #1b415c 0 33.333%, #c8621a 33.333% 66.667%, #b7bf87 66.667% 100%);
 }
 
 .name__halo {
@@ -544,7 +544,7 @@ a:focus-visible {
 
 .name__text {
   position: relative;
-  background-image: linear-gradient(to bottom, #1b3a5c 0 0.3em, #718395 0.3em 0.51em, #da876d 0.51em 0.72em, #cfd3af 0.72em 0.93em, #1b3a5c 0.93em 100%);
+  background-image: linear-gradient(to bottom, #1b415c 0 0.3em, #728795 0.3em 0.51em, #da9b6d 0.51em 0.72em, #cfd3af 0.72em 0.93em, #1b415c 0.93em 100%);
   background-clip: text;
   -webkit-background-clip: text;
 }
