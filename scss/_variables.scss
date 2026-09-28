@@ -34,14 +34,14 @@ $stripeOne: 50%;     // outermost
 $stripeTwo: 80.9%;   // end of the middle one; the innermost is the last 19.1%
 
 /*
- * The lines are drawn at 80% strength. They are mixed against the paper rather than given an
+ * The lines are drawn at 90% strength. They are mixed against the paper rather than given an
  * alpha: the ribbon only ever lies on the paper, and a real alpha would double up at the
  * hairline overlaps where one piece of it meets the next and print a darker seam there.
  * Recompute these if $paper ever changes.
  */
-$navyLine: #466072;     // $navy at 80% on $paper; white on it is 6.6:1
-$orangeLine: #c4804f;   // 3.2:1
-$sageLine: #9ca376;     // 2.7:1, under the 3:1 large-text line - see the note in the memory file
+$navyLine: #314e63;     // $navy at 90% on $paper; white on it is 8.8:1
+$orangeLine: #be723b;   // 3.7:1
+$sageLine: #919968;     // 3.0:1, just over the 3:1 large-text line
 
 /*
  * The window the ribbon is seen through: a cream cover over the top tenth of the screen, where
