@@ -376,36 +376,43 @@ h1 {
     white-space: nowrap;
 }
 
-.rail__run::before,
-.rail__run::after {
-    content: "";
+/*
+ * A piece's two turns are elements of their own rather than pseudo-elements of the run: the
+ * mask that draws the run in would take them with it. The one it arrives by sits a turn's
+ * height above the run's bottom edge; the one it leaves by starts at the run's top.
+ */
+.rail__turn {
     position: absolute;
     pointer-events: none;
 }
 
+.rail__turn--in {
+    top: calc((#{$railSub} - #{$railPiece}) / 2 + #{$railPiece} - #{$railPiece} - #{$railTurn});
+}
+
+.rail__turn--out {
+    top: calc((#{$railSub} - #{$railPiece}) / 2);
+}
+
 // Running right: arriving on the left from above, leaving on the right going down
-.project--east .rail__run::before {
-    right: 100%;
-    bottom: 0;
+.project--east .rail__turn--in {
+    left: -#{$railLane};
     @include rail-turn(100% 0, $navy, $sage, $railPiece);
 }
 
-.project--east .rail__run::after {
-    top: 0;
-    left: 100%;
+.project--east .rail__turn--out {
+    right: -#{$railLane};
     @include rail-turn(0 100%, $sage, $navy, $railPiece);
 }
 
 // Running left: arriving on the right from above, leaving on the left going down
-.project--west .rail__run::after {
-    bottom: 0;
-    left: 100%;
+.project--west .rail__turn--in {
+    right: -#{$railLane};
     @include rail-turn(0 0, $sage, $navy, $railPiece);
 }
 
-.project--west .rail__run::before {
-    top: 0;
-    right: 100%;
+.project--west .rail__turn--out {
+    left: -#{$railLane};
     @include rail-turn(100% 100%, $navy, $sage, $railPiece);
 }
 
@@ -464,4 +471,175 @@ h1 {
 
 .project--west .rail__taper--out {
     left: -#{$railLane};
+}
+
+/*
+ * DRAWING THE RAIL
+ *
+ * The path above is the whole path, always there. What moves is a mask on each piece of it,
+ * opening in the direction the ribbon travels, so the line appears to draw itself ahead of you
+ * as you scroll. Until it arrives, a title is the colour it always was.
+ *
+ * Everything is keyed to one line across the viewport, 40% down: a piece of the path starts
+ * opening when it crosses that line. The runs down the margins open at exactly the rate you
+ * scroll, so their tip sits on that line; the runs across a title open faster, because a title
+ * is a thousand pixels wide and you would be scrolling all day.
+ *
+ * My name and its turn are the exception. They are at the top of the page, above the line
+ * before you have scrolled at all, so they run off the page's own scroll instead.
+ */
+@keyframes rail-draw-right {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@keyframes rail-draw-left {
+    from {
+        clip-path: inset(0 0 0 100%);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@keyframes rail-draw-down {
+    from {
+        clip-path: inset(0 0 100% 0);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@supports (animation-timeline: view()) {
+    .intro h1 .name__band,
+    .intro h1::after,
+    .rail__taper,
+    .rail__band,
+    .rail__run,
+    .section > .wrap > h2::before,
+    .section > .wrap > h2::after,
+    .rail__turn,
+    .section > .wrap::after,
+    .project:not(.project--last)::after {
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view(block auto 60%);
+    }
+
+    // The circle and its turn are above the line before the page has moved
+    .intro h1 .name__band {
+        animation-name: band-extend-square;
+        animation-timeline: scroll(root block);
+        animation-range: 0 55px;
+    }
+
+    @keyframes band-extend-square {
+        from {
+            width: 1.32em;
+            border-radius: 0.66em;
+        }
+
+        18% {
+            border-radius: 0.66em 0 0 0.66em;
+        }
+
+        to {
+            width: 100%;
+            border-radius: 0.66em 0 0 0.66em;
+        }
+    }
+
+    .intro h1::after {
+        animation-name: rail-draw-right;
+        animation-timeline: scroll(root block);
+        animation-range: 55px 80px;
+    }
+
+    .rail__taper--name {
+        animation-name: rail-draw-down;
+        animation-timeline: scroll(root block);
+        animation-range: 80px 30vh;
+    }
+
+    /*
+     * A run down a margin opens at the rate you scroll, so its end sits just under the line.
+     * The 90px is the head start the run across the title above it needs to finish first;
+     * without it the margin starts drawing while the title is still filling in.
+     */
+    .rail__taper--out,
+    .section > .wrap::after,
+    .project:not(.project--last)::after {
+        animation-name: rail-draw-down;
+        animation-range: entry 40px entry 100%;
+    }
+
+    // The drop from a section title into its first piece is too short to measure that way
+    .rail__taper--in {
+        animation-name: rail-draw-down;
+        animation-range: cover 14% cover 22%;
+    }
+
+    // A run across a title opens as the title comes up the page
+    .section:not(.rail--back) .rail__band,
+    .project--east .rail__run {
+        animation-name: rail-draw-right;
+        animation-range: cover 0% cover 14%;
+    }
+
+    .rail--back .rail__band,
+    .project--west .rail__run {
+        animation-name: rail-draw-left;
+        animation-range: cover 0% cover 14%;
+    }
+
+    // The turn the ribbon arrives at, before the run
+    .section:not(.rail--back) > .wrap > h2::before,
+    .rail--back > .wrap > h2::after,
+    .rail__turn--in {
+        animation-name: rail-draw-down;
+        animation-range: cover 0% cover 5%;
+    }
+
+    // And the turn it leaves by, after it
+    .section:not(.rail--back) > .wrap > h2::after,
+    .project--east .rail__turn--out {
+        animation-name: rail-draw-right;
+        animation-range: cover 12% cover 18%;
+    }
+
+    .rail--back > .wrap > h2::before,
+    .project--west .rail__turn--out {
+        animation-name: rail-draw-left;
+        animation-range: cover 12% cover 18%;
+    }
+}
+
+// Anyone who asked for less motion gets the finished path
+@media (prefers-reduced-motion: reduce) {
+    .intro h1 .name__band,
+    .intro h1::after,
+    .rail__taper,
+    .rail__band,
+    .rail__run,
+    .section > .wrap > h2::before,
+    .section > .wrap > h2::after,
+    .rail__turn,
+    .section > .wrap::after,
+    .project:not(.project--last)::after {
+        clip-path: none;
+        animation: none;
+    }
+
+    .intro h1 .name__band {
+        width: 100%;
+    }
 }

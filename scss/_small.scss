@@ -289,8 +289,35 @@ a {
     white-space: nowrap;
 }
 
+/*
+ * The ribbon draws itself. Every piece of the path is there in full; what moves is a mask on
+ * each piece, opening in the direction the ribbon travels. The circle by my name is the one
+ * exception: it grows into its run rather than being uncovered, so the shape changes.
+ */
+@supports (animation-timeline: scroll()) {
+    .name__band {
+        width: 1.32em;
+        animation: band-extend linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 55px;
+    }
+
+    @keyframes band-extend {
+        to {
+            width: 100%;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .name__band {
+        width: 100%;
+        animation: none;
+    }
+}
+
 .name__text {
-    color: $navy;
+    color: $ink;
 }
 
 .intro__lede {

@@ -560,8 +560,32 @@ a:focus-visible {
   white-space: nowrap;
 }
 
+/*
+ * The ribbon draws itself. Every piece of the path is there in full; what moves is a mask on
+ * each piece, opening in the direction the ribbon travels. The circle by my name is the one
+ * exception: it grows into its run rather than being uncovered, so the shape changes.
+ */
+@supports (animation-timeline: scroll()) {
+  .name__band {
+    width: 1.32em;
+    animation: band-extend linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 55px;
+  }
+  @keyframes band-extend {
+    to {
+      width: 100%;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .name__band {
+    width: 100%;
+    animation: none;
+  }
+}
 .name__text {
-  color: #1b3c54;
+  color: #1d1c1a;
 }
 
 .intro__lede {
@@ -1118,42 +1142,47 @@ a:focus-visible {
     text-underline-offset: 0.18em;
     white-space: nowrap;
   }
-  .rail__run::before,
-  .rail__run::after {
-    content: "";
+  /*
+   * A piece's two turns are elements of their own rather than pseudo-elements of the run: the
+   * mask that draws the run in would take them with it. The one it arrives by sits a turn's
+   * height above the run's bottom edge; the one it leaves by starts at the run's top.
+   */
+  .rail__turn {
     position: absolute;
     pointer-events: none;
   }
-  .project--east .rail__run::before {
-    right: 100%;
-    bottom: 0;
+  .rail__turn--in {
+    top: calc((1.4375rem - 1.65rem) / 2 + 1.65rem - 1.65rem - 1.1rem);
+  }
+  .rail__turn--out {
+    top: calc((1.4375rem - 1.65rem) / 2);
+  }
+  .project--east .rail__turn--in {
+    left: -6.5rem;
     width: calc(1.65rem + 1.1rem);
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
     background-image: radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 1.65rem / 3), #b86428 calc(1.1rem + 1.65rem / 3) calc(1.1rem + 1.65rem * 2 / 3), #868f59 calc(1.1rem + 1.65rem * 2 / 3) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
   }
-  .project--east .rail__run::after {
-    top: 0;
-    left: 100%;
+  .project--east .rail__turn--out {
+    right: -6.5rem;
     width: calc(1.65rem + 1.1rem);
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
     background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem / 3), #b86428 calc(1.1rem + 1.65rem / 3) calc(1.1rem + 1.65rem * 2 / 3), #1b3c54 calc(1.1rem + 1.65rem * 2 / 3) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
   }
-  .project--west .rail__run::after {
-    bottom: 0;
-    left: 100%;
+  .project--west .rail__turn--in {
+    right: -6.5rem;
     width: calc(1.65rem + 1.1rem);
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
     background-image: radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem / 3), #b86428 calc(1.1rem + 1.65rem / 3) calc(1.1rem + 1.65rem * 2 / 3), #1b3c54 calc(1.1rem + 1.65rem * 2 / 3) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
   }
-  .project--west .rail__run::before {
-    top: 0;
-    right: 100%;
+  .project--west .rail__turn--out {
+    left: -6.5rem;
     width: calc(1.65rem + 1.1rem);
     height: calc(1.65rem + 1.1rem);
     margin: 0;
@@ -1198,5 +1227,148 @@ a:focus-visible {
   }
   .project--west .rail__taper--out {
     left: -6.5rem;
+  }
+  /*
+   * DRAWING THE RAIL
+   *
+   * The path above is the whole path, always there. What moves is a mask on each piece of it,
+   * opening in the direction the ribbon travels, so the line appears to draw itself ahead of you
+   * as you scroll. Until it arrives, a title is the colour it always was.
+   *
+   * Everything is keyed to one line across the viewport, 40% down: a piece of the path starts
+   * opening when it crosses that line. The runs down the margins open at exactly the rate you
+   * scroll, so their tip sits on that line; the runs across a title open faster, because a title
+   * is a thousand pixels wide and you would be scrolling all day.
+   *
+   * My name and its turn are the exception. They are at the top of the page, above the line
+   * before you have scrolled at all, so they run off the page's own scroll instead.
+   */
+  @keyframes rail-draw-right {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes rail-draw-left {
+    from {
+      clip-path: inset(0 0 0 100%);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @keyframes rail-draw-down {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @supports (animation-timeline: view()) {
+    .intro h1 .name__band,
+    .intro h1::after,
+    .rail__taper,
+    .rail__band,
+    .rail__run,
+    .section > .wrap > h2::before,
+    .section > .wrap > h2::after,
+    .rail__turn,
+    .section > .wrap::after,
+    .project:not(.project--last)::after {
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view(block auto 60%);
+    }
+    .intro h1 .name__band {
+      animation-name: band-extend-square;
+      animation-timeline: scroll(root block);
+      animation-range: 0 55px;
+    }
+    @keyframes band-extend-square {
+      from {
+        width: 1.32em;
+        border-radius: 0.66em;
+      }
+      18% {
+        border-radius: 0.66em 0 0 0.66em;
+      }
+      to {
+        width: 100%;
+        border-radius: 0.66em 0 0 0.66em;
+      }
+    }
+    .intro h1::after {
+      animation-name: rail-draw-right;
+      animation-timeline: scroll(root block);
+      animation-range: 55px 80px;
+    }
+    .rail__taper--name {
+      animation-name: rail-draw-down;
+      animation-timeline: scroll(root block);
+      animation-range: 80px 30vh;
+    }
+    /*
+     * A run down a margin opens at the rate you scroll, so its end sits just under the line.
+     * The 90px is the head start the run across the title above it needs to finish first;
+     * without it the margin starts drawing while the title is still filling in.
+     */
+    .rail__taper--out,
+    .section > .wrap::after,
+    .project:not(.project--last)::after {
+      animation-name: rail-draw-down;
+      animation-range: entry 40px entry 100%;
+    }
+    .rail__taper--in {
+      animation-name: rail-draw-down;
+      animation-range: cover 14% cover 22%;
+    }
+    .section:not(.rail--back) .rail__band,
+    .project--east .rail__run {
+      animation-name: rail-draw-right;
+      animation-range: cover 0% cover 14%;
+    }
+    .rail--back .rail__band,
+    .project--west .rail__run {
+      animation-name: rail-draw-left;
+      animation-range: cover 0% cover 14%;
+    }
+    .section:not(.rail--back) > .wrap > h2::before,
+    .rail--back > .wrap > h2::after,
+    .rail__turn--in {
+      animation-name: rail-draw-down;
+      animation-range: cover 0% cover 5%;
+    }
+    .section:not(.rail--back) > .wrap > h2::after,
+    .project--east .rail__turn--out {
+      animation-name: rail-draw-right;
+      animation-range: cover 12% cover 18%;
+    }
+    .rail--back > .wrap > h2::before,
+    .project--west .rail__turn--out {
+      animation-name: rail-draw-left;
+      animation-range: cover 12% cover 18%;
+    }
+  }
+}
+@media only screen and (min-width: 60rem) and (prefers-reduced-motion: reduce) {
+  .intro h1 .name__band,
+  .intro h1::after,
+  .rail__taper,
+  .rail__band,
+  .rail__run,
+  .section > .wrap > h2::before,
+  .section > .wrap > h2::after,
+  .rail__turn,
+  .section > .wrap::after,
+  .project:not(.project--last)::after {
+    clip-path: none;
+    animation: none;
+  }
+  .intro h1 .name__band {
+    width: 100%;
   }
 }
