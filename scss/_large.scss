@@ -14,7 +14,7 @@ h1 {
     display: grid;
     grid-template-columns: 3fr 2fr;
     align-items: center;
-    gap: 2.5rem;
+    gap: $projectGap;
     margin-bottom: 4rem;
 }
 
@@ -321,11 +321,17 @@ h1 {
     background-attachment: fixed, scroll;
 }
 
-// The title sits in the right-hand column, three fifths of the way across the piece
+/*
+ * The title starts exactly where the piece's words start, so it reads as the head of that
+ * column rather than as a label floating over the gutter. The run is wider than the piece
+ * by one lane less a turn at each end, so the padding is that overhang, plus the 3fr
+ * column, plus the gap. The 3fr column is 60% of the piece less the gap, so 60% of the
+ * piece and two fifths of the gap come to the same thing.
+ */
 .rail__run-text {
     display: flex;
     align-items: center;
-    padding-left: calc(60% + 0.25rem);
+    padding-left: calc(60% + #{$railLane} - #{$railPiece} - #{$railTurn} + 0.4 * #{$projectGap});
     color: #fff;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     font-size: 1.25rem;
