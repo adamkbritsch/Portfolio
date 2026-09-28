@@ -219,6 +219,7 @@ h1 {
     --w2: calc(var(--n) * 2 / 3 * 100%);
     --w3: calc(var(--n) * 100%);
 
+    display: block;
     position: absolute;
     width: calc(var(--wide) * 1rem);
     pointer-events: none;
@@ -382,6 +383,7 @@ h1 {
  * height above the run's bottom edge; the one it leaves by starts at the run's top.
  */
 .rail__turn {
+    display: block;
     position: absolute;
     pointer-events: none;
 }

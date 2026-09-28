@@ -320,6 +320,16 @@ a {
     color: $ink;
 }
 
+// The rail only runs from 60rem up, where there is a lane beside the content for it (see
+// _large.scss). Until then none of its parts are rendered at all: the copies of the titles it
+// carries would otherwise print a second time under every heading.
+.rail__band,
+.rail__run,
+.rail__turn,
+.rail__taper {
+    display: none;
+}
+
 .intro__lede {
     max-width: $textWidth;
     font-size: 1.1875rem;

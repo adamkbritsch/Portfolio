@@ -588,6 +588,13 @@ a:focus-visible {
   color: #1d1c1a;
 }
 
+.rail__band,
+.rail__run,
+.rail__turn,
+.rail__taper {
+  display: none;
+}
+
 .intro__lede {
   max-width: 42rem;
   font-size: 1.1875rem;
@@ -1035,6 +1042,7 @@ a:focus-visible {
     --w1: calc(var(--n) / 3 * 100%);
     --w2: calc(var(--n) * 2 / 3 * 100%);
     --w3: calc(var(--n) * 100%);
+    display: block;
     position: absolute;
     width: calc(var(--wide) * 1rem);
     pointer-events: none;
@@ -1148,6 +1156,7 @@ a:focus-visible {
    * height above the run's bottom edge; the one it leaves by starts at the run's top.
    */
   .rail__turn {
+    display: block;
     position: absolute;
     pointer-events: none;
   }
