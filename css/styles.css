@@ -310,6 +310,12 @@ template {
   display: none;
 }
 
+/*
+ * The window the ribbon is seen through: a cream cover over the top tenth and the bottom tenth
+ * of the screen, painted as the ribbon's own first background layer with background-attachment
+ * fixed, so it is pinned to the viewport and clipped to the ribbon. No script, no animation,
+ * and it works in every browser.
+ */
 *,
 *::before,
 *::after {
@@ -428,16 +434,6 @@ a:focus-visible {
   border-bottom: 0;
   background: #f4f1ea;
 }
-.site-header::after {
-  content: "";
-  display: block;
-  width: calc(100% - 32px);
-  max-width: calc(72rem - 32px);
-  height: 12px;
-  margin: 0 auto;
-  border-radius: 6px;
-  background-image: linear-gradient(to bottom, #1b3c54 0 6px, #b86428 6px 9.7px, #868f59 9.7px 12px);
-}
 .site-header .wrap {
   display: flex;
   flex-wrap: wrap;
@@ -511,9 +507,7 @@ a:focus-visible {
   width: 96px;
   height: 96px;
   margin-bottom: 1.25rem;
-  border: 4px solid #1b3c54;
   border-radius: 50%;
-  box-shadow: 0 0 0 3px #b86428;
 }
 
 /*
@@ -548,7 +542,8 @@ a:focus-visible {
   height: 1.32em;
   overflow: hidden;
   border-radius: 0.66em;
-  background-image: linear-gradient(to bottom, #1b3c54 0 50%, #b86428 50% 80.9%, #868f59 80.9% 100%);
+  background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(to bottom, #1b3c54 0 50%, #b86428 50% 80.9%, #868f59 80.9% 100%);
+  background-attachment: fixed, scroll;
   pointer-events: none;
   user-select: none;
 }
@@ -556,7 +551,12 @@ a:focus-visible {
 .name__band-text {
   display: block;
   padding: 0.06em 0 0 1.62em;
-  color: #fff;
+  color: transparent;
+  background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(#fff, #fff);
+  background-attachment: fixed, scroll;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   white-space: nowrap;
 }
 
@@ -871,7 +871,7 @@ a:focus-visible {
     font-size: 3.25rem;
   }
   .intro {
-    padding-top: 5.5rem;
+    padding-top: 13rem;
   }
   .project {
     display: grid;
@@ -943,17 +943,24 @@ a:focus-visible {
   }
   .rail__band {
     display: block;
-    background-image: linear-gradient(to bottom, #1b3c54 0 50%, #b86428 50% 80.9%, #868f59 80.9% 100%);
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(to bottom, #1b3c54 0 50%, #b86428 50% 80.9%, #868f59 80.9% 100%);
+    background-attachment: fixed, scroll;
   }
   .rail__band-text {
     display: flex;
     align-items: center;
     padding-left: calc(6.5rem - 2.64rem - 1.1rem);
-    color: #fff;
+    color: transparent;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(#fff, #fff);
+    background-attachment: fixed, scroll;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     white-space: nowrap;
   }
   .rail--back .rail__band {
-    background-image: linear-gradient(to bottom, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(to bottom, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll;
   }
   /*
    * The turns. Each is a quarter of concentric arcs: transparent inside the bend, then the three
@@ -974,7 +981,8 @@ a:focus-visible {
     height: calc(4.29rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 4.29rem * 0.191), #b86428 calc(1.1rem + 4.29rem * 0.191) calc(1.1rem + 4.29rem * 0.5), #1b3c54 calc(1.1rem + 4.29rem * 0.5) calc(1.1rem + 4.29rem), transparent calc(1.1rem + 4.29rem));
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 4.29rem * 0.191), #b86428 calc(1.1rem + 4.29rem * 0.191) calc(1.1rem + 4.29rem * 0.5), #1b3c54 calc(1.1rem + 4.29rem * 0.5) calc(1.1rem + 4.29rem), transparent calc(1.1rem + 4.29rem));
+    background-attachment: fixed, scroll;
   }
   .section:not(.rail--back) > .wrap > h2::after {
     top: calc((100% - 2.64rem) / 2);
@@ -983,7 +991,8 @@ a:focus-visible {
     height: calc(2.64rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem * 0.191), #b86428 calc(1.1rem + 2.64rem * 0.191) calc(1.1rem + 2.64rem * 0.5), #1b3c54 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem * 0.191), #b86428 calc(1.1rem + 2.64rem * 0.191) calc(1.1rem + 2.64rem * 0.5), #1b3c54 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-attachment: fixed, scroll;
   }
   .rail--back > .wrap > h2::after {
     right: -6.5rem;
@@ -992,7 +1001,8 @@ a:focus-visible {
     height: calc(2.64rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem * 0.191), #b86428 calc(1.1rem + 2.64rem * 0.191) calc(1.1rem + 2.64rem * 0.5), #1b3c54 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem * 0.191), #b86428 calc(1.1rem + 2.64rem * 0.191) calc(1.1rem + 2.64rem * 0.5), #1b3c54 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-attachment: fixed, scroll;
   }
   .rail--back > .wrap > h2::before {
     top: calc((100% - 2.64rem) / 2);
@@ -1001,7 +1011,8 @@ a:focus-visible {
     height: calc(2.64rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 100% 100%, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem * 0.5), #b86428 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem * 0.809), #868f59 calc(1.1rem + 2.64rem * 0.809) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), radial-gradient(circle at 100% 100%, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem * 0.5), #b86428 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem * 0.809), #868f59 calc(1.1rem + 2.64rem * 0.809) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-attachment: fixed, scroll;
   }
   .section:not(.rail--back) > .wrap > h2::before {
     bottom: calc((100% - 2.64rem) / 2);
@@ -1010,7 +1021,8 @@ a:focus-visible {
     height: calc(2.64rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem * 0.5), #b86428 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem * 0.809), #868f59 calc(1.1rem + 2.64rem * 0.809) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem * 0.5), #b86428 calc(1.1rem + 2.64rem * 0.5) calc(1.1rem + 2.64rem * 0.809), #868f59 calc(1.1rem + 2.64rem * 0.809) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+    background-attachment: fixed, scroll;
   }
   /*
    * The runs down the margins. Every one of them travels downward, so every one of them carries
@@ -1022,7 +1034,8 @@ a:focus-visible {
     width: 2.64rem;
     top: calc((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem - 1px);
     bottom: calc(-1 * (3.5rem * 2 + (2.3rem - 2.64rem) / 2 - 1.1rem) - 1px);
-    background-image: linear-gradient(to right, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(to right, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll;
     pointer-events: none;
   }
   .rail--down-right > .wrap::after {
@@ -1046,13 +1059,14 @@ a:focus-visible {
     display: block;
     position: absolute;
     width: calc(var(--rail-w) * 1rem);
-    background-image: linear-gradient(to right, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(to right, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll;
     pointer-events: none;
   }
   .rail__drop--name {
     --rail-w: 2.64;
     right: 0;
-    top: calc(6.4425rem + 4.29rem + 1.1rem - 1px);
+    top: calc(13.9425rem + 4.29rem + 1.1rem - 1px);
     bottom: calc(-1 * (3.5rem + (2.3rem - 2.64rem) / 2 - 1.1rem) - 1px);
   }
   /*
@@ -1087,24 +1101,28 @@ a:focus-visible {
   }
   .rail__run {
     display: block;
-    background-image: linear-gradient(to bottom, #1b3c54 0 50%, #b86428 50% 80.9%, #868f59 80.9% 100%);
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(to bottom, #1b3c54 0 50%, #b86428 50% 80.9%, #868f59 80.9% 100%);
+    background-attachment: fixed, scroll;
   }
   .project--west .rail__run {
-    background-image: linear-gradient(to bottom, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(to bottom, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll;
   }
   .rail__run-text {
     display: flex;
     align-items: center;
     padding-left: calc(60% + 0.25rem);
-    color: #fff;
+    color: transparent;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(#fff, #fff);
+    background-attachment: fixed, scroll;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-size: 1.25rem;
     font-weight: 600;
     font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
     line-height: 1.15;
     letter-spacing: normal;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.18em;
     white-space: nowrap;
   }
   /*
@@ -1129,7 +1147,8 @@ a:focus-visible {
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 1.65rem * 0.5), #b86428 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem * 0.809), #868f59 calc(1.1rem + 1.65rem * 0.809) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 1.65rem * 0.5), #b86428 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem * 0.809), #868f59 calc(1.1rem + 1.65rem * 0.809) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-attachment: fixed, scroll;
   }
   .project--east .rail__turn--out {
     right: -6.5rem;
@@ -1137,7 +1156,8 @@ a:focus-visible {
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem * 0.191), #b86428 calc(1.1rem + 1.65rem * 0.191) calc(1.1rem + 1.65rem * 0.5), #1b3c54 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem * 0.191), #b86428 calc(1.1rem + 1.65rem * 0.191) calc(1.1rem + 1.65rem * 0.5), #1b3c54 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-attachment: fixed, scroll;
   }
   .project--west .rail__turn--in {
     right: -6.5rem;
@@ -1145,7 +1165,8 @@ a:focus-visible {
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem * 0.191), #b86428 calc(1.1rem + 1.65rem * 0.191) calc(1.1rem + 1.65rem * 0.5), #1b3c54 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 1.65rem * 0.191), #b86428 calc(1.1rem + 1.65rem * 0.191) calc(1.1rem + 1.65rem * 0.5), #1b3c54 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-attachment: fixed, scroll;
   }
   .project--west .rail__turn--out {
     left: -6.5rem;
@@ -1153,7 +1174,8 @@ a:focus-visible {
     height: calc(1.65rem + 1.1rem);
     margin: 0;
     border-radius: 0;
-    background-image: radial-gradient(circle at 100% 100%, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 1.65rem * 0.5), #b86428 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem * 0.809), #868f59 calc(1.1rem + 1.65rem * 0.809) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), radial-gradient(circle at 100% 100%, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 1.65rem * 0.5), #b86428 calc(1.1rem + 1.65rem * 0.5) calc(1.1rem + 1.65rem * 0.809), #868f59 calc(1.1rem + 1.65rem * 0.809) calc(1.1rem + 1.65rem), transparent calc(1.1rem + 1.65rem));
+    background-attachment: fixed, scroll;
   }
   .project:not(.project--last)::after {
     content: "";
@@ -1161,7 +1183,8 @@ a:focus-visible {
     top: calc((1.4375rem - 1.65rem) / 2 + 1.65rem + 1.1rem - 1px);
     bottom: calc(-4rem + (1.4375rem - 1.65rem) / 2 + 1.1rem - 1px);
     width: 1.65rem;
-    background-image: linear-gradient(to right, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), linear-gradient(to right, #868f59 0 calc(100% - 80.9%), #b86428 calc(100% - 80.9%) calc(100% - 50%), #1b3c54 calc(100% - 50%) 100%);
+    background-attachment: fixed, scroll;
     pointer-events: none;
   }
   .project--east:not(.project--last)::after {
@@ -1193,105 +1216,54 @@ a:focus-visible {
     left: -6.5rem;
   }
   /*
-   * DRAWING THE RAIL
+   * THE TURNS THAT CHANGE THICKNESS
    *
-   * The path above is the whole path, always there. What moves is each piece of it being drawn
-   * in, in the direction the ribbon travels, and nothing starts until the piece before it has
-   * finished: a turn, then the run across the title, then the turn out of it, then the run down
-   * the margin, then the next turn.
-   *
-   * Every one of those is measured in pixels of scroll from the moment the piece crosses a line
-   * 40% down the viewport, and each piece's start is the one before it's finish. The runs across
-   * a title take 40px of scroll, because a title run is a thousand pixels wide and tracking the
-   * scroll would take all day; the runs down the margins take exactly as long as they are, so
-   * their end sits on the line.
-   *
-   * The long pieces are drawn by scaling, which the compositor can do on its own thread: a run's
-   * stripes are even along the way it travels, so scaling it that way does not show. The small
-   * ones are clipped, which is repainted, but they are small. Nothing here animates width or
-   * position, which would be laid out again every frame.
-   *
-   * My name and its turn are the exception. They sit above the line before you have scrolled at
-   * all, so they run off the page's own scroll.
+   * Where the ribbon is a different thickness on the two sides of a bend, the bend itself is the
+   * change: the outer edge stays a circle and the inner edge winds in or out across the quarter
+   * turn, so the ribbon narrows or widens as it goes round rather than stepping into it.
+   * Concentric arcs cannot do that, so these five are drawn as SVG, each stripe a band between
+   * two spirals. They are generated, not written: the generator is turns.py in the session notes.
    */
-  @keyframes rail-sweep-right {
-    from {
-      transform: scaleX(0);
-    }
-    to {
-      transform: scaleX(1);
-    }
+  .intro h1::after {
+    width: 5.39rem;
+    height: 5.39rem;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 86.2 86.2%27><path fill=%27%231b3c54%27 d=%27M0.0 0.0 L4.8 0.1 L9.7 0.5 L14.4 1.2 L19.2 2.2 L23.9 3.4 L28.5 4.8 L33.0 6.6 L37.4 8.5 L41.7 10.8 L45.9 13.2 L49.9 15.9 L53.8 18.8 L57.5 21.9 L61.0 25.3 L64.3 28.8 L67.4 32.5 L70.3 36.3 L73.0 40.4 L75.5 44.5 L77.7 48.8 L79.7 53.2 L81.4 57.8 L82.9 62.4 L84.1 67.0 L85.0 71.8 L85.7 76.6 L86.1 81.4 L86.2 86.2 L65.1 86.2 L64.5 82.6 L63.8 79.1 L62.8 75.6 L61.6 72.2 L60.3 68.9 L58.8 65.7 L57.1 62.6 L55.3 59.6 L53.3 56.8 L51.1 54.1 L48.9 51.6 L46.5 49.2 L44.0 46.9 L41.4 44.9 L38.7 43.0 L35.9 41.2 L33.0 39.7 L30.1 38.3 L27.2 37.1 L24.2 36.1 L21.1 35.2 L18.1 34.6 L15.0 34.1 L12.0 33.8 L8.9 33.7 L5.9 33.7 L2.9 33.9 L0.0 34.3 Z%27/><path fill=%27%23b86428%27 d=%27M0.0 34.3 L2.9 33.9 L5.9 33.7 L8.9 33.7 L12.0 33.8 L15.0 34.1 L18.1 34.6 L21.1 35.2 L24.2 36.1 L27.2 37.1 L30.1 38.3 L33.0 39.7 L35.9 41.2 L38.7 43.0 L41.4 44.9 L44.0 46.9 L46.5 49.2 L48.9 51.6 L51.1 54.1 L53.3 56.8 L55.3 59.6 L57.1 62.6 L58.8 65.7 L60.3 68.9 L61.6 72.2 L62.8 75.6 L63.8 79.1 L64.5 82.6 L65.1 86.2 L52.1 86.2 L51.2 83.4 L50.2 80.6 L49.1 77.9 L47.8 75.3 L46.4 72.9 L44.8 70.6 L43.2 68.4 L41.4 66.3 L39.6 64.4 L37.6 62.6 L35.6 61.0 L33.6 59.5 L31.4 58.2 L29.3 57.0 L27.1 55.9 L24.9 55.1 L22.6 54.4 L20.4 53.8 L18.2 53.4 L16.0 53.1 L13.8 52.9 L11.7 52.9 L9.6 53.1 L7.5 53.3 L5.5 53.7 L3.6 54.2 L1.8 54.8 L0.0 55.5 Z%27/><path fill=%27%23868f59%27 d=%27M0.0 55.5 L1.8 54.8 L3.6 54.2 L5.5 53.7 L7.5 53.3 L9.6 53.1 L11.7 52.9 L13.8 52.9 L16.0 53.1 L18.2 53.4 L20.4 53.8 L22.6 54.4 L24.9 55.1 L27.1 55.9 L29.3 57.0 L31.4 58.2 L33.6 59.5 L35.6 61.0 L37.6 62.6 L39.6 64.4 L41.4 66.3 L43.2 68.4 L44.8 70.6 L46.4 72.9 L47.8 75.3 L49.1 77.9 L50.2 80.6 L51.2 83.4 L52.1 86.2 L44.0 86.2 L43.0 83.8 L41.8 81.5 L40.6 79.3 L39.2 77.3 L37.8 75.4 L36.2 73.6 L34.6 71.9 L32.8 70.4 L31.1 69.1 L29.3 67.8 L27.4 66.8 L25.6 65.9 L23.7 65.1 L21.8 64.5 L19.9 64.0 L18.0 63.6 L16.2 63.4 L14.4 63.4 L12.6 63.4 L10.9 63.6 L9.3 63.9 L7.7 64.3 L6.2 64.8 L4.8 65.4 L3.4 66.1 L2.2 66.9 L1.0 67.7 L0.0 68.6 Z%27/></svg>");
+    background-attachment: fixed, scroll;
   }
-  @keyframes rail-fall {
-    from {
-      transform: scaleY(0);
-    }
-    to {
-      transform: scaleY(1);
-    }
+  #work > .wrap > h2::before {
+    width: 3.74rem;
+    height: 3.74rem;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 59.8 59.8%27><path fill=%27%23868f59%27 d=%27M59.8 0.0 L56.5 0.1 L53.1 0.4 L49.8 0.8 L46.5 1.5 L43.3 2.3 L40.1 3.4 L36.9 4.6 L33.9 5.9 L30.9 7.5 L28.0 9.2 L25.2 11.0 L22.5 13.1 L20.0 15.2 L17.5 17.5 L15.2 20.0 L13.1 22.5 L11.0 25.2 L9.2 28.0 L7.5 30.9 L5.9 33.9 L4.6 36.9 L3.4 40.1 L2.3 43.3 L1.5 46.5 L0.8 49.8 L0.4 53.1 L0.1 56.5 L0.0 59.8 L5.0 59.8 L5.2 56.8 L5.6 53.7 L6.1 50.7 L6.8 47.7 L7.7 44.8 L8.7 42.0 L9.9 39.2 L11.2 36.4 L12.7 33.8 L14.4 31.3 L16.1 28.8 L18.0 26.5 L20.0 24.3 L22.2 22.2 L24.4 20.2 L26.8 18.3 L29.2 16.6 L31.7 15.1 L34.3 13.7 L37.0 12.4 L39.7 11.3 L42.5 10.4 L45.4 9.6 L48.2 8.9 L51.1 8.5 L54.0 8.2 L56.9 8.0 L59.8 8.1 Z%27/><path fill=%27%23b86428%27 d=%27M59.8 8.1 L56.9 8.0 L54.0 8.2 L51.1 8.5 L48.2 8.9 L45.4 9.6 L42.5 10.4 L39.7 11.3 L37.0 12.4 L34.3 13.7 L31.7 15.1 L29.2 16.6 L26.8 18.3 L24.4 20.2 L22.2 22.2 L20.0 24.3 L18.0 26.5 L16.1 28.8 L14.4 31.3 L12.7 33.8 L11.2 36.4 L9.9 39.2 L8.7 42.0 L7.7 44.8 L6.8 47.7 L6.1 50.7 L5.6 53.7 L5.2 56.8 L5.0 59.8 L13.2 59.8 L13.6 57.2 L14.1 54.7 L14.7 52.2 L15.5 49.7 L16.4 47.3 L17.4 45.0 L18.6 42.7 L19.9 40.6 L21.2 38.5 L22.7 36.5 L24.3 34.7 L26.0 32.9 L27.8 31.2 L29.7 29.7 L31.6 28.2 L33.6 26.9 L35.6 25.7 L37.7 24.7 L39.9 23.7 L42.1 22.9 L44.3 22.2 L46.5 21.7 L48.7 21.3 L51.0 21.0 L53.2 20.8 L55.4 20.8 L57.7 20.9 L59.8 21.1 Z%27/><path fill=%27%231b3c54%27 d=%27M59.8 21.1 L57.7 20.9 L55.4 20.8 L53.2 20.8 L51.0 21.0 L48.7 21.3 L46.5 21.7 L44.3 22.2 L42.1 22.9 L39.9 23.7 L37.7 24.7 L35.6 25.7 L33.6 26.9 L31.6 28.2 L29.7 29.7 L27.8 31.2 L26.0 32.9 L24.3 34.7 L22.7 36.5 L21.2 38.5 L19.9 40.6 L18.6 42.7 L17.4 45.0 L16.4 47.3 L15.5 49.7 L14.7 52.2 L14.1 54.7 L13.6 57.2 L13.2 59.8 L26.4 59.8 L27.0 58.0 L27.7 56.2 L28.5 54.5 L29.4 52.9 L30.4 51.4 L31.5 49.9 L32.6 48.6 L33.8 47.3 L35.0 46.1 L36.3 45.1 L37.6 44.1 L39.0 43.2 L40.4 42.5 L41.8 41.8 L43.2 41.2 L44.6 40.8 L46.1 40.4 L47.5 40.1 L48.9 40.0 L50.2 39.9 L51.6 39.9 L52.9 40.0 L54.2 40.2 L55.4 40.5 L56.6 40.8 L57.7 41.2 L58.8 41.7 L59.8 42.2 Z%27/></svg>");
+    background-attachment: fixed, scroll;
   }
-  @property --rail-sweep {
-    syntax: "<angle>";
-    inherits: false;
-    initial-value: 0deg;
+  #design > .wrap > h2::after {
+    width: 3.74rem;
+    height: 3.74rem;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 59.8 59.8%27><path fill=%27%231b3c54%27 d=%27M0.0 0.0 L3.4 0.1 L6.7 0.4 L10.0 0.8 L13.3 1.5 L16.6 2.3 L19.8 3.4 L22.9 4.6 L26.0 5.9 L28.9 7.5 L31.8 9.2 L34.6 11.0 L37.3 13.1 L39.9 15.2 L42.3 17.5 L44.6 20.0 L46.8 22.5 L48.8 25.2 L50.7 28.0 L52.4 30.9 L53.9 33.9 L55.3 36.9 L56.5 40.1 L57.5 43.3 L58.3 46.5 L59.0 49.8 L59.5 53.1 L59.7 56.5 L59.8 59.8 L46.6 59.8 L46.3 57.2 L45.8 54.7 L45.1 52.2 L44.4 49.7 L43.5 47.3 L42.4 45.0 L41.3 42.7 L40.0 40.6 L38.6 38.5 L37.1 36.5 L35.5 34.7 L33.8 32.9 L32.0 31.2 L30.2 29.7 L28.3 28.2 L26.3 26.9 L24.2 25.7 L22.1 24.7 L20.0 23.7 L17.8 22.9 L15.6 22.2 L13.3 21.7 L11.1 21.3 L8.9 21.0 L6.6 20.8 L4.4 20.8 L2.2 20.9 L0.0 21.1 Z%27/><path fill=%27%23b86428%27 d=%27M0.0 21.1 L2.2 20.9 L4.4 20.8 L6.6 20.8 L8.9 21.0 L11.1 21.3 L13.3 21.7 L15.6 22.2 L17.8 22.9 L20.0 23.7 L22.1 24.7 L24.2 25.7 L26.3 26.9 L28.3 28.2 L30.2 29.7 L32.0 31.2 L33.8 32.9 L35.5 34.7 L37.1 36.5 L38.6 38.5 L40.0 40.6 L41.3 42.7 L42.4 45.0 L43.5 47.3 L44.4 49.7 L45.1 52.2 L45.8 54.7 L46.3 57.2 L46.6 59.8 L38.5 59.8 L38.0 57.7 L37.3 55.6 L36.6 53.6 L35.7 51.7 L34.8 49.8 L33.7 48.0 L32.6 46.3 L31.4 44.7 L30.1 43.2 L28.7 41.8 L27.3 40.5 L25.8 39.3 L24.3 38.2 L22.7 37.2 L21.1 36.3 L19.4 35.5 L17.8 34.8 L16.1 34.2 L14.4 33.8 L12.7 33.4 L11.0 33.2 L9.4 33.0 L7.7 33.0 L6.1 33.0 L4.5 33.2 L3.0 33.4 L1.5 33.8 L0.0 34.2 Z%27/><path fill=%27%23868f59%27 d=%27M0.0 34.2 L1.5 33.8 L3.0 33.4 L4.5 33.2 L6.1 33.0 L7.7 33.0 L9.4 33.0 L11.0 33.2 L12.7 33.4 L14.4 33.8 L16.1 34.2 L17.8 34.8 L19.4 35.5 L21.1 36.3 L22.7 37.2 L24.3 38.2 L25.8 39.3 L27.3 40.5 L28.7 41.8 L30.1 43.2 L31.4 44.7 L32.6 46.3 L33.7 48.0 L34.8 49.8 L35.7 51.7 L36.6 53.6 L37.3 55.6 L38.0 57.7 L38.5 59.8 L33.4 59.8 L32.8 58.0 L32.1 56.2 L31.3 54.5 L30.4 52.9 L29.4 51.4 L28.4 49.9 L27.2 48.6 L26.1 47.3 L24.8 46.1 L23.5 45.1 L22.2 44.1 L20.8 43.2 L19.5 42.5 L18.0 41.8 L16.6 41.2 L15.2 40.8 L13.8 40.4 L12.4 40.1 L11.0 40.0 L9.6 39.9 L8.3 39.9 L6.9 40.0 L5.7 40.2 L4.4 40.5 L3.2 40.8 L2.1 41.2 L1.0 41.7 L0.0 42.2 Z%27/></svg>");
+    background-attachment: fixed, scroll;
   }
-  @keyframes rail-turn-sweep {
-    from {
-      --rail-sweep: 0deg;
-    }
-    to {
-      --rail-sweep: 90deg;
-    }
+  #work .project--last .rail__turn--out {
+    width: 3.74rem;
+    height: 3.74rem;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 59.8 59.8%27><path fill=%27%23868f59%27 d=%27M59.8 0.0 L56.5 0.1 L53.1 0.4 L49.8 0.8 L46.5 1.5 L43.3 2.3 L40.1 3.4 L36.9 4.6 L33.9 5.9 L30.9 7.5 L28.0 9.2 L25.2 11.0 L22.5 13.1 L20.0 15.2 L17.5 17.5 L15.2 20.0 L13.1 22.5 L11.0 25.2 L9.2 28.0 L7.5 30.9 L5.9 33.9 L4.6 36.9 L3.4 40.1 L2.3 43.3 L1.5 46.5 L0.8 49.8 L0.4 53.1 L0.1 56.5 L0.0 59.8 L8.1 59.8 L8.0 56.9 L8.2 54.0 L8.5 51.1 L8.9 48.2 L9.6 45.4 L10.4 42.5 L11.3 39.7 L12.4 37.0 L13.7 34.3 L15.1 31.7 L16.6 29.2 L18.3 26.8 L20.2 24.4 L22.2 22.2 L24.3 20.0 L26.5 18.0 L28.8 16.1 L31.3 14.4 L33.8 12.7 L36.4 11.2 L39.2 9.9 L42.0 8.7 L44.8 7.7 L47.7 6.8 L50.7 6.1 L53.7 5.6 L56.8 5.2 L59.8 5.0 Z%27/><path fill=%27%23b86428%27 d=%27M59.8 5.0 L56.8 5.2 L53.7 5.6 L50.7 6.1 L47.7 6.8 L44.8 7.7 L42.0 8.7 L39.2 9.9 L36.4 11.2 L33.8 12.7 L31.3 14.4 L28.8 16.1 L26.5 18.0 L24.3 20.0 L22.2 22.2 L20.2 24.4 L18.3 26.8 L16.6 29.2 L15.1 31.7 L13.7 34.3 L12.4 37.0 L11.3 39.7 L10.4 42.5 L9.6 45.4 L8.9 48.2 L8.5 51.1 L8.2 54.0 L8.0 56.9 L8.1 59.8 L21.1 59.8 L20.9 57.7 L20.8 55.4 L20.8 53.2 L21.0 51.0 L21.3 48.7 L21.7 46.5 L22.2 44.3 L22.9 42.1 L23.7 39.9 L24.7 37.7 L25.7 35.6 L26.9 33.6 L28.2 31.6 L29.7 29.7 L31.2 27.8 L32.9 26.0 L34.7 24.3 L36.5 22.7 L38.5 21.2 L40.6 19.9 L42.7 18.6 L45.0 17.4 L47.3 16.4 L49.7 15.5 L52.2 14.7 L54.7 14.1 L57.2 13.6 L59.8 13.2 Z%27/><path fill=%27%231b3c54%27 d=%27M59.8 13.2 L57.2 13.6 L54.7 14.1 L52.2 14.7 L49.7 15.5 L47.3 16.4 L45.0 17.4 L42.7 18.6 L40.6 19.9 L38.5 21.2 L36.5 22.7 L34.7 24.3 L32.9 26.0 L31.2 27.8 L29.7 29.7 L28.2 31.6 L26.9 33.6 L25.7 35.6 L24.7 37.7 L23.7 39.9 L22.9 42.1 L22.2 44.3 L21.7 46.5 L21.3 48.7 L21.0 51.0 L20.8 53.2 L20.8 55.4 L20.9 57.7 L21.1 59.8 L42.2 59.8 L41.7 58.8 L41.2 57.7 L40.8 56.6 L40.5 55.4 L40.2 54.2 L40.0 52.9 L39.9 51.6 L39.9 50.2 L40.0 48.9 L40.1 47.5 L40.4 46.1 L40.8 44.6 L41.2 43.2 L41.8 41.8 L42.5 40.4 L43.2 39.0 L44.1 37.6 L45.1 36.3 L46.1 35.0 L47.3 33.8 L48.6 32.6 L49.9 31.5 L51.4 30.4 L52.9 29.4 L54.5 28.5 L56.2 27.7 L58.0 27.0 L59.8 26.4 Z%27/></svg>");
+    background-attachment: fixed, scroll;
+  }
+  #design .project--last .rail__turn--out {
+    width: 3.74rem;
+    height: 3.74rem;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 90%, #f4f1ea 90% 100%), url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 59.8 59.8%27><path fill=%27%231b3c54%27 d=%27M0.0 0.0 L3.4 0.1 L6.7 0.4 L10.0 0.8 L13.3 1.5 L16.6 2.3 L19.8 3.4 L22.9 4.6 L26.0 5.9 L28.9 7.5 L31.8 9.2 L34.6 11.0 L37.3 13.1 L39.9 15.2 L42.3 17.5 L44.6 20.0 L46.8 22.5 L48.8 25.2 L50.7 28.0 L52.4 30.9 L53.9 33.9 L55.3 36.9 L56.5 40.1 L57.5 43.3 L58.3 46.5 L59.0 49.8 L59.5 53.1 L59.7 56.5 L59.8 59.8 L38.7 59.8 L38.9 57.7 L39.0 55.4 L39.0 53.2 L38.9 51.0 L38.6 48.7 L38.1 46.5 L37.6 44.3 L36.9 42.1 L36.1 39.9 L35.2 37.7 L34.1 35.6 L32.9 33.6 L31.6 31.6 L30.2 29.7 L28.6 27.8 L27.0 26.0 L25.2 24.3 L23.3 22.7 L21.3 21.2 L19.3 19.9 L17.1 18.6 L14.8 17.4 L12.5 16.4 L10.1 15.5 L7.7 14.7 L5.2 14.1 L2.6 13.6 L0.0 13.2 Z%27/><path fill=%27%23b86428%27 d=%27M0.0 13.2 L2.6 13.6 L5.2 14.1 L7.7 14.7 L10.1 15.5 L12.5 16.4 L14.8 17.4 L17.1 18.6 L19.3 19.9 L21.3 21.2 L23.3 22.7 L25.2 24.3 L27.0 26.0 L28.6 27.8 L30.2 29.7 L31.6 31.6 L32.9 33.6 L34.1 35.6 L35.2 37.7 L36.1 39.9 L36.9 42.1 L37.6 44.3 L38.1 46.5 L38.6 48.7 L38.9 51.0 L39.0 53.2 L39.0 55.4 L38.9 57.7 L38.7 59.8 L25.7 59.8 L26.1 58.4 L26.4 56.9 L26.7 55.3 L26.8 53.7 L26.9 52.1 L26.8 50.5 L26.7 48.8 L26.4 47.1 L26.1 45.4 L25.6 43.7 L25.0 42.1 L24.4 40.4 L23.6 38.8 L22.7 37.2 L21.7 35.6 L20.6 34.0 L19.4 32.6 L18.0 31.1 L16.6 29.8 L15.1 28.5 L13.5 27.2 L11.8 26.1 L10.0 25.1 L8.2 24.1 L6.2 23.3 L4.2 22.5 L2.1 21.9 L0.0 21.4 Z%27/><path fill=%27%23868f59%27 d=%27M0.0 21.4 L2.1 21.9 L4.2 22.5 L6.2 23.3 L8.2 24.1 L10.0 25.1 L11.8 26.1 L13.5 27.2 L15.1 28.5 L16.6 29.8 L18.0 31.1 L19.4 32.6 L20.6 34.0 L21.7 35.6 L22.7 37.2 L23.6 38.8 L24.4 40.4 L25.0 42.1 L25.6 43.7 L26.1 45.4 L26.4 47.1 L26.7 48.8 L26.8 50.5 L26.9 52.1 L26.8 53.7 L26.7 55.3 L26.4 56.9 L26.1 58.4 L25.7 59.8 L17.6 59.8 L18.1 58.8 L18.6 57.7 L19.0 56.6 L19.4 55.4 L19.6 54.2 L19.8 52.9 L19.9 51.6 L19.9 50.2 L19.9 48.9 L19.7 47.5 L19.4 46.1 L19.1 44.6 L18.6 43.2 L18.0 41.8 L17.4 40.4 L16.6 39.0 L15.7 37.6 L14.8 36.3 L13.7 35.0 L12.5 33.8 L11.3 32.6 L9.9 31.5 L8.5 30.4 L6.9 29.4 L5.3 28.5 L3.6 27.7 L1.8 27.0 L0.0 26.4 Z%27/></svg>");
+    background-attachment: fixed, scroll;
   }
   /*
-   * A turn opens by rotating a quarter of a conic mask about the centre its own arcs are struck
-   * from: clockwise from where the ribbon comes in, anticlockwise when the bend goes the other
-   * way. $at is that centre, $from the direction the ribbon arrives from (clockwise) or leaves
-   * by (anticlockwise).
+   * My name's circle still grows into its run as the page moves, where the browser can do it
+   * without script. Everything else about the ribbon is static: what moves is the window.
    */
-  @keyframes rail-draw-right {
-    from {
-      clip-path: inset(0 100% 0 0);
-    }
-    to {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-  @keyframes rail-draw-left {
-    from {
-      clip-path: inset(0 0 0 100%);
-    }
-    to {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-  @keyframes rail-draw-down {
-    from {
-      clip-path: inset(0 0 100% 0);
-    }
-    to {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-  @supports (animation-timeline: view()) {
-    .intro h1 .name__band,
-    .intro h1::after,
-    .rail__drop,
-    .rail__band,
-    .rail__band-text,
-    .rail__run,
-    .rail__run-text,
-    .section > .wrap > h2::before,
-    .section > .wrap > h2::after,
-    .rail__turn,
-    .section > .wrap::after,
-    .project:not(.project--last)::after {
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: scroll(root block);
-    }
+  @supports (animation-timeline: scroll()) {
     .intro h1 .name__band {
-      animation-name: band-extend-square;
+      width: 1.32em;
+      animation: band-extend-square linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 120px;
     }
     @keyframes band-extend-square {
       from {
@@ -1305,215 +1277,6 @@ a:focus-visible {
         width: 100%;
         border-radius: 0.66em 0 0 0.66em;
       }
-    }
-    .intro h1::after {
-      mask-image: conic-gradient(from 0deg at 0 100%, #000 0 var(--rail-sweep), transparent var(--rail-sweep) 360deg);
-      animation-name: rail-turn-sweep;
-    }
-    .rail--back > .wrap > h2::after,
-    .project--west .rail__turn--in {
-      mask-image: conic-gradient(from 90deg at 0 0, #000 0 var(--rail-sweep), transparent var(--rail-sweep) 360deg);
-      animation-name: rail-turn-sweep;
-    }
-    .section:not(.rail--back) > .wrap > h2::before,
-    .project--east .rail__turn--in {
-      mask-image: conic-gradient(from 180deg at 100% 0, transparent 0 calc(90deg - var(--rail-sweep)), #000 calc(90deg - var(--rail-sweep)) 360deg);
-      animation-name: rail-turn-sweep;
-    }
-    .section:not(.rail--back) .rail__band,
-    .project--east .rail__run {
-      transform-origin: left center;
-      animation-name: rail-sweep-right;
-      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-    .rail--back .rail__band,
-    .project--west .rail__run {
-      transform-origin: right center;
-      animation-name: rail-sweep-right;
-      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-    .section:not(.rail--back) .rail__band-text,
-    .project--east .rail__run-text {
-      animation-name: rail-draw-right;
-      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-    .rail--back .rail__band-text,
-    .project--west .rail__run-text {
-      animation-name: rail-draw-left;
-      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-    .section:not(.rail--back) > .wrap > h2::after,
-    .project--east .rail__turn--out {
-      mask-image: conic-gradient(from 0deg at 0 100%, #000 0 var(--rail-sweep), transparent var(--rail-sweep) 360deg);
-      animation-name: rail-turn-sweep;
-    }
-    .rail--back > .wrap > h2::before,
-    .project--west .rail__turn--out {
-      mask-image: conic-gradient(from 270deg at 100% 100%, transparent 0 calc(90deg - var(--rail-sweep)), #000 calc(90deg - var(--rail-sweep)) 360deg);
-      animation-name: rail-turn-sweep;
-    }
-    .section > .wrap::after {
-      transform-origin: center top;
-      animation-name: rail-fall;
-    }
-    .project:not(.project--last)::after,
-    .rail__drop {
-      transform-origin: center top;
-      animation-name: rail-fall;
-    }
-    .rail--end > .wrap::after {
-      transform: none;
-      animation-name: rail-draw-down;
-    }
-    /*
-     * WHEN EACH PIECE IS DRAWN
-     *
-     * One timeline, the page's own scroll, cut into consecutive pieces: nothing starts before
-     * the piece before it has finished. Each piece's share is its own length, so the ribbon is
-     * drawn at one steady rate the whole way round - a run across a title takes as long as a
-     * run down a margin of the same length. At 6px of ribbon per px of scroll the whole path,
-     * which is about 17,000px long, is drawn over the first 2,800px of the page.
-     *
-     * Measured at 1440px wide. Narrower and the runs are shorter, so it finishes sooner.
-     */
-    .intro h1 .name__band {
-      animation-range: 0px 124px;
-    }
-    .intro h1::after {
-      animation-range: 124px 138px;
-    }
-    .rail__drop--name {
-      animation-range: 138px 188px;
-    }
-    #work > .wrap > h2::after {
-      animation-range: 188px 198px;
-    }
-    #work .rail__band,
-    #work .rail__band-text {
-      animation-range: 198px 370px;
-    }
-    #work > .wrap > h2::before {
-      animation-range: 370px 380px;
-    }
-    #work .rail__drop--in {
-      animation-range: 380px 389px;
-    }
-    #work .project--first .rail__turn--in {
-      animation-range: 389px 397px;
-    }
-    #work .project--first .rail__run,
-    #work .project--first .rail__run-text {
-      animation-range: 397px 574px;
-    }
-    #work .project--first .rail__turn--out {
-      animation-range: 574px 582px;
-    }
-    #work .project--first::after {
-      animation-range: 582px 642px;
-    }
-    #work .project--last .rail__turn--in {
-      animation-range: 642px 650px;
-    }
-    #work .project--last .rail__run,
-    #work .project--last .rail__run-text {
-      animation-range: 650px 827px;
-    }
-    #work .project--last .rail__turn--out {
-      animation-range: 827px 835px;
-    }
-    #work .rail__drop--out {
-      animation-range: 835px 904px;
-    }
-    #design > .wrap > h2::before {
-      animation-range: 904px 914px;
-    }
-    #design .rail__band,
-    #design .rail__band-text {
-      animation-range: 914px 1086px;
-    }
-    #design > .wrap > h2::after {
-      animation-range: 1086px 1096px;
-    }
-    #design .rail__drop--in {
-      animation-range: 1096px 1104px;
-    }
-    #design .project--first .rail__turn--in {
-      animation-range: 1104px 1112px;
-    }
-    #design .project--first .rail__run,
-    #design .project--first .rail__run-text {
-      animation-range: 1112px 1290px;
-    }
-    #design .project--first .rail__turn--out {
-      animation-range: 1290px 1298px;
-    }
-    #design .project--first::after {
-      animation-range: 1298px 1358px;
-    }
-    #design .project--last .rail__turn--in {
-      animation-range: 1358px 1366px;
-    }
-    #design .project--last .rail__run,
-    #design .project--last .rail__run-text {
-      animation-range: 1366px 1543px;
-    }
-    #design .project--last .rail__turn--out {
-      animation-range: 1543px 1551px;
-    }
-    #design .rail__drop--out {
-      animation-range: 1551px 1641px;
-    }
-    #how-i-work > .wrap > h2::after {
-      animation-range: 1641px 1652px;
-    }
-    #how-i-work .rail__band,
-    #how-i-work .rail__band-text {
-      animation-range: 1652px 1824px;
-    }
-    #how-i-work > .wrap > h2::before {
-      animation-range: 1824px 1834px;
-    }
-    #how-i-work > .wrap::after {
-      animation-range: 1834px 1897px;
-    }
-    #coursework > .wrap > h2::before {
-      animation-range: 1897px 1907px;
-    }
-    #coursework .rail__band,
-    #coursework .rail__band-text {
-      animation-range: 1907px 2079px;
-    }
-    #coursework > .wrap > h2::after {
-      animation-range: 2079px 2089px;
-    }
-    #coursework > .wrap::after {
-      animation-range: 2089px 2276px;
-    }
-    #resume > .wrap > h2::after {
-      animation-range: 2276px 2286px;
-    }
-    #resume .rail__band,
-    #resume .rail__band-text {
-      animation-range: 2286px 2458px;
-    }
-    #resume > .wrap > h2::before {
-      animation-range: 2458px 2468px;
-    }
-    #resume > .wrap::after {
-      animation-range: 2468px 2607px;
-    }
-    #contact > .wrap > h2::before {
-      animation-range: 2607px 2617px;
-    }
-    #contact .rail__band,
-    #contact .rail__band-text {
-      animation-range: 2617px 2789px;
-    }
-    #contact > .wrap > h2::after {
-      animation-range: 2789px 2800px;
-    }
-    #contact > .wrap::after {
-      animation-range: 2800px 2818px;
     }
   }
 }
@@ -1530,8 +1293,6 @@ a:focus-visible {
   .rail__turn,
   .section > .wrap::after,
   .project:not(.project--last)::after {
-    transform: none;
-    clip-path: none;
     mask-image: none;
     animation: none;
   }

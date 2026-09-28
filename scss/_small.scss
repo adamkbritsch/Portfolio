@@ -125,21 +125,6 @@ a {
     border-bottom: 0;
     background: $paper;
 
-    // A supergraphic band instead of a hairline, on the content column and round at both ends
-    &::after {
-        content: "";
-        display: block;
-        width: calc(100% - #{$gutter * 2});
-        max-width: calc(#{$pageWidth} - #{$gutter * 2});
-        height: 12px;
-        margin: 0 auto;
-        border-radius: 6px;
-        background-image: linear-gradient(to bottom,
-            $navy 0 6px,
-            $orange 6px 9.7px,
-            $sage 9.7px 12px);
-    }
-
     .wrap {
         display: flex;
         flex-wrap: wrap;
@@ -236,9 +221,7 @@ a {
     width: 96px;
     height: 96px;
     margin-bottom: 1.25rem;
-    border: 4px solid $navy;
     border-radius: 50%;
-    box-shadow: 0 0 0 3px $orange;
 }
 
 /*
@@ -273,10 +256,11 @@ a {
     height: 1.32em;
     overflow: hidden;
     border-radius: 0.66em;
-    background-image: linear-gradient(to bottom,
+    background-image: $railCover, linear-gradient(to bottom,
         $navy 0 #{$stripeOne},
         $orange #{$stripeOne} #{$stripeTwo},
         $sage #{$stripeTwo} 100%);
+    background-attachment: fixed, scroll;
     pointer-events: none;
     user-select: none;
 }
@@ -285,7 +269,12 @@ a {
 .name__band-text {
     display: block;
     padding: 0.06em 0 0 1.62em;
-    color: #fff;
+    color: transparent;
+    background-image: $railCover, linear-gradient(#fff, #fff);
+    background-attachment: fixed, scroll;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     white-space: nowrap;
 }
 
