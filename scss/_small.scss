@@ -183,9 +183,9 @@ a {
     margin: 0 auto 2rem;
     border-radius: 6px;
     background-image: linear-gradient(to bottom,
-        $navy 0 6px,
-        $orange 6px 9.7px,
-        $sage 9.7px 12px);
+        $navyLine 0 6px,
+        $orangeLine 6px 9.7px,
+        $sageLine 9.7px 12px);
 }
 
 // A short run of bands that marks the start of a section
@@ -197,9 +197,9 @@ a {
     margin-bottom: 0.9rem;
     border-radius: 5px;
     background-image: linear-gradient(90deg,
-        $navy 0 38px,
-        $orange 38px 61.5px,
-        $sage 61.5px 76px);
+        $navyLine 0 38px,
+        $orangeLine 38px 61.5px,
+        $sageLine 61.5px 76px);
 }
 
 .section > .wrap > h2::before {
@@ -257,9 +257,9 @@ a {
     overflow: hidden;
     border-radius: 0.66em;
     background-image: $railCover, linear-gradient(to bottom,
-        $navy 0 #{$stripeOne},
-        $orange #{$stripeOne} #{$stripeTwo},
-        $sage #{$stripeTwo} 100%);
+        $navyLine 0 #{$stripeOne},
+        $orangeLine #{$stripeOne} #{$stripeTwo},
+        $sageLine #{$stripeTwo} 100%);
     background-attachment: fixed, scroll;
     pointer-events: none;
     user-select: none;
@@ -267,6 +267,7 @@ a {
 
 // Sits exactly over the real name: the band's 0.29em plus this 0.06em is the h1's own 0.35em
 .name__band-text {
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     display: block;
     padding: 0.06em 0 0 1.62em;
     color: transparent;

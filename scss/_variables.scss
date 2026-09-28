@@ -34,6 +34,16 @@ $stripeOne: 50%;     // outermost
 $stripeTwo: 80.9%;   // end of the middle one; the innermost is the last 19.1%
 
 /*
+ * The lines are drawn at 80% strength. They are mixed against the paper rather than given an
+ * alpha: the ribbon only ever lies on the paper, and a real alpha would double up at the
+ * hairline overlaps where one piece of it meets the next and print a darker seam there.
+ * Recompute these if $paper ever changes.
+ */
+$navyLine: #466072;     // $navy at 80% on $paper; white on it is 6.6:1
+$orangeLine: #c4804f;   // 3.2:1
+$sageLine: #9ca376;     // 2.7:1, under the 3:1 large-text line - see the note in the memory file
+
+/*
  * The window the ribbon is seen through: a cream cover over the top tenth of the screen, where
  * the sticky header is, so the ribbon runs up under it and out of sight. It is painted as the
  * ribbon's own first background layer with background-attachment fixed, so it is pinned to the
