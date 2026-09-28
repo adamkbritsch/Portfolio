@@ -372,16 +372,16 @@ figure {
 }
 
 a {
-  color: #1b415c;
+  color: #113854;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
 }
 a:hover {
-  color: #8f4613;
+  color: #8f420b;
   text-decoration-thickness: 2px;
 }
 a:focus-visible {
-  outline: 3px solid #1b415c;
+  outline: 3px solid #113854;
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -431,7 +431,7 @@ a:focus-visible {
   content: "";
   display: block;
   height: 12px;
-  background-image: linear-gradient(to bottom, #1b415c 0 4px, #c8621a 4px 8px, #b7bf87 8px 12px);
+  background-image: linear-gradient(to bottom, #113854 0 4px, #b8550f 4px 8px, #858f4f 8px 12px);
 }
 .site-header .wrap {
   display: flex;
@@ -467,7 +467,7 @@ a:focus-visible {
   text-decoration: none;
 }
 .site-nav a:hover {
-  color: #1b415c;
+  color: #113854;
   text-decoration: underline;
 }
 @media (max-width: 22rem) {
@@ -481,7 +481,7 @@ a:focus-visible {
   display: block;
   height: 12px;
   margin-bottom: 2rem;
-  background-image: linear-gradient(to bottom, #1b415c 0 4px, #c8621a 4px 8px, #b7bf87 8px 12px);
+  background-image: linear-gradient(to bottom, #113854 0 4px, #b8550f 4px 8px, #858f4f 8px 12px);
 }
 
 .article > h1::before, .section > .wrap > h2::before {
@@ -490,7 +490,7 @@ a:focus-visible {
   width: 76px;
   height: 10px;
   margin-bottom: 0.9rem;
-  background-image: linear-gradient(90deg, #1b415c 0 25px, #c8621a 25px 50px, #b7bf87 50px 76px);
+  background-image: linear-gradient(90deg, #113854 0 25px, #b8550f 25px 50px, #858f4f 50px 76px);
 }
 
 .intro {
@@ -502,9 +502,9 @@ a:focus-visible {
   width: 96px;
   height: 96px;
   margin-bottom: 1.25rem;
-  border: 4px solid #1b415c;
+  border: 4px solid #113854;
   border-radius: 50%;
-  box-shadow: 0 0 0 3px #c8621a;
+  box-shadow: 0 0 0 3px #b8550f;
 }
 
 /*
@@ -512,9 +512,9 @@ a:focus-visible {
  *
  * Three layers that cannot drift apart because they share one box: the band behind everything,
  * a cream copy of the name drawn with a fat cream stroke so the band is cut away around each
- * letter and between one letter and the next, and the name itself on top, filled from a
- * gradient whose stops match the band in 60% versions of the same three colours. So a band is
- * solid around a letter and washed out inside it.
+ * letter and between one letter and the next, and the name itself on top, white where the band
+ * runs behind it and navy above and below it. White holds up on all three: 12.2:1 on the navy,
+ * 4.8:1 on the orange, 3.5:1 on the sage (the 3:1 large-text threshold).
  *
  * Stops are in em, so everything scales with the name. The band's stops are measured from the
  * top of the h1; the fill's from the top of the text, which sits 0.22em lower.
@@ -531,7 +531,7 @@ a:focus-visible {
   left: 0;
   height: 0.63em;
   border-radius: 0.315em 0 0 0.315em;
-  background-image: linear-gradient(to bottom, #1b415c 0 33.333%, #c8621a 33.333% 66.667%, #b7bf87 66.667% 100%);
+  background-image: linear-gradient(to bottom, #113854 0 33.333%, #b8550f 33.333% 66.667%, #858f4f 66.667% 100%);
 }
 
 .name__halo {
@@ -544,7 +544,7 @@ a:focus-visible {
 
 .name__text {
   position: relative;
-  background-image: linear-gradient(to bottom, #1b415c 0 0.3em, #728795 0.3em 0.51em, #da9b6d 0.51em 0.72em, #cfd3af 0.72em 0.93em, #1b415c 0.93em 100%);
+  background-image: linear-gradient(to bottom, #113854 0 0.3em, #fff 0.3em 0.93em, #113854 0.93em 100%);
   background-clip: text;
   -webkit-background-clip: text;
 }

@@ -238,9 +238,9 @@ a {
  *
  * Three layers that cannot drift apart because they share one box: the band behind everything,
  * a cream copy of the name drawn with a fat cream stroke so the band is cut away around each
- * letter and between one letter and the next, and the name itself on top, filled from a
- * gradient whose stops match the band in 60% versions of the same three colours. So a band is
- * solid around a letter and washed out inside it.
+ * letter and between one letter and the next, and the name itself on top, white where the band
+ * runs behind it and navy above and below it. White holds up on all three: 12.2:1 on the navy,
+ * 4.8:1 on the orange, 3.5:1 on the sage (the 3:1 large-text threshold).
  *
  * Stops are in em, so everything scales with the name. The band's stops are measured from the
  * top of the h1; the fill's from the top of the text, which sits 0.22em lower.
@@ -276,9 +276,7 @@ a {
     position: relative;
     background-image: linear-gradient(to bottom,
         $navy 0 0.30em,
-        $navy60 0.30em 0.51em,
-        $orange60 0.51em 0.72em,
-        $sage60 0.72em 0.93em,
+        #fff 0.30em 0.93em,
         $navy 0.93em 100%);
     background-clip: text;
     -webkit-background-clip: text;
