@@ -243,12 +243,11 @@ a {
     height: 1.32em;
     overflow: hidden;
     border-radius: 0.66em;
-    background-image: $railCover, rail-soften(to right), linear-gradient(to bottom,
+    background-image: rail-soften(to right), linear-gradient(to bottom,
         $navyLine 0 #{$stripeOne},
         $orangeLine #{$stripeOne} #{$stripeTwo},
         $sageLine #{$stripeTwo} 100%);
-    background-attachment: fixed, scroll, scroll;
-    background-blend-mode: normal, saturation, normal;
+        background-blend-mode: saturation, normal;
     pointer-events: none;
     user-select: none;
 }
@@ -265,14 +264,6 @@ a {
     color: #fff;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     white-space: nowrap;
-}
-
-.name__band-text::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: $railCover;
-    background-attachment: fixed;
 }
 
 .name__text {

@@ -66,17 +66,6 @@ $railSoft: 0.35;     // how far the middle of a run drains: 0 leaves it, 1 takes
         rgba(128, 128, 128, 0) 100%);
 }
 
-/*
- * The window the ribbon is seen through: a cream cover over the top tenth of the screen, where
- * the sticky header is, so the ribbon runs up under it and out of sight. It is painted as the
- * ribbon's own first background layer with background-attachment fixed, so it is pinned to the
- * viewport and clipped to the ribbon. No script, no animation, works in every browser. The
- * bottom is open: the ribbon runs all the way to the foot of the screen.
- */
-$railCover: linear-gradient(to bottom,
-    $paper 0 10%,
-    transparent 10% 100%);
-
 // The rail: the one ribbon that runs through every title from 60rem up (see _large.scss).
 // Its thickness is the band through my name, 1.32 x the 3.25rem h1, so the whole run is one
 // ribbon. The lane is the clear strip down each side of the content that it travels in.
