@@ -1255,29 +1255,319 @@ a:focus-visible {
     background-attachment: fixed, scroll;
   }
   /*
-   * My name's circle still grows into its run as the page moves, where the browser can do it
-   * without script. Everything else about the ribbon is static: what moves is the window.
+   * GENERATING THE RIBBON
+   *
+   * Each piece of the path is revealed along its own axis - a run across a title opens the way it
+   * travels, a run down a margin opens downwards, a turn sweeps round the centre its arcs are
+   * struck from - and nothing starts before the piece before it has finished. Each piece's share
+   * of the scroll is its own length, so it is drawn at one steady rate the whole way round, and
+   * the shares add up to the whole page, which is as fast as it can go without the end of the
+   * line getting ahead of the reader.
+   *
+   * All of it hangs off one number, --rail-scroll, which is 0 at the top of the page and 1 at the
+   * bottom. A browser that can drive a custom property off the scroll does it itself; the rest
+   * are given the same number by js/rail.js. Each piece knows its slice of the path (--a to --b)
+   * and works out how far through that slice the page is (--p).
    */
+  @property --rail-scroll {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  @property --rail-sweep {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
   @supports (animation-timeline: scroll()) {
-    .intro h1 .name__band {
-      width: 1.32em;
-      animation: band-extend-square linear both;
+    :root {
+      animation: rail-scroll linear both;
       animation-timeline: scroll(root block);
-      animation-range: 0 120px;
     }
-    @keyframes band-extend-square {
+    @keyframes rail-scroll {
       from {
-        width: 1.32em;
-        border-radius: 0.66em;
-      }
-      18% {
-        border-radius: 0.66em 0 0 0.66em;
+        --rail-scroll: 0;
       }
       to {
-        width: 100%;
-        border-radius: 0.66em 0 0 0.66em;
+        --rail-scroll: 1;
       }
     }
+  }
+  .intro h1 .name__band,
+  .intro h1::after,
+  .rail__drop,
+  .rail__band,
+  .rail__band-text,
+  .rail__run,
+  .rail__run-text,
+  .section > .wrap > h2::before,
+  .section > .wrap > h2::after,
+  .rail__turn,
+  .section > .wrap::after,
+  .project:not(.project--last)::after {
+    --p: clamp(0, calc((var(--rail-scroll) - var(--a)) / (var(--b) - var(--a))), 1);
+  }
+  .section:not(.rail--back) .rail__band,
+  .section:not(.rail--back) .rail__band-text,
+  .project--east .rail__run,
+  .project--east .rail__run-text {
+    clip-path: inset(0 calc((1 - var(--p)) * 100%) 0 0);
+  }
+  .rail--back .rail__band,
+  .rail--back .rail__band-text,
+  .project--west .rail__run,
+  .project--west .rail__run-text {
+    clip-path: inset(0 0 0 calc((1 - var(--p)) * 100%));
+  }
+  .rail__drop,
+  .section > .wrap::after,
+  .project:not(.project--last)::after {
+    clip-path: inset(0 0 calc((1 - var(--p)) * 100%) 0);
+  }
+  .intro h1::after,
+  .section > .wrap > h2::before,
+  .section > .wrap > h2::after,
+  .rail__turn {
+    --rail-sweep: calc(var(--p) * 90deg);
+  }
+  .intro h1::after,
+  .rail--back > .wrap > h2::after,
+  .project--west .rail__turn--in {
+    mask-image: conic-gradient(from var(--sweep-from) at var(--sweep-at), #000 0 var(--rail-sweep), transparent var(--rail-sweep) 360deg);
+  }
+  .section:not(.rail--back) > .wrap > h2::after,
+  .project--east .rail__turn--out {
+    mask-image: conic-gradient(from var(--sweep-from) at var(--sweep-at), #000 0 var(--rail-sweep), transparent var(--rail-sweep) 360deg);
+  }
+  .section:not(.rail--back) > .wrap > h2::before,
+  .project--east .rail__turn--in,
+  .rail--back > .wrap > h2::before,
+  .project--west .rail__turn--out {
+    mask-image: conic-gradient(from var(--sweep-from) at var(--sweep-at), transparent 0 calc(90deg - var(--rail-sweep)), #000 calc(90deg - var(--rail-sweep)) 360deg);
+  }
+  .intro h1 .name__band {
+    width: calc(1.32em + (100% - 1.32em) * var(--p));
+    border-radius: 0.66em;
+  }
+  /*
+   * Which way each turn sweeps: --sweep-at is the centre its arcs are struck from and
+   * --sweep-from the direction the ribbon arrives from, or leaves by when it bends anticlockwise.
+   */
+  .intro h1::after,
+  .section:not(.rail--back) > .wrap > h2::after,
+  .project--east .rail__turn--out {
+    --sweep-at: 0 100%;
+    --sweep-from: 0deg;
+  }
+  .rail--back > .wrap > h2::after,
+  .project--west .rail__turn--in {
+    --sweep-at: 0 0;
+    --sweep-from: 90deg;
+  }
+  .rail--back > .wrap > h2::before,
+  .project--west .rail__turn--out {
+    --sweep-at: 100% 100%;
+    --sweep-from: 270deg;
+  }
+  .section:not(.rail--back) > .wrap > h2::before,
+  .project--east .rail__turn--in {
+    --sweep-at: 100% 0;
+    --sweep-from: 180deg;
+  }
+  /*
+   * When each piece is drawn. The tip of the line sits about 70% down the screen: a run down a
+   * margin is drawn as the line passes it, one pixel of ribbon per pixel of scroll, and the three
+   * pieces of a row - turn, run across the title, turn - share 180px of scroll between them as
+   * the row crosses that line.
+   *
+   * A row cannot be drawn at the same rate as a margin. It is a thousand pixels of ribbon at a
+   * single height on the page, so drawing it at the scroll's own rate would mean scrolling a
+   * thousand pixels while it crossed one title, and the line would fall a screen or more behind
+   * you. 180px is as slow as it can go and still be finished before the next piece is due.
+   *
+   * Generated from the measured page - see the memory file - so regenerate rather than editing.
+   */
+  .intro h1 .name__band {
+    --a: 0.0000;
+    --b: 0.0341;
+  }
+  .intro h1::after {
+    --a: 0.0341;
+    --b: 0.0461;
+  }
+  .rail__drop--name {
+    --a: 0.0461;
+    --b: 0.0581;
+  }
+  #work > .wrap > h2::after {
+    --a: 0.0581;
+    --b: 0.0701;
+  }
+  #work > .wrap > h2::after {
+    --a: 0.0701;
+    --b: 0.0761;
+  }
+  #work .rail__band,
+  #work .rail__band-text {
+    --a: 0.0744;
+    --b: 0.1018;
+  }
+  #work > .wrap > h2::before {
+    --a: 0.1018;
+    --b: 0.1079;
+  }
+  #work .project--first .rail__turn--in {
+    --a: 0.1062;
+    --b: 0.1182;
+  }
+  #work .project--first .rail__turn--in {
+    --a: 0.1182;
+    --b: 0.1242;
+  }
+  #work .project--first .rail__run,
+  #work .project--first .rail__run-text {
+    --a: 0.1225;
+    --b: 0.1499;
+  }
+  #work .project--first .rail__turn--out {
+    --a: 0.1499;
+    --b: 0.1559;
+  }
+  #work .project--last .rail__turn--in {
+    --a: 0.1542;
+    --b: 0.1663;
+  }
+  #work .project--last .rail__turn--in {
+    --a: 0.1663;
+    --b: 0.1723;
+  }
+  #work .project--last .rail__run,
+  #work .project--last .rail__run-text {
+    --a: 0.1706;
+    --b: 0.1980;
+  }
+  #work .project--last .rail__turn--out {
+    --a: 0.1980;
+    --b: 0.2040;
+  }
+  #design > .wrap > h2::before {
+    --a: 0.2226;
+    --b: 0.2346;
+  }
+  #design > .wrap > h2::before {
+    --a: 0.2346;
+    --b: 0.2406;
+  }
+  #design .rail__band,
+  #design .rail__band-text {
+    --a: 0.2389;
+    --b: 0.2663;
+  }
+  #design > .wrap > h2::after {
+    --a: 0.2663;
+    --b: 0.2723;
+  }
+  #design .project--first .rail__turn--in {
+    --a: 0.2706;
+    --b: 0.2827;
+  }
+  #design .project--first .rail__turn--in {
+    --a: 0.2827;
+    --b: 0.2887;
+  }
+  #design .project--first .rail__run,
+  #design .project--first .rail__run-text {
+    --a: 0.2870;
+    --b: 0.3144;
+  }
+  #design .project--first .rail__turn--out {
+    --a: 0.3144;
+    --b: 0.3204;
+  }
+  #design .project--last .rail__turn--in {
+    --a: 0.3516;
+    --b: 0.3636;
+  }
+  #design .project--last .rail__turn--in {
+    --a: 0.3636;
+    --b: 0.3696;
+  }
+  #design .project--last .rail__run,
+  #design .project--last .rail__run-text {
+    --a: 0.3679;
+    --b: 0.3953;
+  }
+  #design .project--last .rail__turn--out {
+    --a: 0.3953;
+    --b: 0.4013;
+  }
+  #how-i-work > .wrap > h2::after {
+    --a: 0.4766;
+    --b: 0.4886;
+  }
+  #how-i-work > .wrap > h2::after {
+    --a: 0.4886;
+    --b: 0.4946;
+  }
+  #how-i-work .rail__band,
+  #how-i-work .rail__band-text {
+    --a: 0.4929;
+    --b: 0.5203;
+  }
+  #how-i-work > .wrap > h2::before {
+    --a: 0.5203;
+    --b: 0.5263;
+  }
+  #coursework > .wrap > h2::before {
+    --a: 0.5575;
+    --b: 0.5695;
+  }
+  #coursework > .wrap > h2::before {
+    --a: 0.5695;
+    --b: 0.5755;
+  }
+  #coursework .rail__band,
+  #coursework .rail__band-text {
+    --a: 0.5738;
+    --b: 0.6012;
+  }
+  #coursework > .wrap > h2::after {
+    --a: 0.6012;
+    --b: 0.6073;
+  }
+  #resume > .wrap > h2::after {
+    --a: 0.7867;
+    --b: 0.7987;
+  }
+  #resume > .wrap > h2::after {
+    --a: 0.7987;
+    --b: 0.8047;
+  }
+  #resume .rail__band,
+  #resume .rail__band-text {
+    --a: 0.8030;
+    --b: 0.8304;
+  }
+  #resume > .wrap > h2::before {
+    --a: 0.8304;
+    --b: 0.8364;
+  }
+  #contact > .wrap > h2::before {
+    --a: 0.9589;
+    --b: 0.9710;
+  }
+  #contact > .wrap > h2::before {
+    --a: 0.9710;
+    --b: 0.9770;
+  }
+  #contact .rail__band,
+  #contact .rail__band-text {
+    --a: 0.9753;
+    --b: 1.0027;
+  }
+  #contact > .wrap > h2::after {
+    --a: 1.0027;
+    --b: 1.0087;
   }
 }
 @media only screen and (min-width: 60rem) and (prefers-reduced-motion: reduce) {
