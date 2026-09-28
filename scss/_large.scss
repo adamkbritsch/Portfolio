@@ -292,9 +292,12 @@ h1 {
     align-items: start;
 }
 
-// The picture starts where the run over it ends
+/*
+ * The picture hangs clear of the run above it by the same $railTurn the ribbon keeps clear
+ * on the inside of every bend, so the run frames the picture instead of resting on it.
+ */
 .project .project__image {
-    margin-top: calc((#{$railSub} - #{$railPiece}) / 2 + #{$railPiece});
+    margin-top: calc((#{$railSub} - #{$railPiece}) / 2 + #{$railPiece} + #{$railTurn});
 }
 
 // A piece's run, the same as a title's but thinner
