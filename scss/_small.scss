@@ -236,28 +236,29 @@ a {
 /*
  * My name, with the bands running through it.
  *
- * Two layers that cannot drift apart because they share one box: the band behind, and the name
- * on top, filled white where the band runs behind it and navy above and below it. White holds
- * up on all three bands: 12.2:1 on the navy, 4.8:1 on the orange, 3.5:1 on the sage (the 3:1
- * large-text threshold). No stroke around the letters: a cream outline around white letters
- * eats the edge that makes them readable.
+ * The band runs behind the whole name and stands half a letter-height clear of it above and
+ * below, so the letters sit inside it and are white throughout. White holds up on all three
+ * bands: 12.2:1 on the navy, 4.8:1 on the orange, 3.5:1 on the sage (the 3:1 large-text
+ * threshold). No stroke around the letters: a cream outline around white letters eats the edge
+ * that makes them readable.
  *
  * Stops are in em, so everything scales with the name. The band's stops are measured from the
  * top of the h1; the fill's from the top of the text, which sits 0.22em lower.
  */
 .intro h1 {
     position: relative;
-    padding: 0.22em 0 0.22em 0.42em;
+    padding: 0.35em 0 0.35em 0.78em;
 }
 
 // The band is its own box, so its left end can round into a half circle
+// Two letter-heights tall: half a letter above the caps, half below the baseline
 .name__band {
     position: absolute;
-    top: 0.52em;
+    top: 0.29em;
     right: 0;
     left: 0;
-    height: 0.63em;
-    border-radius: 0.315em 0 0 0.315em;
+    height: 1.32em;
+    border-radius: 0.66em 0 0 0.66em;
     background-image: linear-gradient(to bottom,
         $navy 0 33.333%,
         $orange 33.333% 66.667%,
@@ -266,19 +267,7 @@ a {
 
 .name__text {
     position: relative;
-    background-image: linear-gradient(to bottom,
-        $navy 0 0.30em,
-        #fff 0.30em 0.93em,
-        $navy 0.93em 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-}
-
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-    .name__text {
-        color: transparent;
-        -webkit-text-fill-color: transparent;
-    }
+    color: #fff;
 }
 
 .intro__lede {
