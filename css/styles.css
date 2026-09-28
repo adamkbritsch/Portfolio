@@ -526,23 +526,16 @@ a:focus-visible {
   border-radius: 4px;
 }
 
-.design {
-  margin-bottom: 3.5rem;
+.figure--phones {
+  max-width: 40rem;
 }
-.design:last-child {
-  margin-bottom: 0;
+
+.figure--icons {
+  max-width: 20rem;
 }
-.design p {
-  max-width: 42rem;
-}
-.design figure {
-  margin: 1.5rem 0 0;
-}
-.design figcaption {
-  margin-top: 0.5rem;
-  color: #5b5852;
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  font-size: 0.9375rem;
+
+.figure--screen {
+  max-width: 44rem;
 }
 
 .writeups {

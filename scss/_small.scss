@@ -235,29 +235,19 @@ a {
     border-radius: 4px;
 }
 
-// Design work
+// Figure sizes: phone screens, icons and app screenshots are small things,
+// and showing them at full page width makes them shout.
 
-.design {
-    margin-bottom: 3.5rem;
+.figure--phones {
+    max-width: 40rem;
+}
 
-    &:last-child {
-        margin-bottom: 0;
-    }
+.figure--icons {
+    max-width: 20rem;
+}
 
-    p {
-        max-width: $textWidth;
-    }
-
-    figure {
-        margin: 1.5rem 0 0;
-    }
-
-    figcaption {
-        margin-top: 0.5rem;
-        color: $inkSoft;
-        font-family: $uiFont;
-        font-size: 0.9375rem;
-    }
+.figure--screen {
+    max-width: 44rem;
 }
 
 // Coursework

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoasterMap | Adam Britsch</title>
+    <meta name="description" content="CoasterMap, an iOS day-planning app for Lagoon designed by Adam Britsch: live ride waits, the next FrontRunner train, and a plan that recovers when a ride closes.">
+    <meta name="author" content="Adam Britsch">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link href="../css/styles.min.css" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png?v=2">
+    <link rel="manifest" href="../site.webmanifest?v=2">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="wrap">
+            <a class="site-header__name" href="../index.html">Adam Britsch</a>
+            <nav aria-label="Main">
+                <ul class="site-nav">
+                    <li><a href="../index.html#work">Work</a></li>
+                    <li><a href="../index.html#coursework">Coursework</a></li>
+                    <li><a href="../index.html#resume">Resume</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main" class="article">
+        <p class="article__back"><a href="../index.html#design">Back to design work</a></p>
+        <h1>CoasterMap</h1>
+        <p class="article__meta">iOS app prototype, 2026</p>
+
+        <p>CoasterMap is a day planner for Lagoon, the amusement park in Farmington. A day there is mostly spent guessing: which rides are open, how long the line is, whether there is time for one more before the train home. The app answers those three questions on one screen and then plans around them.</p>
+
+        <figure class="figure--phones">
+            <img class="shot" src="../images/design/coastermap-screens.webp" width="1600" height="1059" alt="Three CoasterMap screens: a home screen with the next train and ride waits, a ride page for Cannibal with its wait time, and directions to Lagoon by train" loading="lazy">
+            <figcaption>The home screen, a ride, and getting there by train.</figcaption>
+        </figure>
+
+        <h2>What it does</h2>
+        <p>The home screen leads with the countdown to the next FrontRunner train, then what is open right now and how long each wait is. A ride page carries the wait, the height requirement, the thrill level and how far the walk is, with one button to add it to the plan.</p>
+        <p>Telling the app how long you have, who you are with and what you care about produces a timeline for the day: rides, breaks, and the walk back to the station in time for a specific train. If a ride closes while you are there, the plan offers a swap instead of falling apart.</p>
+
+        <figure>
+            <img class="shot" src="../images/design/coastermap-story.webp" width="1800" height="790" alt="Five promotional cards for CoasterMap: Know What's Open, Build Your Day, Your Day Sequenced, Recover Don't Restart, and Find Your Next Move" loading="lazy">
+            <figcaption>The five ideas the app is built on, from the launch kit.</figcaption>
+        </figure>
+
+        <h2>Details that come from the place</h2>
+        <p>Lagoon is outdoors in the summer, so the wait chips use three colors that still read in bright sun rather than small grey type. Getting there matters as much as the rides: the train screen shows northbound and southbound departures and will set a reminder, because the last train is a hard deadline on the day. An activity view tracks steps, distance and water, since a park day is a long walk whether or not you planned one.</p>
+
+        <figure class="figure--phones">
+            <img class="shot" src="../images/design/coastermap-activity.webp" width="1100" height="1080" alt="Two CoasterMap screens: an activity view with steps, calories, distance, heart rate and hydration, and the app's opening screen" loading="lazy">
+            <figcaption>The activity view and the opening screen.</figcaption>
+        </figure>
+
+        <h2>The app icon</h2>
+        <p>The icon is a map pin drawn as a coaster loop. I made a version for each of the appearances iOS uses, so it holds up in light mode, dark mode and the clear style.</p>
+
+        <figure class="figure--icons">
+            <img class="shot" src="../images/design/coastermap-icons.webp" width="1200" height="420" alt="The CoasterMap icon in blue, dark and clear versions" loading="lazy">
+            <figcaption>Light, dark and clear.</figcaption>
+        </figure>
+
+        <h2>Where it stands</h2>
+        <p>This is a designed prototype, not a shipped app. The ride waits, train times and step counts in the screens are designed data, and the plan logic is described rather than running. The screens here come from the launch kit I put together to present it.</p>
+
+        <nav class="pager" aria-label="Projects">
+            <a href="uvu-review.html" rel="prev"><span>Previous</span>UVU Review website</a>
+            <a href="trellis.html" rel="next"><span>Next</span>Trellis</a>
+        </nav>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>Adam Britsch, Orem, Utah. Last updated September 2026.</p>
+            <p>I built this site through agentic coding with Claude Code. <a href="https://github.com/adamkbritsch/Portfolio">The code is on GitHub</a>.</p>
+        </div>
+    </footer>
+</body>
+</html>
