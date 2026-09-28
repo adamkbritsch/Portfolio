@@ -204,17 +204,23 @@ h1 {
 }
 
 /*
- * The one run that changes thickness: out of my name at $rail and into the first title at
- * $railTitle. Three stripes, each a trapezoid, so they narrow together and the east edge stays
- * on the margin. Stops, as a share of the wide end: the ribbon loses ($rail - $railTitle) off
- * its west side, which is 38.46% of $rail, and each stripe is 20.51% of it at the narrow end.
+ * A run that changes thickness, because the title it is going to is set smaller or larger than
+ * the one it left. Three stripes, each its own trapezoid, so they narrow together and the east
+ * edge stays on the margin. --wide and --narrow are the two ends in rem, unitless so they can
+ * be divided; the stops are worked out from them as a share of the wide end.
  */
-.rail__fall {
+.rail__taper {
+    // Stops for a taper whose east edge stays put, and for one whose west edge does
+    --n: calc(var(--narrow) / var(--wide));
+    --s0: calc((1 - var(--n)) * 100%);
+    --s1: calc((1 - var(--n) + var(--n) / 3) * 100%);
+    --s2: calc((1 - var(--n) + var(--n) * 2 / 3) * 100%);
+    --w1: calc(var(--n) / 3 * 100%);
+    --w2: calc(var(--n) * 2 / 3 * 100%);
+    --w3: calc(var(--n) * 100%);
+
     position: absolute;
-    right: 0;
-    top: calc(5.5rem + 0.29 * 3.25rem + #{$rail} + #{$railTurn} - 1px);
-    bottom: calc(-1 * (#{$railPad} + (#{$railHead} - #{$railTitle}) / 2 - #{$railTurn}) - 1px);
-    width: $rail;
+    width: calc(var(--wide) * 1rem);
     pointer-events: none;
 
     // Each stripe is clipped on its own: a clip on the parent would take the others with it
@@ -228,16 +234,234 @@ h1 {
 
     > span {
         background-color: $sage;
-        clip-path: polygon(0 0, 33.333% 0, 58.97% 100%, 38.46% 100%);
     }
 
     &::before {
         background-color: $orange;
-        clip-path: polygon(33.333% 0, 66.667% 0, 79.49% 100%, 58.97% 100%);
     }
 
     &::after {
         background-color: $navy;
-        clip-path: polygon(66.667% 0, 100% 0, 100% 100%, 79.49% 100%);
     }
+}
+
+// Narrowing as it falls down the right margin, where the east edge is the one that stays
+.rail__taper--name,
+.project--west .rail__taper--in {
+    > span {
+        clip-path: polygon(0 0, 33.333% 0, var(--s1) 100%, var(--s0) 100%);
+    }
+
+    &::before {
+        clip-path: polygon(33.333% 0, 66.667% 0, var(--s2) 100%, var(--s1) 100%);
+    }
+
+    &::after {
+        clip-path: polygon(66.667% 0, 100% 0, 100% 100%, var(--s2) 100%);
+    }
+}
+
+// Narrowing down the left margin, where the west edge is the one that stays
+.project--east .rail__taper--in {
+    > span {
+        clip-path: polygon(0 0, 33.333% 0, var(--w1) 100%, 0 100%);
+    }
+
+    &::before {
+        clip-path: polygon(33.333% 0, 66.667% 0, var(--w2) 100%, var(--w1) 100%);
+    }
+
+    &::after {
+        clip-path: polygon(66.667% 0, 100% 0, var(--w3) 100%, var(--w2) 100%);
+    }
+}
+
+// Widening down the left margin, on its way back to a bigger title
+.project--west .rail__taper--out {
+    > span {
+        clip-path: polygon(0 0, var(--w1) 0, 33.333% 100%, 0 100%);
+    }
+
+    &::before {
+        clip-path: polygon(var(--w1) 0, var(--w2) 0, 66.667% 100%, 33.333% 100%);
+    }
+
+    &::after {
+        clip-path: polygon(var(--w2) 0, var(--w3) 0, 100% 100%, 66.667% 100%);
+    }
+}
+
+// Widening down the right margin
+.project--east .rail__taper--out {
+    > span {
+        clip-path: polygon(var(--s0) 0, var(--s1) 0, 33.333% 100%, 0 100%);
+    }
+
+    &::before {
+        clip-path: polygon(var(--s1) 0, var(--s2) 0, 66.667% 100%, 33.333% 100%);
+    }
+
+    &::after {
+        clip-path: polygon(var(--s2) 0, 100% 0, 100% 100%, 66.667% 100%);
+    }
+}
+
+// Out of my name and down to the first title
+.rail__taper--name {
+    --wide: 4.29;
+    --narrow: 2.64;
+
+    right: 0;
+    top: calc(5.5rem + 0.29 * 3.25rem + #{$rail} + #{$railTurn} - 1px);
+    bottom: calc(-1 * (#{$railPad} + (#{$railHead} - #{$railTitle}) / 2 - #{$railTurn}) - 1px);
+}
+
+/*
+ * THE SHOWCASED PIECES
+ *
+ * The ribbon does not stop at the section titles: it carries on through the title of every
+ * piece on the page. A piece's picture sits in its way, so the run travels along the top edge
+ * of the picture, which is pushed down to meet it — enough of a frame to get where it is going.
+ */
+.rail--pieces > .wrap > h2 {
+    margin-bottom: 5.5rem;
+}
+
+// The straight run to the next section is replaced by the taper into the first piece
+.rail--pieces > .wrap::after {
+    display: none;
+}
+
+.project {
+    position: relative;
+    align-items: start;
+}
+
+// The picture starts where the run over it ends
+.project .project__image {
+    margin-top: calc((#{$railSub} - #{$railPiece}) / 2 + #{$railPiece});
+}
+
+// A piece's run, the same as a title's but thinner
+.rail__run {
+    position: absolute;
+    top: calc((#{$railSub} - #{$railPiece}) / 2);
+    right: calc(#{$railPiece} + #{$railTurn} - #{$railLane});
+    left: calc(#{$railPiece} + #{$railTurn} - #{$railLane});
+    display: flex;
+    align-items: center;
+    height: $railPiece;
+    background-image: linear-gradient(to bottom,
+        $navy 0 33.333%,
+        $orange 33.333% 66.667%,
+        $sage 66.667% 100%);
+    pointer-events: none;
+    user-select: none;
+}
+
+.project--west .rail__run {
+    background-image: linear-gradient(to bottom,
+        $sage 0 33.333%,
+        $orange 33.333% 66.667%,
+        $navy 66.667% 100%);
+}
+
+// The title sits in the right-hand column, three fifths of the way across the piece
+.rail__run-text {
+    padding-left: calc(60% + 0.25rem);
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    white-space: nowrap;
+}
+
+.rail__run::before,
+.rail__run::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+
+// Running right: arriving on the left from above, leaving on the right going down
+.project--east .rail__run::before {
+    right: 100%;
+    bottom: 0;
+    @include rail-turn(100% 0, $navy, $sage, $railPiece);
+}
+
+.project--east .rail__run::after {
+    top: 0;
+    left: 100%;
+    @include rail-turn(0 100%, $sage, $navy, $railPiece);
+}
+
+// Running left: arriving on the right from above, leaving on the left going down
+.project--west .rail__run::after {
+    bottom: 0;
+    left: 100%;
+    @include rail-turn(0 0, $sage, $navy, $railPiece);
+}
+
+.project--west .rail__run::before {
+    top: 0;
+    right: 100%;
+    @include rail-turn(100% 100%, $navy, $sage, $railPiece);
+}
+
+// The run down to the next piece
+.project:not(.project--last)::after {
+    content: "";
+    position: absolute;
+    top: calc((#{$railSub} - #{$railPiece}) / 2 + #{$railPiece} + #{$railTurn} - 1px);
+    bottom: calc(-4rem + (#{$railSub} - #{$railPiece}) / 2 + #{$railTurn} - 1px);
+    width: $railPiece;
+    background-image: linear-gradient(to right,
+        $sage 0 33.333%,
+        $orange 33.333% 66.667%,
+        $navy 66.667% 100%);
+    pointer-events: none;
+}
+
+.project--east:not(.project--last)::after {
+    right: -#{$railLane};
+}
+
+.project--west:not(.project--last)::after {
+    left: -#{$railLane};
+}
+
+// Down from the section title into the first piece, thinning as it goes. Held at both ends:
+// the title's turn above, the piece's turn below, so no seam can open between them.
+.rail__taper--in {
+    --wide: 2.64;
+    --narrow: 1.65;
+
+    top: calc(-1 * (#{$railHead} + 5.5rem - ((#{$railHead} - #{$railTitle}) / 2 + #{$railTitle} + #{$railTurn})) - 1px);
+    bottom: calc(100% + (#{$railPiece} - #{$railSub}) / 2 + #{$railTurn} - 1px);
+}
+
+.project--east .rail__taper--in {
+    left: -#{$railLane};
+}
+
+.project--west .rail__taper--in {
+    right: -#{$railLane};
+}
+
+// Out of the last piece and back up to the next section title's thickness
+.rail__taper--out {
+    --wide: 2.64;
+    --narrow: 1.65;
+
+    top: calc((#{$railSub} - #{$railPiece}) / 2 + #{$railPiece} + #{$railTurn} - 1px);
+    bottom: calc(-1 * (#{$railPad} * 2 + (#{$railHead} - #{$railTitle}) / 2 - #{$railTurn}) - 1px);
+}
+
+.project--east .rail__taper--out {
+    right: -#{$railLane};
+}
+
+.project--west .rail__taper--out {
+    left: -#{$railLane};
 }

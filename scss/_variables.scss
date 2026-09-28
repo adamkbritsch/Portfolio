@@ -35,7 +35,9 @@ $rail: 4.29rem;      // thickness at my name: 1.32 x the 3.25rem h1
 $railTitle: 2.64rem; // thickness at a section title: 1.32 x the 2rem h2, so it tapers between
 $railTurn: 1.1rem;   // the inside radius of a turn; a turn's box is $rail + $railTurn square
 $railLane: 6.5rem;   // the clear lane each side, wider than a turn by 1.11rem
+$railPiece: 1.65rem; // thickness at a showcased piece's title: 1.32 x the 1.25rem h3
 $railHead: 2.3rem;   // a section h2's line box: 2rem at line-height 1.15
+$railSub: 1.4375rem; // a piece h3's line box: 1.25rem at line-height 1.15
 $railPad: 3.5rem;    // a section's top padding
 $textWidth: 42rem;
 $figureWidth: 60rem;
