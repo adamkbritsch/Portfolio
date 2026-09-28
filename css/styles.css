@@ -526,26 +526,23 @@ a:focus-visible {
   border-radius: 4px;
 }
 
-.builds {
-  display: grid;
-  gap: 2rem 1.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.design {
+  margin-bottom: 3.5rem;
 }
-
-.build img {
-  aspect-ratio: 16/10;
-  margin-bottom: 0.75rem;
-  object-fit: cover;
-  object-position: top;
-}
-.build h3 {
-  margin-bottom: 0.125rem;
-  font-size: 1.125rem;
-}
-.build p:last-child {
+.design:last-child {
   margin-bottom: 0;
+}
+.design p {
+  max-width: 42rem;
+}
+.design figure {
+  margin: 1.5rem 0 0;
+}
+.design figcaption {
+  margin-top: 0.5rem;
+  color: #5b5852;
+  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.9375rem;
 }
 
 .writeups {
@@ -753,7 +750,6 @@ a:focus-visible {
   .section {
     padding: 3.5rem 0;
   }
-  .builds,
   .courses {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -778,7 +774,6 @@ a:focus-visible {
   .project__image {
     margin: 0;
   }
-  .builds,
   .courses {
     grid-template-columns: repeat(3, 1fr);
   }

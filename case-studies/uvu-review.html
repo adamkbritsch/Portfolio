@@ -77,6 +77,19 @@
             <figcaption>The rebuilt About page.</figcaption>
         </figure>
 
+        <h2>Submission tool</h2>
+        <p>Articles, podcast episodes and videos all used to be posted by hand in WordPress. I built a separate staff site where contributors send a piece using a shared team code instead of an account. What they send becomes a draft, and nothing reaches readers until an editor publishes it: the account the tool uses cannot publish at all.</p>
+        <p>The form takes a paste from Word, Google Docs or a PDF and turns it into real WordPress blocks. It checks that the formatting never changed the writer's words, shrinks images before they upload, and matches the byline to the ones the paper already uses instead of making duplicates. An editor can also open a published article, revise it, and send the revision for approval.</p>
+        <p>The tool sits off the main site and behind the team code, so there is no public link to it.</p>
+        <figure>
+            <img class="shot" src="../images/work/uvu-review-submit-form.webp" width="1600" height="1000" alt="The submission form, with a list of what is still missing on the right and a preview of the article below it" loading="lazy">
+            <figcaption>The form tells contributors what is still missing, and previews the piece as it will look.</figcaption>
+        </figure>
+        <figure>
+            <img class="shot" src="../images/work/uvu-review-submit-tools.webp" width="1600" height="1000" alt="The staff site home page, with cards for resources, submitting a piece, previous articles, SharePoint, the Teams channel and the paper" loading="lazy">
+            <figcaption>The staff site the form lives on.</figcaption>
+        </figure>
+
         <h2>How I built it</h2>
         <p>I built these changes through agentic engineering, with Claude Code as my coding agent. For each one, I decided what it should do and how it should look, described it to Claude Code, reviewed the code it wrote, and checked the result on the site.</p>
         <p>I manage the site's theme, and I ship each change as a small plugin that loads alongside it, so any one of them can be switched off on its own.</p>

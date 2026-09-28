@@ -235,33 +235,32 @@ a {
     border-radius: 4px;
 }
 
-// Coursework
+// Design work
 
-.builds {
-    display: grid;
-    gap: 2rem 1.5rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
+.design {
+    margin-bottom: 3.5rem;
 
-.build {
-    img {
-        aspect-ratio: 16 / 10;
-        margin-bottom: 0.75rem;
-        object-fit: cover;
-        object-position: top;
-    }
-
-    h3 {
-        margin-bottom: 0.125rem;
-        font-size: 1.125rem;
-    }
-
-    p:last-child {
+    &:last-child {
         margin-bottom: 0;
     }
+
+    p {
+        max-width: $textWidth;
+    }
+
+    figure {
+        margin: 1.5rem 0 0;
+    }
+
+    figcaption {
+        margin-top: 0.5rem;
+        color: $inkSoft;
+        font-family: $uiFont;
+        font-size: 0.9375rem;
+    }
 }
+
+// Coursework
 
 .writeups {
     padding-left: 1.25rem;
