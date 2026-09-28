@@ -34,15 +34,15 @@ $stripeOne: 50%;     // outermost
 $stripeTwo: 80.9%;   // end of the middle one; the innermost is the last 19.1%
 
 /*
- * The window the ribbon is seen through: a cream cover over the top tenth and the bottom tenth
- * of the screen, painted as the ribbon's own first background layer with background-attachment
- * fixed, so it is pinned to the viewport and clipped to the ribbon. No script, no animation,
- * and it works in every browser.
+ * The window the ribbon is seen through: a cream cover over the top tenth of the screen, where
+ * the sticky header is, so the ribbon runs up under it and out of sight. It is painted as the
+ * ribbon's own first background layer with background-attachment fixed, so it is pinned to the
+ * viewport and clipped to the ribbon. No script, no animation, works in every browser. The
+ * bottom is open: the ribbon runs all the way to the foot of the screen.
  */
 $railCover: linear-gradient(to bottom,
     $paper 0 10%,
-    transparent 10% 90%,
-    $paper 90% 100%);
+    transparent 10% 100%);
 
 // The rail: the one ribbon that runs through every title from 60rem up (see _large.scss).
 // Its thickness is the band through my name, 1.32 x the 3.25rem h1, so the whole run is one
