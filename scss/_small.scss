@@ -238,83 +238,85 @@ a {
  *
  * The band runs behind the whole name and stands half a letter-height clear of it above and
  * below, so the letters sit inside it and are white throughout. White holds up on all three
- * bands: 12.2:1 on the navy, 4.8:1 on the orange, 3.5:1 on the sage (the 3:1 large-text
+ * bands: 11.5:1 on the navy, 4.3:1 on the orange, 3.5:1 on the sage (the 3:1 large-text
  * threshold). No stroke around the letters: a cream outline around white letters eats the edge
  * that makes them readable.
  *
- * Stops are in em, so everything scales with the name. The band's stops are measured from the
- * top of the h1; the fill's from the top of the text, which sits 0.22em lower.
+ * Stops are in em, so everything scales with the name.
  */
 .intro h1 {
     position: relative;
     padding: 0.35em 0 0.35em 1.62em;
 }
 
-// The band is its own box, so its left end can round into a half circle
-// Two letter-heights tall: half a letter above the caps, half below the baseline
+/*
+ * The band is its own box, so its left end can round into a half circle, and it is two
+ * letter-heights tall: half a letter above the caps, half below the baseline.
+ *
+ * It carries its own copy of the name in white and clips it to itself. A letter is white
+ * exactly as far as the band reaches and navy past it, with nothing to keep in step: one
+ * element moves, and the letters follow because they are inside it.
+ */
 .name__band {
     position: absolute;
     top: 0.29em;
     right: 0;
     left: 0;
     height: 1.32em;
+    overflow: hidden;
     border-radius: 0.66em 0 0 0.66em;
     background-image: linear-gradient(to bottom,
         $navy 0 33.333%,
         $orange 33.333% 66.667%,
         $sage 66.667% 100%);
+    pointer-events: none;
+    user-select: none;
+}
+
+// Sits exactly over the real name: the band's 0.29em plus this 0.06em is the h1's own 0.35em
+.name__band-text {
+    display: block;
+    padding: 0.06em 0 0 1.62em;
+    color: #fff;
+    white-space: nowrap;
 }
 
 .name__text {
-    position: relative;
-    color: #fff;
+    color: $navy;
 }
 
 /*
- * On scroll the band travels: at the top of the page it is just a circle to the left of the
- * name, and scrolling stretches it into the line behind the name. The letters are filled from a gradient whose white/navy edge moves with the band, so
- * a letter turns white exactly when the band arrives behind it — before that it is navy on
- * cream, which is what keeps the name readable at the top of the page.
+ * On scroll the band travels: at the top of the page it is a circle to the left of the name,
+ * and scrolling stretches it into the line behind the name, squaring off its right end as it
+ * goes. Navy letters on cream are what keep the name readable before it arrives.
  *
  * Scroll-driven animation, so none of it costs JavaScript. Browsers without it, and anyone who
  * asked for less motion, get the finished line, which is the resting state.
  */
-@property --band-edge {
-    syntax: "<percentage>";
-    inherits: false;
-    initial-value: 100%;
-}
-
 @supports (animation-timeline: scroll()) {
     .name__band {
         width: 1.32em;
+        border-radius: 0.66em;
         animation: band-extend linear both;
         animation-timeline: scroll(root block);
-        animation-range: 0 38vh;
-    }
-
-    .name__text {
-        --band-edge: 0%;
-        color: transparent;
-        background-image: linear-gradient(to right,
-            #fff 0 var(--band-edge),
-            $navy var(--band-edge) 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        animation: band-fill linear both;
-        animation-timeline: scroll(root block);
-        animation-range: 0 38vh;
+        // The name is behind the sticky header by 140px of scroll, so the line has to arrive
+        // before that: 90px is one flick of the wheel, with the name still in full view
+        animation-range: 0 90px;
     }
 
     @keyframes band-extend {
+        from {
+            width: 1.32em;
+            border-radius: 0.66em;
+        }
+
+        18% {
+            border-radius: 0.66em 0 0 0.66em;
+        }
+
         to {
             width: 100%;
-        }
-    }
-
-    @keyframes band-fill {
-        to {
-            --band-edge: 100%;
+            border-radius: 0.66em 0 0 0.66em;
         }
     }
 }
@@ -322,12 +324,7 @@ a {
 @media (prefers-reduced-motion: reduce) {
     .name__band {
         width: 100%;
-        animation: none;
-    }
-
-    .name__text {
-        color: #fff;
-        background-image: none;
+        border-radius: 0.66em 0 0 0.66em;
         animation: none;
     }
 }
