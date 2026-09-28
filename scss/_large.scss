@@ -35,22 +35,151 @@ h1 {
 }
 
 /*
- * Where the line reaches the right margin it turns down it at a right angle. The drop is a
- * second ribbon, a third of it each colour, running the other way: the navy that led the
- * band along the top is on the outside of the turn, so it ends up on the right going down.
+ * THE RAIL
  *
- * The clip mitres the corner. It cuts the drop's first 1.32em on the diagonal, so the two
- * ribbons meet the way a folded one would, each colour meeting its own.
+ * One ribbon runs the whole page. It starts as the circle beside my name, runs through it,
+ * turns down the right margin, comes back through the next title, turns down the left, and
+ * carries on through every title on the page, alternating sides. It is a line that walks you
+ * through the page rather than six separate marks.
+ *
+ * It only runs from 60rem up, because it needs a clear lane down each side of the content:
+ * $railLane. Below that the content fills the column and there is nowhere for it to travel.
+ *
+ * The ribbon is as thick as the title it is passing through: 1.32 times the type size, the
+ * same two letter-heights it has at my name. My name is bigger than the section titles, so the
+ * first run down the margin tapers from one to the other and stays that thickness after.
+ *
+ * A ribbon lying flat cannot keep the same colour on top. Turn it down and back and the order
+ * is reversed, so the runs that travel left (.rail--back) carry the sage on top. The turns are
+ * concentric arcs, so each colour keeps its distance from the inside of the bend and meets
+ * itself coming out. Every end and every turn is round.
  */
-.name__drop {
-    display: block;
+
+// The lane the ribbon travels in, down each side of the content
+.intro,
+.section > .wrap {
+    position: relative;
+    padding-right: $railLane;
+    padding-left: $railLane;
+}
+
+// The rail replaces the little stripe mark beside a heading: the mark's ::before becomes one
+// of the two turns, so it is overridden here rather than hidden
+.section > .wrap > h2 {
+    position: relative;
+}
+
+// My name's run reaches for its turn, which is thicker than the others. Its east end squares
+// off because the turn carries it on; only the circle it started from is still round.
+.intro h1 .name__band {
+    right: calc(#{$rail} + #{$railTurn} - #{$railLane});
+    border-radius: 0.66em 0 0 0.66em;
+}
+
+// A title's run. It stops short of each margin by exactly one turn, and the turns finish it.
+.rail__band {
     position: absolute;
+    top: calc((100% - #{$railTitle}) / 2);
+    right: calc(#{$railTitle} + #{$railTurn} - #{$railLane});
+    left: calc(#{$railTitle} + #{$railTurn} - #{$railLane});
+    display: flex;
+    align-items: center;
+    height: $railTitle;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom,
+        $navy 0 33.333%,
+        $orange 33.333% 66.667%,
+        $sage 66.667% 100%);
+    pointer-events: none;
+    user-select: none;
+}
+
+// The run carries its own copy of the title in white, clipped to itself
+.rail__band-text {
+    padding-left: calc(#{$railLane} - #{$railTitle} - #{$railTurn});
+    color: #fff;
+    white-space: nowrap;
+}
+
+// Coming back the other way, the ribbon shows its other edge
+.rail--back .rail__band {
+    background-image: linear-gradient(to bottom,
+        $sage 0 33.333%,
+        $orange 33.333% 66.667%,
+        $navy 66.667% 100%);
+}
+
+/*
+ * The turns. Each is a quarter of concentric arcs: transparent inside the bend, then the three
+ * colours in the order the ribbon carries them, then transparent again. $at is the inside of
+ * the bend, which is the corner of the box the arcs are struck from.
+ */
+@mixin rail-turn($at, $inner, $outer, $t) {
+    width: calc(#{$t} + #{$railTurn});
+    height: calc(#{$t} + #{$railTurn});
+    margin: 0;
+    border-radius: 0;
+    background-image: radial-gradient(circle at #{$at},
+        transparent 0 $railTurn,
+        $inner $railTurn calc(#{$railTurn} + #{$t} / 3),
+        $orange calc(#{$railTurn} + #{$t} / 3) calc(#{$railTurn} + #{$t} * 2 / 3),
+        $outer calc(#{$railTurn} + #{$t} * 2 / 3) calc(#{$railTurn} + #{$t}),
+        transparent calc(#{$railTurn} + #{$t}));
+}
+
+.section > .wrap > h2::before,
+.section > .wrap > h2::after,
+.intro h1::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+
+// Right margin, leaving my name and turning down
+.intro h1::after {
     top: 0.29em;
-    right: 0;
-    width: 1.32em;
-    height: 20rem;
-    border-radius: 0 0 0.66em 0.66em;
-    clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 1.32em);
+    right: -#{$railLane};
+    @include rail-turn(0 100%, $sage, $navy, $rail);
+}
+
+// Right margin, leaving a title that ran right, turning down
+.section:not(.rail--back) > .wrap > h2::after {
+    top: calc((100% - #{$railTitle}) / 2);
+    right: -#{$railLane};
+    @include rail-turn(0 100%, $sage, $navy, $railTitle);
+}
+
+// Right margin, arriving from above and turning back left
+.rail--back > .wrap > h2::after {
+    right: -#{$railLane};
+    bottom: calc((100% - #{$railTitle}) / 2);
+    @include rail-turn(0 0, $sage, $navy, $railTitle);
+}
+
+// Left margin, leaving a title that ran left, turning down
+.rail--back > .wrap > h2::before {
+    top: calc((100% - #{$railTitle}) / 2);
+    left: -#{$railLane};
+    @include rail-turn(100% 100%, $navy, $sage, $railTitle);
+}
+
+// Left margin, arriving from above and turning back right
+.section:not(.rail--back) > .wrap > h2::before {
+    bottom: calc((100% - #{$railTitle}) / 2);
+    left: -#{$railLane};
+    @include rail-turn(100% 0, $navy, $sage, $railTitle);
+}
+
+/*
+ * The runs down the margins. Every one of them travels downward, so every one of them carries
+ * the navy on its east edge.
+ */
+.section > .wrap::after {
+    content: "";
+    position: absolute;
+    width: $railTitle;
+    top: calc((#{$railHead} - #{$railTitle}) / 2 + #{$railTitle} + #{$railTurn} - 1px);
+    bottom: calc(-1 * (#{$railPad} * 2 + (#{$railHead} - #{$railTitle}) / 2 - #{$railTurn}) - 1px);
     background-image: linear-gradient(to right,
         $sage 0 33.333%,
         $orange 33.333% 66.667%,
@@ -58,29 +187,57 @@ h1 {
     pointer-events: none;
 }
 
-// It falls once the band has arrived, and stops short of the first section
-@supports (animation-timeline: scroll()) {
-    .name__band {
-        animation-range: 0 55px;
-    }
-
-    .name__drop {
-        height: 0;
-        animation: drop-fall linear both;
-        animation-timeline: scroll(root block);
-        animation-range: 55px 170px;
-    }
-
-    @keyframes drop-fall {
-        to {
-            height: 20rem;
-        }
-    }
+.rail--down-right > .wrap::after {
+    right: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .name__drop {
-        height: 20rem;
-        animation: none;
+.rail--down-left > .wrap::after {
+    left: 0;
+}
+
+// The last title has nowhere to go, so the ribbon runs out and ends the way it began, round
+.rail--end > .wrap::after {
+    right: 0;
+    bottom: auto;
+    height: 7rem;
+    border-radius: 0 0 calc(#{$railTitle} / 2) calc(#{$railTitle} / 2);
+}
+
+/*
+ * The one run that changes thickness: out of my name at $rail and into the first title at
+ * $railTitle. Three stripes, each a trapezoid, so they narrow together and the east edge stays
+ * on the margin. Stops, as a share of the wide end: the ribbon loses ($rail - $railTitle) off
+ * its west side, which is 38.46% of $rail, and each stripe is 20.51% of it at the narrow end.
+ */
+.rail__fall {
+    position: absolute;
+    right: 0;
+    top: calc(5.5rem + 0.29 * 3.25rem + #{$rail} + #{$railTurn} - 1px);
+    bottom: calc(-1 * (#{$railPad} + (#{$railHead} - #{$railTitle}) / 2 - #{$railTurn}) - 1px);
+    width: $rail;
+    pointer-events: none;
+
+    // Each stripe is clipped on its own: a clip on the parent would take the others with it
+    > span,
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+    }
+
+    > span {
+        background-color: $sage;
+        clip-path: polygon(0 0, 33.333% 0, 58.97% 100%, 38.46% 100%);
+    }
+
+    &::before {
+        background-color: $orange;
+        clip-path: polygon(33.333% 0, 66.667% 0, 79.49% 100%, 58.97% 100%);
+    }
+
+    &::after {
+        background-color: $navy;
+        clip-path: polygon(66.667% 0, 100% 0, 100% 100%, 79.49% 100%);
     }
 }

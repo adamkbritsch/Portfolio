@@ -125,11 +125,15 @@ a {
     border-bottom: 0;
     background: $paper;
 
-    // A supergraphic band instead of a hairline
+    // A supergraphic band instead of a hairline, on the content column and round at both ends
     &::after {
         content: "";
         display: block;
+        width: calc(100% - #{$gutter * 2});
+        max-width: calc(#{$pageWidth} - #{$gutter * 2});
         height: 12px;
+        margin: 0 auto;
+        border-radius: 6px;
         background-image: linear-gradient(to bottom,
             $navy 0 4px,
             $orange 4px 8px,
@@ -188,8 +192,11 @@ a {
 .site-footer::before {
     content: "";
     display: block;
+    width: calc(100% - #{$gutter * 2});
+    max-width: calc(#{$pageWidth} - #{$gutter * 2});
     height: 12px;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
+    border-radius: 6px;
     background-image: linear-gradient(to bottom,
         $navy 0 4px,
         $orange 4px 8px,
@@ -203,6 +210,7 @@ a {
     width: 76px;
     height: 10px;
     margin-bottom: 0.9rem;
+    border-radius: 5px;
     background-image: linear-gradient(90deg,
         $navy 0 25px,
         $orange 25px 50px,
@@ -264,7 +272,7 @@ a {
     left: 0;
     height: 1.32em;
     overflow: hidden;
-    border-radius: 0.66em 0 0 0.66em;
+    border-radius: 0.66em;
     background-image: linear-gradient(to bottom,
         $navy 0 33.333%,
         $orange 33.333% 66.667%,
@@ -283,56 +291,6 @@ a {
 
 .name__text {
     color: $navy;
-}
-
-// The turn down the right margin needs clear space beside the lede, which only exists
-// from 60rem up: see _large.scss
-.name__drop {
-    display: none;
-}
-
-/*
- * On scroll the band travels: at the top of the page it is a circle to the left of the name,
- * and scrolling stretches it into the line behind the name, squaring off its right end as it
- * goes. Navy letters on cream are what keep the name readable before it arrives.
- *
- * Scroll-driven animation, so none of it costs JavaScript. Browsers without it, and anyone who
- * asked for less motion, get the finished line, which is the resting state.
- */
-@supports (animation-timeline: scroll()) {
-    .name__band {
-        width: 1.32em;
-        border-radius: 0.66em;
-        animation: band-extend linear both;
-        animation-timeline: scroll(root block);
-        // The name is behind the sticky header by 140px of scroll, so the line has to arrive
-        // before that: 90px is one flick of the wheel, with the name still in full view
-        animation-range: 0 90px;
-    }
-
-    @keyframes band-extend {
-        from {
-            width: 1.32em;
-            border-radius: 0.66em;
-        }
-
-        18% {
-            border-radius: 0.66em 0 0 0.66em;
-        }
-
-        to {
-            width: 100%;
-            border-radius: 0.66em 0 0 0.66em;
-        }
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .name__band {
-        width: 100%;
-        border-radius: 0.66em 0 0 0.66em;
-        animation: none;
-    }
 }
 
 .intro__lede {

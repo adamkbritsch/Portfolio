@@ -430,7 +430,11 @@ a:focus-visible {
 .site-header::after {
   content: "";
   display: block;
+  width: calc(100% - 32px);
+  max-width: calc(72rem - 32px);
   height: 12px;
+  margin: 0 auto;
+  border-radius: 6px;
   background-image: linear-gradient(to bottom, #1b3c54 0 4px, #b86428 4px 8px, #868f59 8px 12px);
 }
 .site-header .wrap {
@@ -479,8 +483,11 @@ a:focus-visible {
 .site-footer::before {
   content: "";
   display: block;
+  width: calc(100% - 32px);
+  max-width: calc(72rem - 32px);
   height: 12px;
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem;
+  border-radius: 6px;
   background-image: linear-gradient(to bottom, #1b3c54 0 4px, #b86428 4px 8px, #868f59 8px 12px);
 }
 
@@ -490,6 +497,7 @@ a:focus-visible {
   width: 76px;
   height: 10px;
   margin-bottom: 0.9rem;
+  border-radius: 5px;
   background-image: linear-gradient(90deg, #1b3c54 0 25px, #b86428 25px 50px, #868f59 50px 76px);
 }
 
@@ -538,7 +546,7 @@ a:focus-visible {
   left: 0;
   height: 1.32em;
   overflow: hidden;
-  border-radius: 0.66em 0 0 0.66em;
+  border-radius: 0.66em;
   background-image: linear-gradient(to bottom, #1b3c54 0 33.333%, #b86428 33.333% 66.667%, #868f59 66.667% 100%);
   pointer-events: none;
   user-select: none;
@@ -555,47 +563,6 @@ a:focus-visible {
   color: #1b3c54;
 }
 
-.name__drop {
-  display: none;
-}
-
-/*
- * On scroll the band travels: at the top of the page it is a circle to the left of the name,
- * and scrolling stretches it into the line behind the name, squaring off its right end as it
- * goes. Navy letters on cream are what keep the name readable before it arrives.
- *
- * Scroll-driven animation, so none of it costs JavaScript. Browsers without it, and anyone who
- * asked for less motion, get the finished line, which is the resting state.
- */
-@supports (animation-timeline: scroll()) {
-  .name__band {
-    width: 1.32em;
-    border-radius: 0.66em;
-    animation: band-extend linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 0 90px;
-  }
-  @keyframes band-extend {
-    from {
-      width: 1.32em;
-      border-radius: 0.66em;
-    }
-    18% {
-      border-radius: 0.66em 0 0 0.66em;
-    }
-    to {
-      width: 100%;
-      border-radius: 0.66em 0 0 0.66em;
-    }
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .name__band {
-    width: 100%;
-    border-radius: 0.66em 0 0 0.66em;
-    animation: none;
-  }
-}
 .intro__lede {
   max-width: 42rem;
   font-size: 1.1875rem;
@@ -894,45 +861,170 @@ a:focus-visible {
     font-size: 2.75rem;
   }
   /*
-   * Where the line reaches the right margin it turns down it at a right angle. The drop is a
-   * second ribbon, a third of it each colour, running the other way: the navy that led the
-   * band along the top is on the outside of the turn, so it ends up on the right going down.
+   * THE RAIL
    *
-   * The clip mitres the corner. It cuts the drop's first 1.32em on the diagonal, so the two
-   * ribbons meet the way a folded one would, each colour meeting its own.
+   * One ribbon runs the whole page. It starts as the circle beside my name, runs through it,
+   * turns down the right margin, comes back through the next title, turns down the left, and
+   * carries on through every title on the page, alternating sides. It is a line that walks you
+   * through the page rather than six separate marks.
+   *
+   * It only runs from 60rem up, because it needs a clear lane down each side of the content:
+   * $railLane. Below that the content fills the column and there is nowhere for it to travel.
+   *
+   * The ribbon is as thick as the title it is passing through: 1.32 times the type size, the
+   * same two letter-heights it has at my name. My name is bigger than the section titles, so the
+   * first run down the margin tapers from one to the other and stays that thickness after.
+   *
+   * A ribbon lying flat cannot keep the same colour on top. Turn it down and back and the order
+   * is reversed, so the runs that travel left (.rail--back) carry the sage on top. The turns are
+   * concentric arcs, so each colour keeps its distance from the inside of the bend and meets
+   * itself coming out. Every end and every turn is round.
    */
-  .name__drop {
-    display: block;
+  .intro,
+  .section > .wrap {
+    position: relative;
+    padding-right: 6.5rem;
+    padding-left: 6.5rem;
+  }
+  .section > .wrap > h2 {
+    position: relative;
+  }
+  .intro h1 .name__band {
+    right: calc(4.29rem + 1.1rem - 6.5rem);
+    border-radius: 0.66em 0 0 0.66em;
+  }
+  .rail__band {
     position: absolute;
+    top: calc((100% - 2.64rem) / 2);
+    right: calc(2.64rem + 1.1rem - 6.5rem);
+    left: calc(2.64rem + 1.1rem - 6.5rem);
+    display: flex;
+    align-items: center;
+    height: 2.64rem;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom, #1b3c54 0 33.333%, #b86428 33.333% 66.667%, #868f59 66.667% 100%);
+    pointer-events: none;
+    user-select: none;
+  }
+  .rail__band-text {
+    padding-left: calc(6.5rem - 2.64rem - 1.1rem);
+    color: #fff;
+    white-space: nowrap;
+  }
+  .rail--back .rail__band {
+    background-image: linear-gradient(to bottom, #868f59 0 33.333%, #b86428 33.333% 66.667%, #1b3c54 66.667% 100%);
+  }
+  /*
+   * The turns. Each is a quarter of concentric arcs: transparent inside the bend, then the three
+   * colours in the order the ribbon carries them, then transparent again. $at is the inside of
+   * the bend, which is the corner of the box the arcs are struck from.
+   */
+  .section > .wrap > h2::before,
+  .section > .wrap > h2::after,
+  .intro h1::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+  .intro h1::after {
     top: 0.29em;
-    right: 0;
-    width: 1.32em;
-    height: 20rem;
-    border-radius: 0 0 0.66em 0.66em;
-    clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 1.32em);
+    right: -6.5rem;
+    width: calc(4.29rem + 1.1rem);
+    height: calc(4.29rem + 1.1rem);
+    margin: 0;
+    border-radius: 0;
+    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 4.29rem / 3), #b86428 calc(1.1rem + 4.29rem / 3) calc(1.1rem + 4.29rem * 2 / 3), #1b3c54 calc(1.1rem + 4.29rem * 2 / 3) calc(1.1rem + 4.29rem), transparent calc(1.1rem + 4.29rem));
+  }
+  .section:not(.rail--back) > .wrap > h2::after {
+    top: calc((100% - 2.64rem) / 2);
+    right: -6.5rem;
+    width: calc(2.64rem + 1.1rem);
+    height: calc(2.64rem + 1.1rem);
+    margin: 0;
+    border-radius: 0;
+    background-image: radial-gradient(circle at 0 100%, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem / 3), #b86428 calc(1.1rem + 2.64rem / 3) calc(1.1rem + 2.64rem * 2 / 3), #1b3c54 calc(1.1rem + 2.64rem * 2 / 3) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+  }
+  .rail--back > .wrap > h2::after {
+    right: -6.5rem;
+    bottom: calc((100% - 2.64rem) / 2);
+    width: calc(2.64rem + 1.1rem);
+    height: calc(2.64rem + 1.1rem);
+    margin: 0;
+    border-radius: 0;
+    background-image: radial-gradient(circle at 0 0, transparent 0 1.1rem, #868f59 1.1rem calc(1.1rem + 2.64rem / 3), #b86428 calc(1.1rem + 2.64rem / 3) calc(1.1rem + 2.64rem * 2 / 3), #1b3c54 calc(1.1rem + 2.64rem * 2 / 3) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+  }
+  .rail--back > .wrap > h2::before {
+    top: calc((100% - 2.64rem) / 2);
+    left: -6.5rem;
+    width: calc(2.64rem + 1.1rem);
+    height: calc(2.64rem + 1.1rem);
+    margin: 0;
+    border-radius: 0;
+    background-image: radial-gradient(circle at 100% 100%, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem / 3), #b86428 calc(1.1rem + 2.64rem / 3) calc(1.1rem + 2.64rem * 2 / 3), #868f59 calc(1.1rem + 2.64rem * 2 / 3) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+  }
+  .section:not(.rail--back) > .wrap > h2::before {
+    bottom: calc((100% - 2.64rem) / 2);
+    left: -6.5rem;
+    width: calc(2.64rem + 1.1rem);
+    height: calc(2.64rem + 1.1rem);
+    margin: 0;
+    border-radius: 0;
+    background-image: radial-gradient(circle at 100% 0, transparent 0 1.1rem, #1b3c54 1.1rem calc(1.1rem + 2.64rem / 3), #b86428 calc(1.1rem + 2.64rem / 3) calc(1.1rem + 2.64rem * 2 / 3), #868f59 calc(1.1rem + 2.64rem * 2 / 3) calc(1.1rem + 2.64rem), transparent calc(1.1rem + 2.64rem));
+  }
+  /*
+   * The runs down the margins. Every one of them travels downward, so every one of them carries
+   * the navy on its east edge.
+   */
+  .section > .wrap::after {
+    content: "";
+    position: absolute;
+    width: 2.64rem;
+    top: calc((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem - 1px);
+    bottom: calc(-1 * (3.5rem * 2 + (2.3rem - 2.64rem) / 2 - 1.1rem) - 1px);
     background-image: linear-gradient(to right, #868f59 0 33.333%, #b86428 33.333% 66.667%, #1b3c54 66.667% 100%);
     pointer-events: none;
   }
-  @supports (animation-timeline: scroll()) {
-    .name__band {
-      animation-range: 0 55px;
-    }
-    .name__drop {
-      height: 0;
-      animation: drop-fall linear both;
-      animation-timeline: scroll(root block);
-      animation-range: 55px 170px;
-    }
-    @keyframes drop-fall {
-      to {
-        height: 20rem;
-      }
-    }
+  .rail--down-right > .wrap::after {
+    right: 0;
   }
-}
-@media only screen and (min-width: 60rem) and (prefers-reduced-motion: reduce) {
-  .name__drop {
-    height: 20rem;
-    animation: none;
+  .rail--down-left > .wrap::after {
+    left: 0;
+  }
+  .rail--end > .wrap::after {
+    right: 0;
+    bottom: auto;
+    height: 7rem;
+    border-radius: 0 0 calc(2.64rem / 2) calc(2.64rem / 2);
+  }
+  /*
+   * The one run that changes thickness: out of my name at $rail and into the first title at
+   * $railTitle. Three stripes, each a trapezoid, so they narrow together and the east edge stays
+   * on the margin. Stops, as a share of the wide end: the ribbon loses ($rail - $railTitle) off
+   * its west side, which is 38.46% of $rail, and each stripe is 20.51% of it at the narrow end.
+   */
+  .rail__fall {
+    position: absolute;
+    right: 0;
+    top: calc(6.4425rem + 4.29rem + 1.1rem - 1px);
+    bottom: calc(-1 * (3.5rem + (2.3rem - 2.64rem) / 2 - 1.1rem) - 1px);
+    width: 4.29rem;
+    pointer-events: none;
+  }
+  .rail__fall > span, .rail__fall::before, .rail__fall::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .rail__fall > span {
+    background-color: #868f59;
+    clip-path: polygon(0 0, 33.333% 0, 58.97% 100%, 38.46% 100%);
+  }
+  .rail__fall::before {
+    background-color: #b86428;
+    clip-path: polygon(33.333% 0, 66.667% 0, 79.49% 100%, 58.97% 100%);
+  }
+  .rail__fall::after {
+    background-color: #1b3c54;
+    clip-path: polygon(66.667% 0, 100% 0, 100% 100%, 79.49% 100%);
   }
 }

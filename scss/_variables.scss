@@ -27,5 +27,15 @@ $boldWeight: 600;
 // Layout
 $gutter: 16px;
 $pageWidth: 72rem;
+
+// The rail: the one ribbon that runs through every title from 60rem up (see _large.scss).
+// Its thickness is the band through my name, 1.32 x the 3.25rem h1, so the whole run is one
+// ribbon. The lane is the clear strip down each side of the content that it travels in.
+$rail: 4.29rem;      // thickness at my name: 1.32 x the 3.25rem h1
+$railTitle: 2.64rem; // thickness at a section title: 1.32 x the 2rem h2, so it tapers between
+$railTurn: 1.1rem;   // the inside radius of a turn; a turn's box is $rail + $railTurn square
+$railLane: 6.5rem;   // the clear lane each side, wider than a turn by 1.11rem
+$railHead: 2.3rem;   // a section h2's line box: 2rem at line-height 1.15
+$railPad: 3.5rem;    // a section's top padding
 $textWidth: 42rem;
 $figureWidth: 60rem;
