@@ -266,17 +266,25 @@ a {
 }
 
 // Sits exactly over the real name: the band's 0.29em plus this 0.06em is the h1's own 0.35em
+/*
+ * The white copy of the title. The letters are painted white and shadowed the ordinary way -
+ * clipping a background to the text instead puts the shadow on top of the letters and greys
+ * them - and the window's cover goes over them as an overlay of their own.
+ */
 .name__band-text {
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     display: block;
     padding: 0.06em 0 0 1.62em;
-    color: transparent;
-    background-image: $railCover, linear-gradient(#fff, #fff);
-    background-attachment: fixed, scroll;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     white-space: nowrap;
+}
+
+.name__band-text::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: $railCover;
+    background-attachment: fixed;
 }
 
 .name__text {

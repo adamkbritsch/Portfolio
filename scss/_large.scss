@@ -84,7 +84,6 @@ h1 {
  */
 .rail__band,
 .rail__band-text {
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     position: absolute;
     top: calc((100% - #{$railTitle}) / 2);
     right: calc(#{$railTitle} + #{$railTurn} - #{$railLane});
@@ -103,17 +102,27 @@ h1 {
     background-attachment: fixed, scroll;
 }
 
+/*
+ * The white copy of a title. The letters are painted white and shadowed the ordinary way -
+ * clipping a background to the text instead puts the shadow on top of the letters and greys
+ * them - and the window's cover goes over them as an overlay of their own.
+ */
 .rail__band-text {
     display: flex;
     align-items: center;
     padding-left: calc(#{$railLane} - #{$railTitle} - #{$railTurn});
-    color: transparent;
-    background-image: $railCover, linear-gradient(#fff, #fff);
-    background-attachment: fixed, scroll;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     white-space: nowrap;
+}
+
+.rail__band-text::after,
+.rail__run-text::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: $railCover;
+    background-attachment: fixed;
 }
 
 // Coming back the other way, the ribbon shows its other edge
@@ -286,7 +295,6 @@ h1 {
 // A piece's run, the same as a title's but thinner
 .rail__run,
 .rail__run-text {
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     position: absolute;
     top: calc((#{$railSub} - #{$railPiece}) / 2);
     right: calc(#{$railPiece} + #{$railTurn} - #{$railLane});
@@ -318,12 +326,8 @@ h1 {
     display: flex;
     align-items: center;
     padding-left: calc(60% + 0.25rem);
-    color: transparent;
-    background-image: $railCover, linear-gradient(#fff, #fff);
-    background-attachment: fixed, scroll;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     font-size: 1.25rem;
     font-weight: $boldWeight;
     font-family: $titleFont;

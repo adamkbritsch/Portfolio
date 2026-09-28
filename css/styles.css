@@ -555,17 +555,25 @@ a:focus-visible {
   user-select: none;
 }
 
+/*
+ * The white copy of the title. The letters are painted white and shadowed the ordinary way -
+ * clipping a background to the text instead puts the shadow on top of the letters and greys
+ * them - and the window's cover goes over them as an overlay of their own.
+ */
 .name__band-text {
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
   display: block;
   padding: 0.06em 0 0 1.62em;
-  color: transparent;
-  background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(#fff, #fff);
-  background-attachment: fixed, scroll;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
   white-space: nowrap;
+}
+
+.name__band-text::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%);
+  background-attachment: fixed;
 }
 
 .name__text {
@@ -917,7 +925,6 @@ a:focus-visible {
    */
   .rail__band,
   .rail__band-text {
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     position: absolute;
     top: calc((100% - 2.64rem) / 2);
     right: calc(2.64rem + 1.1rem - 6.5rem);
@@ -931,17 +938,26 @@ a:focus-visible {
     background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, #466072 0 50%, #c4804f 50% 80.9%, #9ca376 80.9% 100%);
     background-attachment: fixed, scroll;
   }
+  /*
+   * The white copy of a title. The letters are painted white and shadowed the ordinary way -
+   * clipping a background to the text instead puts the shadow on top of the letters and greys
+   * them - and the window's cover goes over them as an overlay of their own.
+   */
   .rail__band-text {
     display: flex;
     align-items: center;
     padding-left: calc(6.5rem - 2.64rem - 1.1rem);
-    color: transparent;
-    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(#fff, #fff);
-    background-attachment: fixed, scroll;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     white-space: nowrap;
+  }
+  .rail__band-text::after,
+  .rail__run-text::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%);
+    background-attachment: fixed;
   }
   .rail--back .rail__band {
     background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(to bottom, #9ca376 0 calc(100% - 80.9%), #c4804f calc(100% - 80.9%) calc(100% - 50%), #466072 calc(100% - 50%) 100%);
@@ -1076,7 +1092,6 @@ a:focus-visible {
   }
   .rail__run,
   .rail__run-text {
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     position: absolute;
     top: calc((1.4375rem - 1.65rem) / 2);
     right: calc(1.65rem + 1.1rem - 6.5rem);
@@ -1098,12 +1113,8 @@ a:focus-visible {
     display: flex;
     align-items: center;
     padding-left: calc(60% + 0.25rem);
-    color: transparent;
-    background-image: linear-gradient(to bottom, #f4f1ea 0 10%, transparent 10% 100%), linear-gradient(#fff, #fff);
-    background-attachment: fixed, scroll;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
     font-size: 1.25rem;
     font-weight: 600;
     font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
