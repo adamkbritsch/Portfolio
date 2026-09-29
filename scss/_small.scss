@@ -636,6 +636,13 @@ figure img {
         margin: 1.5rem 0 2rem;
     }
 
+    // An app icon shown a foot wide is not an app icon. The size modifiers further up are
+    // one class and this is two, so inside a case study they lose; this one is spelled out
+    // again to win. The other two are still overridden - see the note by .figure--phones.
+    > .figure--icons {
+        max-width: 20rem;
+    }
+
     h1 {
         margin-bottom: 0.5rem;
     }

@@ -966,6 +966,9 @@ figure img {
   max-width: 60rem;
   margin: 1.5rem 0 2rem;
 }
+.article > .figure--icons {
+  max-width: 20rem;
+}
 .article h1 {
   margin-bottom: 0.5rem;
 }
