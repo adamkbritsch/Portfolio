@@ -2,7 +2,8 @@
  * COLOURS
  *
  * 70s supergraphics: navy, burnt orange and a greenish cream, each 15% desaturated, on the
- * cream of the poster this is drawn from (#eae0cb, sampled off it).
+ * cream of the poster this is drawn from (#eae0cb, sampled off it), with a quarter of that
+ * cream's saturation taken back out: #e6dfcf.
  *
  * Everything that changes with the theme is a custom property, and the SCSS names below are
  * just `var()` pointing at them, so the rest of the stylesheets are written exactly as they
@@ -13,17 +14,17 @@ $orange: #b86428;    // hue 25, the direct complement of the navy; stripes only
 $sage: #868f59;      // hue 69, the odd one out, and the lightest of the three
 
 :root {
-    --paper: #eae0cb;       // the poster's cream, exactly
-    --ink: #1d1c1a;         // 13.0:1
-    --ink-soft: #5b5852;    // secondary text, 5.4:1
-    --rule: #c9c1af;        // hairlines between things, 1.4:1
-    --accent: #{$navy};     // links and focus rings, 8.8:1
-    --accent-dark: #8f4e1f; // the same orange dark enough to read as text, 4.9:1
+    --paper: #e6dfcf;       // the poster's cream, a quarter of its saturation taken out
+    --ink: #1d1c1a;         // 12.8:1
+    --ink-soft: #5b5852;    // secondary text, 5.3:1
+    --rule: #c6c0b2;        // hairlines between things, 1.4:1
+    --accent: #{$navy};     // links and focus rings, 8.7:1
+    --accent-dark: #8f4e1f; // the same orange dark enough to read as text, 4.8:1
 
     // The ribbon, mixed against the page rather than given an alpha (see the note below)
-    --navy-line: #304c60;
-    --orange-line: #bd7038;
-    --sage-line: #909764;
+    --navy-line: #2f4c60;
+    --orange-line: #bc7039;
+    --sage-line: #8f9765;
 
     // The titles the ribbon carries
     --title-ink: #fff;
@@ -44,10 +45,10 @@ $sage: #868f59;      // hue 69, the odd one out, and the lightest of the three
  * saturated by exactly as much as the alpha came down, so the two cancel.
  */
 :root[data-theme="dark"] {
-    --paper: #1d1010;       // the poster's dark, exactly
-    --ink: #eae0cb;         // the cream, now the ink: 14.1:1
-    --ink-soft: #b1a697;    // 7.7:1
-    --rule: #382b28;        // 1.4:1, the same weight the hairlines have in the light
+    --paper: #1b1212;       // the poster's dark, desaturated to match
+    --ink: #e6dfcf;         // the cream, now the ink: 13.9:1
+    --ink-soft: #ada69a;    // 7.6:1
+    --rule: #352d2b;        // 1.4:1, the same weight the hairlines have in the light
     --accent: #6ca6d0;      // the navy at its own hue, lifted to 7.1:1
     --accent-dark: #d1722e; // the orange likewise, 5.4:1
 
@@ -97,10 +98,10 @@ $stripeTwo: 80.9%;   // end of the middle one; the innermost is the last 19.1%
  * the theme instead of ignoring it. 0.85 is close to the floor: the navy's red channel runs
  * out at 0.796, below which no source colour can hold the cream result.
  *
- *   source          on the cream #eae0cb   on the dark #1d1010
- *   navy   #0f324d  #304c60                #112d44
- *   orange #b55c1e  #bd7038                #9e511c
- *   sage   #808a52  #909764                #717848
+ *   source          on the cream #e6dfcf   on the dark #1b1212
+ *   navy   #0f324d  #2f4c60                #112d44
+ *   orange #b55c1e  #bc7039                #9e511c
+ *   sage   #808a52  #8f9765                #717848
  *
  * They are written out composited rather than given a real alpha: an alpha would double up
  * at the hairline overlaps between one piece of the ribbon and the next and print a darker
