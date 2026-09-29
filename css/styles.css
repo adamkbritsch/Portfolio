@@ -369,6 +369,64 @@ template {
 }
 
 /*
+ * Type: serif titles, sans-serif body text.
+ *
+ * The webfonts arrive after the first paint, so for a moment the page is set in whatever the
+ * browser already has - and Georgia is a quarter wider than Source Serif 4, which made my name
+ * jump 22% narrower the moment the real font landed. These four stand-ins are those same local
+ * faces with their metrics overridden to match the fonts they are standing in for: the same
+ * advance widths, the same ascent and descent, so the line breaks where it is going to break
+ * and the page is the height it is going to be. The letterforms change when the swap happens.
+ * Nothing moves.
+ *
+ * size-adjust is the real font's advance width over the stand-in's, measured on a line of this
+ * site's own text, measured in the page rather than on a canvas - a canvas asked for Georgia
+ * at 600 synthesises a bold, and a stand-in that declares its own weight does not, which is
+ * a 13% difference on its own. The ascent and descent are scaled by that same ratio, since
+ * size-adjust has already resized the em they are measured against.
+ *
+ * Source Serif 4 is optically sized, so it is not one width to match: its letters are 9%
+ * wider at 20px than at 100px, and one size-adjust cannot be right at both. It is struck at
+ * 52px, the size of my name, which is the largest serif on the page and the one whose jump
+ * was worth seeing. Smaller titles land a little narrow rather than a little wide.
+ */
+@font-face {
+  font-family: "Serif stand-in";
+  src: local("Georgia"), local("Times New Roman");
+  font-weight: 600;
+  size-adjust: 94.59%;
+  ascent-override: 109.95%;
+  descent-override: 35.94%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Serif stand-in";
+  src: local("Georgia"), local("Times New Roman");
+  font-weight: 700;
+  size-adjust: 96.56%;
+  ascent-override: 107.7%;
+  descent-override: 35.22%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Sans stand-in";
+  src: local("Helvetica Neue"), local("Segoe UI"), local("Helvetica"), local("Arial");
+  font-weight: 400;
+  size-adjust: 92.18%;
+  ascent-override: 110.65%;
+  descent-override: 43.39%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Sans stand-in";
+  src: local("Helvetica Neue"), local("Segoe UI"), local("Helvetica"), local("Arial");
+  font-weight: 600;
+  size-adjust: 94.82%;
+  ascent-override: 107.57%;
+  descent-override: 42.19%;
+  line-gap-override: 0%;
+}
+/*
  * The ribbon's three lines are one set of colours laid over the page at $railAlpha. Lowering
  * that alpha and saturating the sources by the same amount leaves the ribbon looking exactly
  * as it did on the cream, while letting more of the page through, so the ribbon shifts with
@@ -440,7 +498,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 1.0625rem;
   font-weight: 400;
   line-height: 1.6;
@@ -461,7 +519,7 @@ h2,
 h3,
 h4 {
   margin: 0 0 0.5em;
-  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-family: "Source Serif 4", "Serif stand-in", Georgia, "Times New Roman", serif;
   font-weight: 600;
   line-height: 1.15;
   text-wrap: balance;
@@ -515,7 +573,7 @@ a:focus-visible {
   padding: 0.5rem 0.75rem;
   background: var(--ink);
   color: var(--paper);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 .skip-link:focus {
   top: 16px;
@@ -530,7 +588,7 @@ a:focus-visible {
 .meta {
   margin-bottom: 0.5rem;
   color: var(--ink-soft);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.9375rem;
 }
 
@@ -543,7 +601,7 @@ a:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 .link-row a {
   padding: 0.45rem 0.85rem;
@@ -635,7 +693,7 @@ a:focus-visible {
   grid-row: 1;
   grid-column: 1;
   color: var(--ink);
-  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-family: "Source Serif 4", "Serif stand-in", Georgia, "Times New Roman", serif;
   font-size: 1.25rem;
   font-weight: 600;
   text-decoration: none;
@@ -647,7 +705,7 @@ a:focus-visible {
   gap: 0 1.25rem;
   margin: 0;
   padding: 0;
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   list-style: none;
 }
 .site-nav a {
@@ -971,7 +1029,7 @@ figure img {
 }
 
 .entry__title {
-  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-family: "Source Serif 4", "Serif stand-in", Georgia, "Times New Roman", serif;
   font-weight: 600;
 }
 
@@ -998,14 +1056,14 @@ figure img {
 }
 .contact-list span {
   color: var(--ink-soft);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .site-footer {
   padding: 2rem 0 2.5rem;
   border-top: 1px solid var(--ink);
   color: var(--ink-soft);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.9375rem;
 }
 .site-footer p {
@@ -1043,25 +1101,25 @@ figure img {
 .article figcaption {
   margin-top: 0.5rem;
   color: var(--ink-soft);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.9375rem;
 }
 
 .article__back {
   margin-bottom: 1.5rem;
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.9375rem;
 }
 
 .article__meta {
   margin-bottom: 2rem;
   color: var(--ink-soft);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .article__note {
   color: var(--ink-soft);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.9375rem;
 }
 
@@ -1076,7 +1134,7 @@ figure img {
   justify-content: space-between;
   gap: 1rem;
   margin-top: 1.5rem;
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 .pager a {
   max-width: 48%;
@@ -1119,7 +1177,7 @@ figure img {
   padding: 0.1rem 0.4rem;
   border-radius: 4px;
   background: var(--panel);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.95em;
 }
 
@@ -1186,7 +1244,7 @@ figure img {
 .proto__where {
   margin-bottom: 0.6rem;
   color: var(--ink-soft);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.9375rem;
 }
 
@@ -1204,7 +1262,7 @@ figure img {
   border-radius: 6px;
   background: var(--panel-hover);
   color: var(--accent);
-  font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.9375rem;
   cursor: pointer;
 }
@@ -1627,7 +1685,7 @@ figure img {
     text-shadow: var(--title-shadow);
     font-size: 1.25rem;
     font-weight: 600;
-    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-family: "Source Serif 4", "Serif stand-in", Georgia, "Times New Roman", serif;
     line-height: 1.15;
     letter-spacing: normal;
     white-space: nowrap;

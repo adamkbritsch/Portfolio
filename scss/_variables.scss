@@ -82,9 +82,70 @@ $titleShadow: var(--title-shadow);
 $stripe: 18px;       // band thickness
 $stripeGap: 10px;    // cream between bands
 
-// Type: serif titles, sans-serif body text
-$serif: "Source Serif 4", Georgia, "Times New Roman", serif;
-$sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+/*
+ * Type: serif titles, sans-serif body text.
+ *
+ * The webfonts arrive after the first paint, so for a moment the page is set in whatever the
+ * browser already has - and Georgia is a quarter wider than Source Serif 4, which made my name
+ * jump 22% narrower the moment the real font landed. These four stand-ins are those same local
+ * faces with their metrics overridden to match the fonts they are standing in for: the same
+ * advance widths, the same ascent and descent, so the line breaks where it is going to break
+ * and the page is the height it is going to be. The letterforms change when the swap happens.
+ * Nothing moves.
+ *
+ * size-adjust is the real font's advance width over the stand-in's, measured on a line of this
+ * site's own text, measured in the page rather than on a canvas - a canvas asked for Georgia
+ * at 600 synthesises a bold, and a stand-in that declares its own weight does not, which is
+ * a 13% difference on its own. The ascent and descent are scaled by that same ratio, since
+ * size-adjust has already resized the em they are measured against.
+ *
+ * Source Serif 4 is optically sized, so it is not one width to match: its letters are 9%
+ * wider at 20px than at 100px, and one size-adjust cannot be right at both. It is struck at
+ * 52px, the size of my name, which is the largest serif on the page and the one whose jump
+ * was worth seeing. Smaller titles land a little narrow rather than a little wide.
+ */
+@font-face {
+    font-family: "Serif stand-in";
+    src: local("Georgia"), local("Times New Roman");
+    font-weight: 600;
+    size-adjust: 94.59%;
+    ascent-override: 109.95%;
+    descent-override: 35.94%;
+    line-gap-override: 0%;
+}
+
+@font-face {
+    font-family: "Serif stand-in";
+    src: local("Georgia"), local("Times New Roman");
+    font-weight: 700;
+    size-adjust: 96.56%;
+    ascent-override: 107.70%;
+    descent-override: 35.22%;
+    line-gap-override: 0%;
+}
+
+@font-face {
+    font-family: "Sans stand-in";
+    src: local("Helvetica Neue"), local("Segoe UI"), local("Helvetica"), local("Arial");
+    font-weight: 400;
+    size-adjust: 92.18%;
+    ascent-override: 110.65%;
+    descent-override: 43.39%;
+    line-gap-override: 0%;
+}
+
+@font-face {
+    font-family: "Sans stand-in";
+    src: local("Helvetica Neue"), local("Segoe UI"), local("Helvetica"), local("Arial");
+    font-weight: 600;
+    size-adjust: 94.82%;
+    ascent-override: 107.57%;
+    descent-override: 42.19%;
+    line-gap-override: 0%;
+}
+
+$serif: "Source Serif 4", "Serif stand-in", Georgia, "Times New Roman", serif;
+$sans: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 $titleFont: $serif;
 $bodyFont: $sans;
 $uiFont: $sans;      // nav, labels, captions and other small text
