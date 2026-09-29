@@ -12,7 +12,8 @@
  *   how long it is    the one that matters. Read on a log scale, because the difference
  *                     between 50px and 150px is a change of kind and the difference between
  *                     1,000px and 1,100px is not. Every run still drains - the shortest is
- *                     held to a floor - but a long one goes about three times as far.
+ *                     held to a floor - but a long one goes about twice as far. Nothing
+ *                     drains past the single figure every run used to get.
  *
  *   how thick it is   a thin run shows the drain sooner than a thick one at the same depth,
  *                     so a piece's run is eased off a little and the band through my name,
@@ -48,8 +49,8 @@
 
     var SHORT = 48;          // px: a drop between two corners, the least the ribbon ever runs
     var LONG = 1200;         // px: the lane down the side of the tallest section
-    var SHALLOW = 0.27;      // how far a run that short drains - still plainly a fade
-    var DEEP = 0.48;         // how far a run that long drains
+    var SHALLOW = 0.15;      // how far a run that short drains
+    var DEEP = 0.34;         // how far a run that long drains, and the greyest any run goes
     var TITLE = 42;          // px: the ribbon's thickness at a section title, the middle case
     var SHOULDER = 0.42;     // the end left at full strength, as a fraction of that thickness
     var WOBBLE = 0.06;       // how much a run may differ from another of its own length
@@ -73,11 +74,14 @@
         var reach = Math.log(clamp(SHORT, LONG, along) / SHORT) / Math.log(LONG / SHORT);
         var thin = clamp(0.85, 1.05, 0.85 + 0.15 * (across / TITLE));
 
-        return clamp(0.22, 0.55, (SHALLOW + (DEEP - SHALLOW) * reach) * thin * (1 + wobbleOf(seed)));
+        return clamp(0.1, 0.38, (SHALLOW + (DEEP - SHALLOW) * reach) * thin * (1 + wobbleOf(seed)));
     }
 
+    // Never less of an end than a run used to keep, so no part of the ribbon is drained further
+    // than it was: a long run holds its bright stretch into the bend, and only a short one -
+    // where a fixed percentage left barely any - is given the room its thickness asks for.
     function shoulderFor(along, across) {
-        return clamp(1.2, 34, 100 * SHOULDER * across / along);
+        return clamp(14, 34, 100 * SHOULDER * across / along);
     }
 
     /*
