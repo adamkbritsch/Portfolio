@@ -621,7 +621,7 @@ a:focus-visible {
   position: sticky;
   top: 0;
   z-index: 5;
-  border-bottom: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink-soft);
   background: var(--paper);
   /*
    * Two deliberate rows on a phone: my name and the switch on the first, the whole of the
@@ -1061,7 +1061,7 @@ figure img {
 
 .site-footer {
   padding: 2rem 0 2.5rem;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--ink-soft);
   color: var(--ink-soft);
   font-family: "Source Sans 3", "Sans stand-in", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 0.9375rem;
