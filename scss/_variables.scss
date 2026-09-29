@@ -1,15 +1,67 @@
-// Colors: 70s supergraphics — navy, burnt orange and a greenish cream, each 15% desaturated
-$paper: #f4f1ea;     // cream
-$ink: #1d1c1a;
-$inkSoft: #5b5852;   // secondary text, 6.3:1 on $paper
-$rule: #d9d4c9;      // hairlines between things
-$navy: #1b3c54;      // hue 205, 10.2:1 on $paper
+/*
+ * COLOURS
+ *
+ * 70s supergraphics: navy, burnt orange and a greenish cream, each 15% desaturated, on the
+ * cream of the poster this is drawn from (#eae0cb, sampled off it).
+ *
+ * Everything that changes with the theme is a custom property, and the SCSS names below are
+ * just `var()` pointing at them, so the rest of the stylesheets are written exactly as they
+ * were and the switch is one attribute on <html>.
+ */
+$navy: #1b3c54;      // hue 205, 8.8:1 on the cream
 $orange: #b86428;    // hue 25, the direct complement of the navy; stripes only
 $sage: #868f59;      // hue 69, the odd one out, and the lightest of the three
-$orangeInk: #8f4e1f; // the same orange dark enough to read as text, 5.68:1
 
-$accent: $navy;      // links and focus rings
-$accentDark: $orangeInk;
+:root {
+    --paper: #eae0cb;       // the poster's cream, exactly
+    --ink: #1d1c1a;         // 13.0:1
+    --ink-soft: #5b5852;    // secondary text, 5.4:1
+    --rule: #c9c1af;        // hairlines between things, 1.4:1
+    --accent: #{$navy};     // links and focus rings, 8.8:1
+    --accent-dark: #8f4e1f; // the same orange dark enough to read as text, 4.9:1
+
+    // The ribbon, mixed against the page rather than given an alpha (see the note below)
+    --navy-line: #304c60;
+    --orange-line: #bd7038;
+    --sage-line: #909764;
+
+    // The titles the ribbon carries
+    --title-ink: #fff;
+    --title-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+/*
+ * Dark. The page becomes the poster's other colour and the cream becomes the ink, so the two
+ * swap places. The ribbon cannot: the navy is darker than the page it would sit on, so every
+ * stripe is lifted the same 25% towards the cream - the least that keeps the darkest of the
+ * three legible (3.0:1) - which holds the three hues in the relation they have in the light.
+ * The titles the ribbon carries turn dark for the same reason: white on the lifted sage is
+ * 2.6:1, the page's own dark on it is 7.0:1.
+ */
+:root[data-theme="dark"] {
+    --paper: #1d1010;       // the poster's dark, exactly
+    --ink: #eae0cb;         // the cream, now the ink: 14.1:1
+    --ink-soft: #b1a697;    // 7.7:1
+    --rule: #382b28;        // 1.4:1, the same weight the hairlines have in the light
+    --accent: #6ca6d0;      // the navy at its own hue, lifted to 7.1:1
+    --accent-dark: #d1722e; // the orange likewise, 5.4:1
+
+    --navy-line: #4f6572;   // 3.0:1 against the page
+    --orange-line: #c48351; // 5.9:1
+    --sage-line: #9fa376;   // 7.0:1
+
+    --title-ink: #1d1010;   // 3.0:1 on the navy, 5.9:1 on the orange, 7.0:1 on the sage
+    --title-shadow: none;   // dark letters on a lit ribbon need no help
+}
+
+$paper: var(--paper);
+$ink: var(--ink);
+$inkSoft: var(--ink-soft);
+$rule: var(--rule);
+$accent: var(--accent);
+$accentDark: var(--accent-dark);
+$titleInk: var(--title-ink);
+$titleShadow: var(--title-shadow);
 
 // Stripe geometry, shared by every supergraphic on the site
 $stripe: 18px;       // band thickness
@@ -34,14 +86,17 @@ $stripeOne: 50%;     // outermost
 $stripeTwo: 80.9%;   // end of the middle one; the innermost is the last 19.1%
 
 /*
- * The lines are drawn at 90% strength. They are mixed against the paper rather than given an
- * alpha: the ribbon only ever lies on the paper, and a real alpha would double up at the
+ * The lines are drawn at 90% strength. They are mixed against the page rather than given an
+ * alpha: the ribbon only ever lies on the page, and a real alpha would double up at the
  * hairline overlaps where one piece of it meets the next and print a darker seam there.
- * Recompute these if $paper ever changes.
+ * Recompute them, and regenerate the SVG turns with turns.py, if the page colour changes.
+ *
+ * On the cream: white on the navy is 9.0:1, on the orange 3.8:1, on the sage 3.1:1, so the
+ * titles clear the 3:1 a line of that size is held to on all three.
  */
-$navyLine: #314e63;     // $navy at 90% on $paper; white on it is 8.8:1
-$orangeLine: #be723b;   // 3.7:1
-$sageLine: #919968;     // 3.0:1, just over the 3:1 large-text line
+$navyLine: var(--navy-line);
+$orangeLine: var(--orange-line);
+$sageLine: var(--sage-line);
 
 /*
  * A straight run loses a little colour towards its middle and keeps it at the ends, so the
