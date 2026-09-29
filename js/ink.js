@@ -45,6 +45,10 @@
     // and shrinks with the window carries a band that grows and shrinks with it.
     var BAND_EM = 2 / 32;
 
+    // Enough softening to take the cut edge off the band without letting it drift. Struck off
+    // the band rather than in pixels, so it stays the same softness at every size.
+    var BLUR_OF_BAND = 0.2;
+
     function between(from, to, t) {
         return from + (to - from) * t;
     }
@@ -93,7 +97,11 @@
             '<feFlood flood-color="' + INK + '" flood-opacity="' + alpha.toFixed(3) + '"/>' +
             '<feComposite in2="SourceAlpha" operator="in" result="ink"/>' +
             '<feOffset in="SourceAlpha" dx="-' + width.toFixed(3) + '" dy="0" result="shifted"/>' +
-            '<feComposite in="ink" in2="shifted" operator="out"/>';
+            '<feComposite in="ink" in2="shifted" operator="out" result="band"/>' +
+            '<feGaussianBlur in="band" stdDeviation="' + (width * BLUR_OF_BAND).toFixed(3) + '" result="soft"/>' +
+            // A blur spreads, and what it spreads past the stroke would land on the ribbon.
+            // Cutting it back to the letters afterwards keeps the blue where it belongs.
+            '<feComposite in="soft" in2="SourceAlpha" operator="in"/>';
 
         svg.appendChild(filter);
     }
