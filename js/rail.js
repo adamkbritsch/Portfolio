@@ -52,7 +52,7 @@
     var SHALLOW = 0.06;      // how far a run that short drains
     var DEEP = 0.17;         // how far a run that long drains, and the greyest any run goes
     var TITLE = 42;          // px: the ribbon's thickness at a section title, the middle case
-    var SHOULDER = 0.42;     // the end left at full strength, as a fraction of that thickness
+    var CLEAR = 2;           // ribbon-thicknesses of full colour kept either side of a bend
     var WOBBLE = 0.06;       // how much a run may differ from another of its own length
 
     function clamp(low, high, n) {
@@ -77,11 +77,16 @@
         return clamp(0.04, 0.19, (SHALLOW + (DEEP - SHALLOW) * reach) * thin * (1 + wobbleOf(seed)));
     }
 
-    // Never less of an end than a run used to keep, so no part of the ribbon is drained further
-    // than it was: a long run holds its bright stretch into the bend, and only a short one -
-    // where a fixed percentage left barely any - is given the room its thickness asks for.
+    /*
+     * A bend, and the ribbon either side of it, is never drained at all. That is a distance and
+     * not a proportion: two thicknesses of the ribbon itself, which is the same amount of clear
+     * colour into every corner on the page whether the run leaving it is 50px or 1,200px. As a
+     * share of a long run that comes to less than the 14% one always kept, so the floor holds;
+     * on a short run it is most of the run, and the little that is left in the middle is the
+     * least the fade ever does anyway. A run with two ends has two of these.
+     */
     function shoulderFor(along, across) {
-        return clamp(14, 34, 100 * SHOULDER * across / along);
+        return clamp(14, 45, 100 * CLEAR * across / along);
     }
 
     /*
