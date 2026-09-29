@@ -62,11 +62,6 @@ h1 {
  */
 
 // The lane the ribbon travels in, down each side of the content
-// The hairline between sections, which the phone's full-width mark stands in for
-.section {
-    border-top: 1px solid $rule;
-}
-
 .intro,
 .section > .wrap {
     position: relative;

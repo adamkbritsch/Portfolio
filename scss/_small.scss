@@ -235,7 +235,8 @@ a {
 // name. The header and the footer are marked by a hairline of ink instead, so the colour on
 // the page is the ribbon's alone.
 
-// A short run of bands that marks the start of a section
+// A short run of bands above a case study's title. The home page's sections used to carry
+// one too; from 60rem up the ribbon does that job, and below it the hairline does.
 %stripe-mark {
     content: "";
     display: block;
@@ -247,25 +248,6 @@ a {
         $navyLine 0 38px,
         $orangeLine 38px 61.5px,
         $sageLine 61.5px 76px);
-}
-
-/*
- * On a phone the mark is the only thing that says a section has started - the ribbon that
- * does that job from 60rem up is not there - so it runs the whole measure rather than
- * sitting in the corner as a short dash, and it takes the place of the hairline that used
- * to run above it. The stripes keep the ribbon's golden split: half, then 30.9, then 19.1.
- */
-.section > .wrap > h2::before {
-    @extend %stripe-mark;
-
-    width: 100%;
-    height: 7px;
-    margin-bottom: 1.15rem;
-    border-radius: 3.5px;
-    background-image: linear-gradient(90deg,
-        $navyLine 0 #{$stripeOne},
-        $orangeLine #{$stripeOne} #{$stripeTwo},
-        $sageLine #{$stripeTwo} 100%);
 }
 
 .article > h1::before {
@@ -395,6 +377,7 @@ a {
 
 .section {
     padding: 3.25rem 0 3rem;
+    border-top: 1px solid $rule;
 }
 
 .section__intro {
