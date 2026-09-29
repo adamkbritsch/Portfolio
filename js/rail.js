@@ -49,8 +49,8 @@
 
     var SHORT = 48;          // px: a drop between two corners, the least the ribbon ever runs
     var LONG = 1200;         // px: the lane down the side of the tallest section
-    var SHALLOW = 0.15;      // how far a run that short drains
-    var DEEP = 0.34;         // how far a run that long drains, and the greyest any run goes
+    var SHALLOW = 0.06;      // how far a run that short drains
+    var DEEP = 0.17;         // how far a run that long drains, and the greyest any run goes
     var TITLE = 42;          // px: the ribbon's thickness at a section title, the middle case
     var SHOULDER = 0.42;     // the end left at full strength, as a fraction of that thickness
     var WOBBLE = 0.06;       // how much a run may differ from another of its own length
@@ -74,7 +74,7 @@
         var reach = Math.log(clamp(SHORT, LONG, along) / SHORT) / Math.log(LONG / SHORT);
         var thin = clamp(0.85, 1.05, 0.85 + 0.15 * (across / TITLE));
 
-        return clamp(0.1, 0.38, (SHALLOW + (DEEP - SHALLOW) * reach) * thin * (1 + wobbleOf(seed)));
+        return clamp(0.04, 0.19, (SHALLOW + (DEEP - SHALLOW) * reach) * thin * (1 + wobbleOf(seed)));
     }
 
     // Never less of an end than a run used to keep, so no part of the ribbon is drained further
