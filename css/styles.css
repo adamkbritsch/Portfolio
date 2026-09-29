@@ -779,6 +779,7 @@ a:focus-visible {
   position: relative;
   z-index: 1;
   color: #000;
+  text-shadow: none;
   pointer-events: none;
 }
 

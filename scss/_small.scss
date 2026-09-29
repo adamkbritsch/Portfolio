@@ -409,6 +409,10 @@ a {
     position: relative;
     z-index: 1;             // over the white letters, which is where the band belongs
     color: #000;            // only the shape is wanted; the filter brings the colour
+    // The titles carry a drop shadow, and text-shadow is inherited. Left alone, this copy
+    // casts one too, the filter reads that blur as part of the letter, and the band comes out
+    // around the outside of the words as a halo. The band belongs to the strokes alone.
+    text-shadow: none;
     pointer-events: none;
 }
 
