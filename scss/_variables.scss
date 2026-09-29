@@ -18,6 +18,7 @@ $sage: #868f59;      // hue 69, the odd one out, and the lightest of the three
     --ink: #1d1c1a;         // 12.8:1
     --ink-soft: #5b5852;    // secondary text, 5.3:1
     --rule: #c6c0b2;        // hairlines between things, 1.4:1
+    --panel: #e0d9ca;       // a block of its own, barely darker than the page: dE 2.2
     --accent: #{$navy};     // links and focus rings, 8.7:1
     --accent-dark: #8f4e1f; // the same orange dark enough to read as text, 4.8:1
 
@@ -49,6 +50,7 @@ $sage: #868f59;      // hue 69, the odd one out, and the lightest of the three
     --ink: #e6dfcf;         // the cream, now the ink: 13.9:1
     --ink-soft: #ada69a;    // 7.6:1
     --rule: #352d2b;        // 1.4:1, the same weight the hairlines have in the light
+    --panel: #1f1616;       // barely lighter than the page instead of darker: dE 2.0
     --accent: #6ca6d0;      // the navy at its own hue, lifted to 7.1:1
     --accent-dark: #d1722e; // the orange likewise, 5.4:1
 
@@ -64,6 +66,7 @@ $paper: var(--paper);
 $ink: var(--ink);
 $inkSoft: var(--ink-soft);
 $rule: var(--rule);
+$panel: var(--panel);
 $accent: var(--accent);
 $accentDark: var(--accent-dark);
 $titleInk: var(--title-ink);

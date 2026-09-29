@@ -466,12 +466,21 @@ a {
     }
 }
 
+/*
+ * A class, and a job, each sit in a block of their own: a panel a shade off the page -
+ * barely darker on the cream, barely lighter on the dark, about dE 2 either way - so a run
+ * of them reads as a set of things rather than one long column of links.
+ */
 .courses {
     display: grid;
-    gap: 2rem;
+    gap: 1.25rem;
 }
 
 .course {
+    padding: 1.15rem 1.2rem 1.3rem;
+    border-radius: 8px;
+    background: $panel;
+
     ul {
         margin: 0;
         padding: 0;
@@ -481,6 +490,10 @@ a {
     li {
         padding: 0.3rem 0;
         border-top: 1px solid $rule;
+    }
+
+    :last-child {
+        margin-bottom: 0;
     }
 }
 
@@ -492,17 +505,24 @@ a {
 }
 
 .entries {
+    display: grid;
+    gap: 0.75rem;
     margin: 0 0 2rem;
     padding: 0;
     list-style: none;
 }
 
 .entry {
-    padding: 1rem 0;
-    border-top: 1px solid $rule;
+    padding: 1rem 1.2rem 1.1rem;
+    border-radius: 8px;
+    background: $panel;
 
     p {
         margin-bottom: 0.25rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 }
 

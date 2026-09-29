@@ -326,6 +326,7 @@ template {
   --ink: #1d1c1a;
   --ink-soft: #5b5852;
   --rule: #c6c0b2;
+  --panel: #e0d9ca;
   --accent: #1b3c54;
   --accent-dark: #8f4e1f;
   --navy-line: #2f4c60;
@@ -353,6 +354,7 @@ template {
   --ink: #e6dfcf;
   --ink-soft: #ada69a;
   --rule: #352d2b;
+  --panel: #1f1616;
   --accent: #6ca6d0;
   --accent-dark: #d1722e;
   --navy-line: #112d44;
@@ -814,11 +816,21 @@ a:focus-visible {
   margin-bottom: 0.25rem;
 }
 
+/*
+ * A class, and a job, each sit in a block of their own: a panel a shade off the page -
+ * barely darker on the cream, barely lighter on the dark, about dE 2 either way - so a run
+ * of them reads as a set of things rather than one long column of links.
+ */
 .courses {
   display: grid;
-  gap: 2rem;
+  gap: 1.25rem;
 }
 
+.course {
+  padding: 1.15rem 1.2rem 1.3rem;
+  border-radius: 8px;
+  background: var(--panel);
+}
 .course ul {
   margin: 0;
   padding: 0;
@@ -828,6 +840,9 @@ a:focus-visible {
   padding: 0.3rem 0;
   border-top: 1px solid var(--rule);
 }
+.course :last-child {
+  margin-bottom: 0;
+}
 
 .resume {
   display: grid;
@@ -835,17 +850,23 @@ a:focus-visible {
 }
 
 .entries {
+  display: grid;
+  gap: 0.75rem;
   margin: 0 0 2rem;
   padding: 0;
   list-style: none;
 }
 
 .entry {
-  padding: 1rem 0;
-  border-top: 1px solid var(--rule);
+  padding: 1rem 1.2rem 1.1rem;
+  border-radius: 8px;
+  background: var(--panel);
 }
 .entry p {
   margin-bottom: 0.25rem;
+}
+.entry p:last-child {
+  margin-bottom: 0;
 }
 
 .entry__title {
