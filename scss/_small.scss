@@ -377,6 +377,48 @@ a {
     color: $ink;
 }
 
+/*
+ * The misregistered edge. js/ink.js splits each white title into words and hands every word a
+ * copy of itself; the filter on that copy keeps nothing but a band down the right-hand side of
+ * each stroke, so the letters keep their shape and their white and only the edges take the
+ * blue. Three strengths dealt out word by word, the way ink density wanders along a printed
+ * line. A section added later needs nothing here: the script finds it by the same class.
+ */
+.ink-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+// One flex item holding the lot, so the words inside space themselves the ordinary way -
+// whitespace between flex items is dropped, and the titles would run together without it
+.ink {
+    flex: none;
+}
+
+.ink__word {
+    position: relative;
+}
+
+.ink__word::before {
+    content: attr(data-word);
+    display: inline-block;
+    width: 0;               // starts where the word starts and costs the line nothing
+    overflow: visible;
+    position: relative;
+    z-index: 1;             // over the white letters, which is where the band belongs
+    color: #000;            // only the shape is wanted; the filter brings the colour
+    pointer-events: none;
+}
+
+.ink__word--band.ink__word--faint::before { filter: url("#ink-band-faint"); }
+.ink__word--band.ink__word--mid::before   { filter: url("#ink-band-mid"); }
+.ink__word--band.ink__word--deep::before  { filter: url("#ink-band-deep"); }
+.ink__word--run.ink__word--faint::before  { filter: url("#ink-run-faint"); }
+.ink__word--run.ink__word--mid::before    { filter: url("#ink-run-mid"); }
+.ink__word--run.ink__word--deep::before   { filter: url("#ink-run-deep"); }
+
 // The rail only runs from 60rem up, where there is a lane beside the content for it (see
 // _large.scss). Until then none of its parts are rendered at all: the copies of the titles it
 // carries would otherwise print a second time under every heading.
