@@ -48,7 +48,7 @@
 
     var SHORT = 48;          // px: a drop between two corners, the least the ribbon ever runs
     var LONG = 1200;         // px: the lane down the side of the tallest section
-    var SHALLOW = 0.15;      // how far a run that short drains
+    var SHALLOW = 0.27;      // how far a run that short drains - still plainly a fade
     var DEEP = 0.48;         // how far a run that long drains
     var TITLE = 42;          // px: the ribbon's thickness at a section title, the middle case
     var SHOULDER = 0.42;     // the end left at full strength, as a fraction of that thickness
@@ -73,7 +73,7 @@
         var reach = Math.log(clamp(SHORT, LONG, along) / SHORT) / Math.log(LONG / SHORT);
         var thin = clamp(0.85, 1.05, 0.85 + 0.15 * (across / TITLE));
 
-        return clamp(0.1, 0.55, (SHALLOW + (DEEP - SHALLOW) * reach) * thin * (1 + wobbleOf(seed)));
+        return clamp(0.22, 0.55, (SHALLOW + (DEEP - SHALLOW) * reach) * thin * (1 + wobbleOf(seed)));
     }
 
     function shoulderFor(along, across) {
