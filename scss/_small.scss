@@ -109,11 +109,32 @@ a {
 }
 
 // A row of plain text links, like "Read the case study   Visit the site"
+/*
+ * The links that ask you to go somewhere are buttons: the same shade a block sits on, a
+ * little padding, a small radius. No underline - the shape says it is a link - and the
+ * panel goes one step further off the page under the cursor.
+ */
 .link-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 1.25rem;
+    gap: 0.5rem;
     font-family: $uiFont;
+
+    a {
+        padding: 0.45rem 0.85rem;
+        border-radius: 6px;
+        background: $panel;
+        text-decoration: none;
+
+        &:hover {
+            background: $panelHover;
+            text-decoration: none;
+        }
+
+        &:focus-visible {
+            border-radius: 6px;
+        }
+    }
 }
 
 // Header
