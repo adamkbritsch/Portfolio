@@ -56,27 +56,12 @@ h1 {
  */
 
 // The lane the ribbon travels in, down each side of the content
-// The phone's ribbon comes off: there is room for the full rail from here up
-.home main::after {
-    display: none;
-}
-
-// The home page gives up a lane on the right for the phone's ribbon. From here up the full
-// rail takes over, so the header and the footer take their gutters back, and the content
-// takes its own two lanes - written with .home so it outranks the phone's rule rather than
-// only outlasting it.
-.home .site-header .wrap,
-.home .site-footer .wrap {
-    padding-right: $gutter;
-}
-
 // The hairline between sections, which the phone's full-width mark stands in for
 .section {
     border-top: 1px solid $rule;
 }
 
-.home .intro,
-.home .section > .wrap,
+.intro,
 .section > .wrap {
     position: relative;
     padding-right: $railLane;

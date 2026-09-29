@@ -159,19 +159,6 @@ $introGap: 2rem;       // under a section's line of introduction
  */
 $railBridge: calc(#{$railHead} + #{$railTitleGap} - ((#{$railHead} - #{$railTitle}) / 2 + #{$railTitle} + #{$railTurn}));
 
-/*
- * The ribbon on a phone. The desktop rail needs a clear lane on both sides of the content
- * and there is only room for one here, so the same ribbon runs a simpler course: out of the
- * nameplate, turning down at its right end, down the right of the whole page, then west
- * along the foot of the contact section to finish round in the bottom left corner - the
- * same tail the desktop ends with.
- */
-$spineW: 1.65rem;     // its thickness
-$spineR: 0.7rem;      // the inside radius of its bends
-$spineLane: 3.5rem;   // the clear lane it travels in, measured from the edge of the page
-$spineBox: 3.835rem;  // the turn out of my name: $spineR + 1.32 x the 2.375rem h1
-$spineBoxM: 4.33rem;  // the same turn from 35rem up, where the h1 is 2.75rem
-
 $textWidth: 42rem;
 $figureWidth: 60rem;
 
