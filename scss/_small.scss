@@ -101,6 +101,12 @@ a {
     padding: 0 $gutter;
 }
 
+// Only the home page carries the ribbon, so only it gives up the lane - on a case study the
+// header would otherwise sit inset from a column that is not
+.home .wrap {
+    padding-right: $spineLane;
+}
+
 .meta {
     margin-bottom: 0.5rem;
     color: $inkSoft;
@@ -317,7 +323,7 @@ a {
 .name__band {
     position: absolute;
     top: 0.29em;
-    right: 0;
+    right: calc(#{$spineBox} + #{$gutter} - #{$spineLane});   // stops where the turn begins
     left: 0;
     height: 1.32em;
     overflow: hidden;
@@ -361,6 +367,13 @@ a {
     display: none;
 }
 
+/*
+ * ...except the bend at the foot, which the phone's own ribbon uses (see below).
+ */
+.rail__turn--tail {
+    display: block;
+}
+
 .intro__lede {
     max-width: $textWidth;
     font-size: 1.1875rem;
@@ -370,6 +383,11 @@ a {
 
 .section {
     padding: 3.25rem 0 3rem;
+}
+
+// The bend and the run at the foot of the ribbon are hung on the contact section's box
+.home .section > .wrap {
+    position: relative;
 }
 
 .section__intro {
@@ -654,4 +672,84 @@ a {
     p {
         margin: 0;
     }
+}
+
+/*
+ * THE RIBBON ON A PHONE
+ *
+ * Two bends. The one out of my name changes thickness, so it is artwork struck from
+ * concentric ellipses the way the desktop's are; the one at the foot keeps its thickness
+ * and is a radial gradient. Everything between them is a straight run.
+ *
+ * The spine is hung on <main class="home">, which only the home page has, and its ends are
+ * measured from that box: the top is everything above the nameplate's turn - the intro's
+ * padding, the photograph and the gap under it, the band's own 0.29em - plus the turn's
+ * box; the bottom is the room the contact section leaves under its words. Both are checked
+ * against the render, so if any of those change the join will show.
+ */
+.intro h1::after {
+    content: "";
+    position: absolute;
+    top: 0.29em;
+    right: calc(-1 * (#{$spineLane} - #{$gutter}));
+    width: $spineBox;
+    height: $spineBox;
+    background-image: url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 61.4 61.4%27><path fill=%27%23304c60%27 d=%27M0.0 0.0 L1.7 0.0 L3.4 0.1 L5.2 0.2 L6.9 0.4 L8.6 0.6 L10.3 0.9 L12.0 1.2 L13.7 1.5 L15.3 1.9 L17.0 2.4 L18.6 2.9 L20.3 3.4 L21.9 4.0 L23.5 4.7 L25.1 5.4 L26.6 6.1 L28.2 6.8 L29.7 7.7 L31.2 8.5 L32.6 9.4 L34.1 10.3 L35.5 11.3 L36.9 12.3 L38.3 13.4 L39.6 14.5 L40.9 15.6 L42.2 16.8 L43.4 18.0 L44.6 19.2 L45.8 20.5 L46.9 21.8 L48.0 23.1 L49.0 24.5 L50.0 25.9 L51.0 27.3 L52.0 28.7 L52.9 30.2 L53.7 31.7 L54.5 33.2 L55.3 34.7 L56.0 36.3 L56.7 37.9 L57.3 39.5 L57.9 41.1 L58.5 42.7 L59.0 44.4 L59.4 46.0 L59.8 47.7 L60.2 49.4 L60.5 51.1 L60.8 52.8 L61.0 54.5 L61.1 56.2 L61.3 57.9 L61.3 59.6 L61.4 61.4 L48.2 61.4 L48.1 60.3 L48.1 59.3 L48.0 58.3 L47.9 57.3 L47.7 56.3 L47.5 55.3 L47.2 54.3 L47.0 53.3 L46.6 52.3 L46.3 51.3 L45.9 50.3 L45.5 49.4 L45.0 48.4 L44.5 47.5 L44.0 46.5 L43.4 45.6 L42.8 44.7 L42.2 43.8 L41.5 42.9 L40.8 42.1 L40.0 41.2 L39.3 40.4 L38.5 39.5 L37.7 38.7 L36.8 38.0 L35.9 37.2 L35.0 36.4 L34.1 35.7 L33.1 35.0 L32.1 34.3 L31.1 33.6 L30.0 33.0 L29.0 32.4 L27.9 31.8 L26.8 31.2 L25.6 30.6 L24.5 30.1 L23.3 29.6 L22.1 29.1 L20.9 28.7 L19.7 28.2 L18.4 27.8 L17.2 27.5 L15.9 27.1 L14.6 26.8 L13.3 26.5 L12.0 26.2 L10.7 26.0 L9.4 25.8 L8.1 25.6 L6.7 25.4 L5.4 25.3 L4.0 25.2 L2.7 25.1 L1.4 25.1 L0.0 25.1 Z%27/><path fill=%27%23bd7038%27 d=%27M0.0 25.1 L1.4 25.1 L2.7 25.1 L4.0 25.2 L5.4 25.3 L6.7 25.4 L8.1 25.6 L9.4 25.8 L10.7 26.0 L12.0 26.2 L13.3 26.5 L14.6 26.8 L15.9 27.1 L17.2 27.5 L18.4 27.8 L19.7 28.2 L20.9 28.7 L22.1 29.1 L23.3 29.6 L24.5 30.1 L25.6 30.6 L26.8 31.2 L27.9 31.8 L29.0 32.4 L30.0 33.0 L31.1 33.6 L32.1 34.3 L33.1 35.0 L34.1 35.7 L35.0 36.4 L35.9 37.2 L36.8 38.0 L37.7 38.7 L38.5 39.5 L39.3 40.4 L40.0 41.2 L40.8 42.1 L41.5 42.9 L42.2 43.8 L42.8 44.7 L43.4 45.6 L44.0 46.5 L44.5 47.5 L45.0 48.4 L45.5 49.4 L45.9 50.3 L46.3 51.3 L46.6 52.3 L47.0 53.3 L47.2 54.3 L47.5 55.3 L47.7 56.3 L47.9 57.3 L48.0 58.3 L48.1 59.3 L48.1 60.3 L48.2 61.4 L40.0 61.4 L40.0 60.8 L39.9 60.2 L39.9 59.6 L39.8 59.0 L39.6 58.5 L39.4 57.9 L39.2 57.3 L39.0 56.7 L38.7 56.2 L38.4 55.6 L38.1 55.0 L37.8 54.5 L37.4 53.9 L37.0 53.4 L36.5 52.9 L36.0 52.3 L35.5 51.8 L35.0 51.3 L34.5 50.8 L33.9 50.3 L33.3 49.8 L32.6 49.3 L32.0 48.9 L31.3 48.4 L30.6 48.0 L29.8 47.5 L29.1 47.1 L28.3 46.7 L27.5 46.3 L26.7 45.9 L25.8 45.5 L24.9 45.1 L24.1 44.8 L23.1 44.4 L22.2 44.1 L21.3 43.8 L20.3 43.5 L19.3 43.2 L18.4 42.9 L17.4 42.6 L16.3 42.4 L15.3 42.2 L14.3 41.9 L13.2 41.7 L12.1 41.6 L11.1 41.4 L10.0 41.2 L8.9 41.1 L7.8 41.0 L6.7 40.9 L5.6 40.8 L4.5 40.7 L3.4 40.7 L2.2 40.6 L1.1 40.6 L0.0 40.6 Z%27/><path fill=%27%23909764%27 d=%27M0.0 40.6 L1.1 40.6 L2.2 40.6 L3.4 40.7 L4.5 40.7 L5.6 40.8 L6.7 40.9 L7.8 41.0 L8.9 41.1 L10.0 41.2 L11.1 41.4 L12.1 41.6 L13.2 41.7 L14.3 41.9 L15.3 42.2 L16.3 42.4 L17.4 42.6 L18.4 42.9 L19.3 43.2 L20.3 43.5 L21.3 43.8 L22.2 44.1 L23.1 44.4 L24.1 44.8 L24.9 45.1 L25.8 45.5 L26.7 45.9 L27.5 46.3 L28.3 46.7 L29.1 47.1 L29.8 47.5 L30.6 48.0 L31.3 48.4 L32.0 48.9 L32.6 49.3 L33.3 49.8 L33.9 50.3 L34.5 50.8 L35.0 51.3 L35.5 51.8 L36.0 52.3 L36.5 52.9 L37.0 53.4 L37.4 53.9 L37.8 54.5 L38.1 55.0 L38.4 55.6 L38.7 56.2 L39.0 56.7 L39.2 57.3 L39.4 57.9 L39.6 58.5 L39.8 59.0 L39.9 59.6 L39.9 60.2 L40.0 60.8 L40.0 61.4 L35.0 61.4 L34.9 61.0 L34.9 60.7 L34.8 60.4 L34.7 60.1 L34.6 59.8 L34.5 59.5 L34.3 59.2 L34.1 58.9 L33.9 58.6 L33.6 58.3 L33.3 58.0 L33.0 57.7 L32.7 57.4 L32.3 57.1 L31.9 56.8 L31.5 56.5 L31.1 56.2 L30.6 55.9 L30.1 55.7 L29.6 55.4 L29.1 55.1 L28.5 54.9 L27.9 54.6 L27.3 54.4 L26.7 54.1 L26.1 53.9 L25.4 53.7 L24.7 53.4 L24.0 53.2 L23.3 53.0 L22.6 52.8 L21.8 52.6 L21.0 52.4 L20.2 52.2 L19.4 52.0 L18.6 51.9 L17.8 51.7 L16.9 51.6 L16.0 51.4 L15.2 51.3 L14.3 51.1 L13.4 51.0 L12.5 50.9 L11.5 50.8 L10.6 50.7 L9.7 50.6 L8.7 50.5 L7.8 50.4 L6.8 50.4 L5.9 50.3 L4.9 50.3 L3.9 50.2 L2.9 50.2 L2.0 50.2 L1.0 50.2 L0.0 50.2 Z%27/></svg>");
+    pointer-events: none;
+}
+
+.home main {
+    position: relative;
+}
+
+.home main::after {
+    content: "";
+    position: absolute;
+    top: calc(3.5rem + 112px + 0.68875rem + #{$spineBox} - 1px);
+    right: $gutter;
+    bottom: calc(#{$spineW} + #{$spineR} * 2 - 1px);
+    width: $spineW;
+    background-image: rail-soften(to bottom), linear-gradient(to right,
+        $sageLine 0 calc(100% - #{$stripeTwo}),
+        $orangeLine calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
+        $navyLine calc(100% - #{$stripeOne}) 100%);
+    background-blend-mode: saturation, normal;
+    pointer-events: none;
+}
+
+// Room under the contact section's words for the ribbon to run out along, a bend's
+// clearance above it and the same below. Written with both classes so _medium's plainer
+// .section padding cannot outrank it.
+.section.rail--end {
+    padding-bottom: calc(#{$spineW} + #{$spineR} * 2);
+}
+
+// The bend at the foot of the lane, arriving from above and turning west
+.rail__turn--tail {
+    position: absolute;
+    right: $gutter;
+    bottom: calc(-1 * (#{$spineW} + #{$spineR}));
+    pointer-events: none;
+    @include rail-turn(0 0, $sageLine, $navyLine, $spineW, $spineR);
+}
+
+// West along the foot, ending round under the first word of the section
+.rail--end > .wrap::before {
+    content: "";
+    position: absolute;
+    right: calc(#{$gutter} + #{$spineW} + #{$spineR} - 1px);
+    bottom: calc(-1 * (#{$spineW} + #{$spineR}));
+    left: $gutter;
+    height: $spineW;
+    border-radius: calc(#{$spineW} / 2) 0 0 calc(#{$spineW} / 2);
+    background-image: rail-soften(to right), linear-gradient(to bottom,
+        $sageLine 0 calc(100% - #{$stripeTwo}),
+        $orangeLine calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
+        $navyLine calc(100% - #{$stripeOne}) 100%);
+    background-blend-mode: saturation, normal;
+    pointer-events: none;
+}
+
+:root[data-theme="dark"] .intro h1::after {
+    background-image: url("data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 61.4 61.4%27><path fill=%27%23112d44%27 d=%27M0.0 0.0 L1.7 0.0 L3.4 0.1 L5.2 0.2 L6.9 0.4 L8.6 0.6 L10.3 0.9 L12.0 1.2 L13.7 1.5 L15.3 1.9 L17.0 2.4 L18.6 2.9 L20.3 3.4 L21.9 4.0 L23.5 4.7 L25.1 5.4 L26.6 6.1 L28.2 6.8 L29.7 7.7 L31.2 8.5 L32.6 9.4 L34.1 10.3 L35.5 11.3 L36.9 12.3 L38.3 13.4 L39.6 14.5 L40.9 15.6 L42.2 16.8 L43.4 18.0 L44.6 19.2 L45.8 20.5 L46.9 21.8 L48.0 23.1 L49.0 24.5 L50.0 25.9 L51.0 27.3 L52.0 28.7 L52.9 30.2 L53.7 31.7 L54.5 33.2 L55.3 34.7 L56.0 36.3 L56.7 37.9 L57.3 39.5 L57.9 41.1 L58.5 42.7 L59.0 44.4 L59.4 46.0 L59.8 47.7 L60.2 49.4 L60.5 51.1 L60.8 52.8 L61.0 54.5 L61.1 56.2 L61.3 57.9 L61.3 59.6 L61.4 61.4 L48.2 61.4 L48.1 60.3 L48.1 59.3 L48.0 58.3 L47.9 57.3 L47.7 56.3 L47.5 55.3 L47.2 54.3 L47.0 53.3 L46.6 52.3 L46.3 51.3 L45.9 50.3 L45.5 49.4 L45.0 48.4 L44.5 47.5 L44.0 46.5 L43.4 45.6 L42.8 44.7 L42.2 43.8 L41.5 42.9 L40.8 42.1 L40.0 41.2 L39.3 40.4 L38.5 39.5 L37.7 38.7 L36.8 38.0 L35.9 37.2 L35.0 36.4 L34.1 35.7 L33.1 35.0 L32.1 34.3 L31.1 33.6 L30.0 33.0 L29.0 32.4 L27.9 31.8 L26.8 31.2 L25.6 30.6 L24.5 30.1 L23.3 29.6 L22.1 29.1 L20.9 28.7 L19.7 28.2 L18.4 27.8 L17.2 27.5 L15.9 27.1 L14.6 26.8 L13.3 26.5 L12.0 26.2 L10.7 26.0 L9.4 25.8 L8.1 25.6 L6.7 25.4 L5.4 25.3 L4.0 25.2 L2.7 25.1 L1.4 25.1 L0.0 25.1 Z%27/><path fill=%27%239e511c%27 d=%27M0.0 25.1 L1.4 25.1 L2.7 25.1 L4.0 25.2 L5.4 25.3 L6.7 25.4 L8.1 25.6 L9.4 25.8 L10.7 26.0 L12.0 26.2 L13.3 26.5 L14.6 26.8 L15.9 27.1 L17.2 27.5 L18.4 27.8 L19.7 28.2 L20.9 28.7 L22.1 29.1 L23.3 29.6 L24.5 30.1 L25.6 30.6 L26.8 31.2 L27.9 31.8 L29.0 32.4 L30.0 33.0 L31.1 33.6 L32.1 34.3 L33.1 35.0 L34.1 35.7 L35.0 36.4 L35.9 37.2 L36.8 38.0 L37.7 38.7 L38.5 39.5 L39.3 40.4 L40.0 41.2 L40.8 42.1 L41.5 42.9 L42.2 43.8 L42.8 44.7 L43.4 45.6 L44.0 46.5 L44.5 47.5 L45.0 48.4 L45.5 49.4 L45.9 50.3 L46.3 51.3 L46.6 52.3 L47.0 53.3 L47.2 54.3 L47.5 55.3 L47.7 56.3 L47.9 57.3 L48.0 58.3 L48.1 59.3 L48.1 60.3 L48.2 61.4 L40.0 61.4 L40.0 60.8 L39.9 60.2 L39.9 59.6 L39.8 59.0 L39.6 58.5 L39.4 57.9 L39.2 57.3 L39.0 56.7 L38.7 56.2 L38.4 55.6 L38.1 55.0 L37.8 54.5 L37.4 53.9 L37.0 53.4 L36.5 52.9 L36.0 52.3 L35.5 51.8 L35.0 51.3 L34.5 50.8 L33.9 50.3 L33.3 49.8 L32.6 49.3 L32.0 48.9 L31.3 48.4 L30.6 48.0 L29.8 47.5 L29.1 47.1 L28.3 46.7 L27.5 46.3 L26.7 45.9 L25.8 45.5 L24.9 45.1 L24.1 44.8 L23.1 44.4 L22.2 44.1 L21.3 43.8 L20.3 43.5 L19.3 43.2 L18.4 42.9 L17.4 42.6 L16.3 42.4 L15.3 42.2 L14.3 41.9 L13.2 41.7 L12.1 41.6 L11.1 41.4 L10.0 41.2 L8.9 41.1 L7.8 41.0 L6.7 40.9 L5.6 40.8 L4.5 40.7 L3.4 40.7 L2.2 40.6 L1.1 40.6 L0.0 40.6 Z%27/><path fill=%27%23717848%27 d=%27M0.0 40.6 L1.1 40.6 L2.2 40.6 L3.4 40.7 L4.5 40.7 L5.6 40.8 L6.7 40.9 L7.8 41.0 L8.9 41.1 L10.0 41.2 L11.1 41.4 L12.1 41.6 L13.2 41.7 L14.3 41.9 L15.3 42.2 L16.3 42.4 L17.4 42.6 L18.4 42.9 L19.3 43.2 L20.3 43.5 L21.3 43.8 L22.2 44.1 L23.1 44.4 L24.1 44.8 L24.9 45.1 L25.8 45.5 L26.7 45.9 L27.5 46.3 L28.3 46.7 L29.1 47.1 L29.8 47.5 L30.6 48.0 L31.3 48.4 L32.0 48.9 L32.6 49.3 L33.3 49.8 L33.9 50.3 L34.5 50.8 L35.0 51.3 L35.5 51.8 L36.0 52.3 L36.5 52.9 L37.0 53.4 L37.4 53.9 L37.8 54.5 L38.1 55.0 L38.4 55.6 L38.7 56.2 L39.0 56.7 L39.2 57.3 L39.4 57.9 L39.6 58.5 L39.8 59.0 L39.9 59.6 L39.9 60.2 L40.0 60.8 L40.0 61.4 L35.0 61.4 L34.9 61.0 L34.9 60.7 L34.8 60.4 L34.7 60.1 L34.6 59.8 L34.5 59.5 L34.3 59.2 L34.1 58.9 L33.9 58.6 L33.6 58.3 L33.3 58.0 L33.0 57.7 L32.7 57.4 L32.3 57.1 L31.9 56.8 L31.5 56.5 L31.1 56.2 L30.6 55.9 L30.1 55.7 L29.6 55.4 L29.1 55.1 L28.5 54.9 L27.9 54.6 L27.3 54.4 L26.7 54.1 L26.1 53.9 L25.4 53.7 L24.7 53.4 L24.0 53.2 L23.3 53.0 L22.6 52.8 L21.8 52.6 L21.0 52.4 L20.2 52.2 L19.4 52.0 L18.6 51.9 L17.8 51.7 L16.9 51.6 L16.0 51.4 L15.2 51.3 L14.3 51.1 L13.4 51.0 L12.5 50.9 L11.5 50.8 L10.6 50.7 L9.7 50.6 L8.7 50.5 L7.8 50.4 L6.8 50.4 L5.9 50.3 L4.9 50.3 L3.9 50.2 L2.9 50.2 L2.0 50.2 L1.0 50.2 L0.0 50.2 Z%27/></svg>");
 }

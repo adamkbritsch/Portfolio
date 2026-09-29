@@ -56,6 +56,15 @@ h1 {
  */
 
 // The lane the ribbon travels in, down each side of the content
+// The phone's ribbon comes off: there is room for the full rail from here up
+.home main::after {
+    display: none;
+}
+
+.home .wrap {
+    padding-right: $gutter;
+}
+
 // The hairline between sections, which the phone's full-width mark stands in for
 .section {
     border-top: 1px solid $rule;
@@ -130,33 +139,6 @@ h1 {
         background-blend-mode: saturation, normal;
 }
 
-/*
- * The turns. Each is a quarter of concentric arcs: transparent inside the bend, then the three
- * colours in the order the ribbon carries them, then transparent again. $at is the inside of
- * the bend, which is the corner of the box the arcs are struck from.
- */
-@mixin rail-turn($at, $inner, $outer, $t) {
-    // The stripes keep their widths round the bend: the navy edge is half the ribbon, the
-    // orange 30.9% of it and the sage 19.1%, whichever way round the bend puts them.
-    $first: 0.191;
-    $second: 0.5;
-
-    @if $inner == $navyLine {
-        $first: 0.5;
-        $second: 0.809;
-    }
-
-    width: calc(#{$t} + #{$railTurn});
-    height: calc(#{$t} + #{$railTurn});
-    margin: 0;
-    border-radius: 0;
-    background-image: radial-gradient(circle at #{$at},
-        transparent 0 $railTurn,
-        $inner $railTurn calc(#{$railTurn} + #{$t} * #{$first}),
-        $orangeLine calc(#{$railTurn} + #{$t} * #{$first}) calc(#{$railTurn} + #{$t} * #{$second}),
-        $outer calc(#{$railTurn} + #{$t} * #{$second}) calc(#{$railTurn} + #{$t}),
-        transparent calc(#{$railTurn} + #{$t}));
-}
 
 .section > .wrap > h2::before,
 .section > .wrap > h2::after,
@@ -236,7 +218,7 @@ h1 {
  * run, with a turn's clearance above it and the same below, so the ribbon lies clear of both
  * the contact list and the hairline under it.
  */
-.rail--end {
+.section.rail--end {
     padding-bottom: calc(#{$railTitle} + #{$railTurn} * 2);
 }
 
