@@ -468,13 +468,19 @@ a {
  * Only pictures in a figure: the prototype's screen is sized by its own phone.
  */
 figure img {
-    // fit-content, not auto: a block-level replaced element with width auto takes the column
-    // and then max-height squashes it. Sized to its own content, both limits pull together
-    // and the picture keeps its shape.
-    width: -webkit-fit-content;
-    width: fit-content;
+    // Both axes auto and both limits maxima. That is the one form every engine reads the
+    // same way: a replaced element with no definite side scales on the ratio it came with,
+    // and whichever limit bites first decides the size. Give the width a definite value
+    // instead -- fit-content, say -- and Firefox holds that width while max-height pulls
+    // the height down, and the picture comes out stretched.
+    width: auto;
+    height: auto;
+    max-width: 100%;
     max-height: calc(100vh - 5rem);
     max-height: calc(100svh - 5rem);
+    // Nothing should reach this, but if a box ever came out the wrong shape the picture
+    // would sit inside it whole rather than being pulled to fit.
+    object-fit: contain;
     margin-inline: auto;
 }
 

@@ -825,10 +825,12 @@ a:focus-visible {
  * Only pictures in a figure: the prototype's screen is sized by its own phone.
  */
 figure img {
-  width: -webkit-fit-content;
-  width: fit-content;
+  width: auto;
+  height: auto;
+  max-width: 100%;
   max-height: calc(100vh - 5rem);
   max-height: calc(100svh - 5rem);
+  object-fit: contain;
   margin-inline: auto;
 }
 
