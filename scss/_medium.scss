@@ -16,6 +16,8 @@ h2 {
     font-size: 2rem;
 }
 
+// There is width for the words beside the photograph from here up, so the nameplate goes
+// back to filling its column and the lede moves up alongside
 .intro {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -29,6 +31,19 @@ h2 {
     width: 120px;
     height: 120px;
     margin: 0.35rem 0 0;
+}
+
+.intro h1 {
+    justify-self: stretch;
+    margin-bottom: 0.5em;
+    padding: 0.35em 0 0.35em 1.62em;
+    font-size: 2.75rem;
+    white-space: normal;
+}
+
+.intro > div {
+    grid-column: 2;
+    margin-top: 0;
 }
 
 // Back to one row: there is width for my name, the nav and the switch side by side

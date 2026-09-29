@@ -4,6 +4,12 @@ h1 {
     font-size: 3.25rem;
 }
 
+// _medium sizes the nameplate's type by name so it can undo the phone's fluid scale, which
+// outranks the bare h1 above; this puts my name back to the size the rail is struck for
+.intro h1 {
+    font-size: 3.25rem;
+}
+
 // The ribbon takes the first 200px or so of scroll to draw my name, and the name has to still
 // be clear of the sticky header when it finishes, which is what this much air buys
 .intro {
