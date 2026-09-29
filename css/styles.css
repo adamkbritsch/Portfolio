@@ -754,7 +754,8 @@ a:focus-visible {
  * copy of itself; the filter on that copy keeps nothing but a band down the right-hand side of
  * each stroke, so the letters keep their shape and their white and only the edges take the
  * blue. Three strengths dealt out word by word, the way ink density wanders along a printed
- * line. A section added later needs nothing here: the script finds it by the same class.
+ * line, each scaled to the size of the type it lands on. A section added later needs nothing
+ * here, whatever size it is set at: the script finds it by the same class and measures it.
  */
 .ink-defs {
   position: absolute;
@@ -781,30 +782,7 @@ a:focus-visible {
   color: #000;
   text-shadow: none;
   pointer-events: none;
-}
-
-.ink__word--band.ink__word--faint::before {
-  filter: url("#ink-band-faint");
-}
-
-.ink__word--band.ink__word--mid::before {
-  filter: url("#ink-band-mid");
-}
-
-.ink__word--band.ink__word--deep::before {
-  filter: url("#ink-band-deep");
-}
-
-.ink__word--run.ink__word--faint::before {
-  filter: url("#ink-run-faint");
-}
-
-.ink__word--run.ink__word--mid::before {
-  filter: url("#ink-run-mid");
-}
-
-.ink__word--run.ink__word--deep::before {
-  filter: url("#ink-run-deep");
+  filter: var(--ink);
 }
 
 .rail__band,
