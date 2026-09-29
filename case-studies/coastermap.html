@@ -52,6 +52,32 @@
             <figcaption>The home screen, a ride, and getting there by train.</figcaption>
         </figure>
 
+
+        <section class="proto-intro">
+            <h2>Try it</h2>
+            <p>The screens above are the real ones, wired together the way the prototype runs: tap the train card, a ride, or the button that builds the day, and the tab bar moves between them. Turn on <span class="proto-intro__hint">Show taps</span> if you would rather see where it goes.</p>
+        </section>
+
+        <div class="proto" data-proto hidden>
+            <div class="proto__device">
+                <div class="proto__screen">
+                    <img class="proto__shot" src="../images/design/coastermap/splash.webp" width="840" height="1818" alt="">
+                    <div class="proto__spots"></div>
+                </div>
+            </div>
+
+            <div class="proto__controls">
+                <p class="proto__where" role="status">Start screen</p>
+                <p class="proto__buttons">
+                    <button class="proto__button proto__back" type="button">Back</button>
+                    <button class="proto__button proto__reset" type="button">Start over</button>
+                    <button class="proto__button proto__hint" type="button" aria-pressed="false">Show taps</button>
+                </p>
+            </div>
+
+            <script class="proto__map" type="application/json">{"path":"../images/design/coastermap/","start":"splash","tabs":[{"to":"home","label":"Home tab","x":2,"y":90,"w":19,"h":6},{"to":"plan","label":"Plan tab","x":41,"y":90,"w":20,"h":6},{"to":"rides","label":"Rides tab","x":61,"y":90,"w":20,"h":6},{"to":"activity","label":"More tab","x":81,"y":90,"w":17,"h":6}],"screens":{"splash":{"label":"Start screen","tabs":false,"alt":"The CoasterMap start screen: the logo, the line Your smartest day at Lagoon, and a Start Planning button","spots":[{"to":"home","label":"Start planning","x":6,"y":88,"w":88,"h":7}]},"home":{"label":"Home","tabs":true,"alt":"The CoasterMap home screen: a countdown to the next FrontRunner train, steps and tickets, what is open now, and a button to start a smart day plan","spots":[{"to":"transit","label":"Next FrontRunner, 8 minutes","x":5,"y":12.5,"w":90,"h":10},{"to":"activity","label":"6,801 steps today","x":5,"y":24,"w":43,"h":12},{"to":"ride","label":"Cannibal, 38 minute wait","x":5,"y":44.3,"w":38,"h":4.8},{"to":"build","label":"Start smart day plan","x":5,"y":70.5,"w":90,"h":11}]},"rides":{"label":"All rides","tabs":true,"alt":"A list of every ride with its wait and how far the walk is: Cannibal, Wicked, Colossus, Splash Canyon, Dragon's Fury, Galaxy Spinner and Haunted Hollow","spots":[{"to":"ride","label":"Cannibal, 8 minute wait","x":4,"y":14.5,"w":92,"h":7.5},{"to":"build","label":"Build my day plan","x":4,"y":85.3,"w":92,"h":4.5}]},"ride":{"label":"Cannibal","tabs":true,"alt":"The ride page for Cannibal: a photograph, a nine minute wait, the height requirement, the thrill level and the walk, and a button to add it to the plan","spots":[{"to":"rides","label":"Back to the rides","x":3,"y":4.5,"w":12,"h":7},{"to":"plan","label":"Add to my plan","x":5,"y":65,"w":90,"h":8}]},"transit":{"label":"Getting to Lagoon","tabs":true,"alt":"Getting to Lagoon by train: the next northbound train in three minutes and the departures after it","spots":[{"to":"home","label":"Back home","x":2,"y":4.5,"w":12,"h":7}]},"build":{"label":"Build your day","tabs":true,"alt":"Build Your Day: how long the visit is, who is with you, and which priorities matter","spots":[{"to":"home","label":"Back home","x":3,"y":5,"w":12,"h":7}]},"plan":{"label":"The day, sequenced","tabs":true,"alt":"The day as a timeline: rides, a break at the Coaster Cafe, and the walk back to Farmington Station","spots":[{"to":"swap","label":"Tap to swap the first ride","x":8,"y":5.5,"w":40,"h":4},{"to":"swap","label":"Tap to swap Splash Canyon","x":8,"y":22,"w":40,"h":4},{"to":"swap","label":"Tap to swap Colossus","x":8,"y":52.5,"w":40,"h":4},{"to":"swap","label":"Tap to swap Galaxy Spinner","x":8,"y":71,"w":40,"h":4}]},"swap":{"label":"Plan update","tabs":false,"alt":"A Plan Update card: Wicked has closed, and Colossus with a four minute wait is offered in its place","spots":[{"to":"plan","label":"Accept the swap","x":20,"y":59.5,"w":60,"h":7.5},{"to":"plan","label":"See other options","x":33,"y":67.5,"w":34,"h":4},{"to":"plan","label":"Close","x":80,"y":27,"w":10,"h":5}]},"activity":{"label":"Activity","tabs":true,"alt":"Today's park activity: 4,950 of 10,000 steps, calories, active time, distance, heart rate and hydration","spots":[{"to":"home","label":"Back home","x":2,"y":5,"w":12,"h":7}]}}}</script>
+        </div>
+
         <h2>What it does</h2>
         <p>The home screen leads with the countdown to the next FrontRunner train, then what is open right now and how long each wait is. A ride page carries the wait, the height requirement, the thrill level and how far the walk is, with one button to add it to the plan.</p>
         <p>Telling the app how long you have, who you are with and what you care about produces a timeline for the day: rides, breaks, and the walk back to the station in time for a specific train. If a ride closes while you are there, the plan offers a swap instead of falling apart.</p>
@@ -92,5 +118,6 @@
             <p>I built this site through agentic coding with Claude Code. <a href="https://github.com/adamkbritsch/Portfolio">The code is on GitHub</a>.</p>
         </div>
     </footer>
+    <script src="../js/prototype.js" defer></script>
 </body>
 </html>

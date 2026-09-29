@@ -20,6 +20,7 @@ $sage: #868f59;      // hue 69, the odd one out, and the lightest of the three
     --rule: #c6c0b2;        // hairlines between things, 1.4:1
     --panel: #e0d9ca;       // a block of its own, barely darker than the page: dE 2.2
     --panel-hover: #dad3c4; // the same, one step further off, for a button under the cursor
+    --proto-hint: 232, 93, 26;  // the prototype's own orange, for showing where the taps are
     --accent: #{$navy};     // links and focus rings, 8.7:1
     --accent-dark: #8f4e1f; // the same orange dark enough to read as text, 4.8:1
 
@@ -53,6 +54,7 @@ $sage: #868f59;      // hue 69, the odd one out, and the lightest of the three
     --rule: #352d2b;        // 1.4:1, the same weight the hairlines have in the light
     --panel: #1f1616;       // barely lighter than the page instead of darker: dE 2.0
     --panel-hover: #251c1b;
+    --proto-hint: 255, 122, 51;
     --accent: #6ca6d0;      // the navy at its own hue, lifted to 7.1:1
     --accent-dark: #d1722e; // the orange likewise, 5.4:1
 
@@ -70,6 +72,7 @@ $inkSoft: var(--ink-soft);
 $rule: var(--rule);
 $panel: var(--panel);
 $panelHover: var(--panel-hover);
+$protoHint: var(--proto-hint);
 $accent: var(--accent);
 $accentDark: var(--accent-dark);
 $titleInk: var(--title-ink);

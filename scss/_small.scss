@@ -704,3 +704,129 @@ a {
         margin: 0;
     }
 }
+
+/*
+ * THE CLICK-THROUGH PROTOTYPE
+ *
+ * A phone on a panel, with the screens as pictures and the taps as buttons laid over them in
+ * percentages. The buttons are invisible until you ask to see them, but they are still real
+ * buttons: they take focus, they carry a label saying where they go, and the ring shows.
+ */
+.proto-intro__hint {
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    background: $panel;
+    font-family: $uiFont;
+    font-size: 0.95em;
+}
+
+.proto {
+    max-width: 23rem;
+    margin: 0 auto 2.5rem;
+    padding: 1.25rem 1.25rem 1.1rem;
+    border-radius: 12px;
+    background: $panel;
+}
+
+.proto__device {
+    max-width: 17rem;
+    margin: 0 auto;
+    padding: 0.5rem;
+    border-radius: 2.4rem;
+    background: $ink;
+}
+
+.proto__screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2rem;
+    aspect-ratio: 840 / 1818;
+}
+
+.proto__shot {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.proto__spots {
+    position: absolute;
+    inset: 0;
+}
+
+.proto__spot {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+
+    // Some of the things you can tap are one line of type; no target goes under 24px
+    min-width: 24px;
+    min-height: 24px;
+
+    &:focus-visible {
+        outline: 3px solid $accent;
+        outline-offset: 1px;
+    }
+}
+
+// Shown on request: the prototype's own orange, which reads on the light screens and on the
+// dark start screen alike
+.proto--hints .proto__spot {
+    border: 2px solid rgba(#{$protoHint}, 0.85);
+    background: rgba(#{$protoHint}, 0.22);
+}
+
+.proto__controls {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.proto__where {
+    margin-bottom: 0.6rem;
+    color: $inkSoft;
+    font-family: $uiFont;
+    font-size: 0.9375rem;
+}
+
+.proto__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0;
+}
+
+.proto__button {
+    padding: 0.45rem 0.85rem;
+    border: 0;
+    border-radius: 6px;
+    background: $panelHover;
+    color: $accent;
+    font-family: $uiFont;
+    font-size: 0.9375rem;
+    cursor: pointer;
+
+    &:hover {
+        color: $accentDark;
+    }
+
+    &:focus-visible {
+        outline: 3px solid $accent;
+        outline-offset: 2px;
+    }
+
+    &[disabled] {
+        color: $inkSoft;
+        cursor: default;
+        opacity: 0.55;
+    }
+
+    &[aria-pressed="true"] {
+        background: $accent;
+        color: $paper;
+    }
+}
