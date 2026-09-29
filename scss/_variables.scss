@@ -136,13 +136,24 @@ $sageLine: var(--sage-line);
  * bottom` for a run down a margin.
  */
 $railSoft: 0.35;     // how far the middle of a run drains: 0 leaves it, 1 takes it to grey
+$railShoulder: 14%;  // how much of each end stays at full strength for its corner
 
-@function rail-soften($along) {
+/*
+ * How far a run drains, and how much of each end is spared, are not the same for every run:
+ * js/rail.js measures each one and sets them. A long run has room to drift a long way down
+ * and back, a short one between two corners has almost none, and the ends are spared the same
+ * fraction of the ribbon's own thickness wherever they are rather than the same percentage of
+ * a run that might be twenty times longer. The numbers above are what a run falls back to,
+ * which is what every run used to get.
+ *
+ * $name is the property the run reads, so an element carrying two runs can keep them apart.
+ */
+@function rail-soften($along, $name: "--soften") {
     @return linear-gradient(#{$along},
         rgba(128, 128, 128, 0) 0,
-        rgba(128, 128, 128, 0) 14%,
-        rgba(128, 128, 128, $railSoft) 50%,
-        rgba(128, 128, 128, 0) 86%,
+        rgba(128, 128, 128, 0) var(#{$name}-shoulder, #{$railShoulder}),
+        rgba(128, 128, 128, var(#{$name}, #{$railSoft})) 50%,
+        rgba(128, 128, 128, 0) calc(100% - var(#{$name}-shoulder, #{$railShoulder})),
         rgba(128, 128, 128, 0) 100%);
 }
 

@@ -398,6 +398,16 @@ template {
  * bottom` for a run down a margin.
  */
 /*
+ * How far a run drains, and how much of each end is spared, are not the same for every run:
+ * js/rail.js measures each one and sets them. A long run has room to drift a long way down
+ * and back, a short one between two corners has almost none, and the ends are spared the same
+ * fraction of the ribbon's own thickness wherever they are rather than the same percentage of
+ * a run that might be twenty times longer. The numbers above are what a run falls back to,
+ * which is what every run used to get.
+ *
+ * $name is the property the run reads, so an element carrying two runs can keep them apart.
+ */
+/*
  * How far the run down into the first piece reaches above that piece. By the same arithmetic
  * it is exactly how far a section title's turn sits above whatever comes after the title, so
  * the one number both hangs that run and bridges a title followed by a line of introduction.
@@ -739,7 +749,7 @@ a:focus-visible {
   height: 1.32em;
   overflow: hidden;
   border-radius: 0.66em;
-  background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--navy-line) 0 50%, var(--orange-line) 50% 80.9%, var(--sage-line) 80.9% 100%);
+  background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-shoulder, 14%), rgba(128, 128, 128, var(--soften, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--navy-line) 0 50%, var(--orange-line) 50% 80.9%, var(--sage-line) 80.9% 100%);
   background-blend-mode: saturation, normal;
   pointer-events: none;
   user-select: none;
@@ -1381,7 +1391,7 @@ figure img {
   }
   .rail__band {
     display: block;
-    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--navy-line) 0 50%, var(--orange-line) 50% 80.9%, var(--sage-line) 80.9% 100%);
+    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-shoulder, 14%), rgba(128, 128, 128, var(--soften, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--navy-line) 0 50%, var(--orange-line) 50% 80.9%, var(--sage-line) 80.9% 100%);
     background-blend-mode: saturation, normal;
   }
   /*
@@ -1398,7 +1408,7 @@ figure img {
     white-space: nowrap;
   }
   .section:nth-child(odd of .section) .rail__band {
-    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
+    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-shoulder, 14%), rgba(128, 128, 128, var(--soften, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
     background-blend-mode: saturation, normal;
   }
   .section > .wrap > h2::before,
@@ -1463,7 +1473,7 @@ figure img {
     width: 2.64rem;
     top: calc((2.3rem - 2.64rem) / 2 + 2.64rem + 1.1rem - 1px);
     bottom: calc(-1 * (3.5rem * 2 + (2.3rem - 2.64rem) / 2 - 1.1rem) - 2px);
-    background-image: linear-gradient(to bottom, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to right, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
+    background-image: linear-gradient(to bottom, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-shoulder, 14%), rgba(128, 128, 128, var(--soften, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to right, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
     background-blend-mode: saturation, normal;
     pointer-events: none;
   }
@@ -1528,14 +1538,14 @@ figure img {
     right: calc(2.64rem + 1.1rem - 1px);
     left: 0;
     border-radius: calc(2.64rem / 2) 0 0 calc(2.64rem / 2);
-    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
+    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-foot-shoulder, 14%), rgba(128, 128, 128, var(--soften-foot, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-foot-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
     background-blend-mode: saturation, normal;
   }
   .section:nth-last-child(1 of .section).section:nth-child(odd of .section) > .wrap::before {
     right: 0;
     left: calc(2.64rem + 1.1rem - 1px);
     border-radius: 0 calc(2.64rem / 2) calc(2.64rem / 2) 0;
-    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--navy-line) 0 50%, var(--orange-line) 50% 80.9%, var(--sage-line) 80.9% 100%);
+    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-foot-shoulder, 14%), rgba(128, 128, 128, var(--soften-foot, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-foot-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--navy-line) 0 50%, var(--orange-line) 50% 80.9%, var(--sage-line) 80.9% 100%);
     background-blend-mode: saturation, normal;
   }
   /*
@@ -1548,7 +1558,7 @@ figure img {
     display: block;
     position: absolute;
     width: calc(var(--rail-w) * 1rem);
-    background-image: linear-gradient(to bottom, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to right, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
+    background-image: linear-gradient(to bottom, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-shoulder, 14%), rgba(128, 128, 128, var(--soften, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to right, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
     background-blend-mode: saturation, normal;
     pointer-events: none;
   }
@@ -1594,12 +1604,12 @@ figure img {
   }
   .rail__run {
     display: block;
-    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--navy-line) 0 50%, var(--orange-line) 50% 80.9%, var(--sage-line) 80.9% 100%);
+    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-shoulder, 14%), rgba(128, 128, 128, var(--soften, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--navy-line) 0 50%, var(--orange-line) 50% 80.9%, var(--sage-line) 80.9% 100%);
     background-blend-mode: saturation, normal;
   }
   .section:nth-child(odd of .section) .project:nth-child(even of .project) .rail__run,
   .section:nth-child(even of .section) .project:nth-child(odd of .project) .rail__run {
-    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
+    background-image: linear-gradient(to right, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-shoulder, 14%), rgba(128, 128, 128, var(--soften, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to bottom, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
     background-blend-mode: saturation, normal;
   }
   /*
@@ -1702,7 +1712,7 @@ figure img {
     top: calc((1.4375rem - 1.65rem) / 2 + 1.65rem + 1.1rem - 1px);
     bottom: calc(-4rem + (1.65rem - 1.4375rem) / 2 + 1.1rem - 1px);
     width: 1.65rem;
-    background-image: linear-gradient(to bottom, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) 14%, rgba(128, 128, 128, 0.35) 50%, rgba(128, 128, 128, 0) 86%, rgba(128, 128, 128, 0) 100%), linear-gradient(to right, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
+    background-image: linear-gradient(to bottom, rgba(128, 128, 128, 0) 0, rgba(128, 128, 128, 0) var(--soften-shoulder, 14%), rgba(128, 128, 128, var(--soften, 0.35)) 50%, rgba(128, 128, 128, 0) calc(100% - var(--soften-shoulder, 14%)), rgba(128, 128, 128, 0) 100%), linear-gradient(to right, var(--sage-line) 0 calc(100% - 80.9%), var(--orange-line) calc(100% - 80.9%) calc(100% - 50%), var(--navy-line) calc(100% - 50%) 100%);
     background-blend-mode: saturation, normal;
     pointer-events: none;
   }

@@ -291,7 +291,7 @@ h1 {
     right: calc(#{$railTitle} + #{$railTurn} - 1px);
     left: 0;
     border-radius: calc(#{$railTitle} / 2) 0 0 calc(#{$railTitle} / 2);
-    background-image: rail-soften(to right), linear-gradient(to bottom,
+    background-image: rail-soften(to right, "--soften-foot"), linear-gradient(to bottom,
         $sageLine 0 calc(100% - #{$stripeTwo}),
         $orangeLine calc(100% - #{$stripeTwo}) calc(100% - #{$stripeOne}),
         $navyLine calc(100% - #{$stripeOne}) 100%);
@@ -303,7 +303,7 @@ h1 {
     right: 0;
     left: calc(#{$railTitle} + #{$railTurn} - 1px);
     border-radius: 0 calc(#{$railTitle} / 2) calc(#{$railTitle} / 2) 0;
-    background-image: rail-soften(to right), linear-gradient(to bottom,
+    background-image: rail-soften(to right, "--soften-foot"), linear-gradient(to bottom,
         $navyLine 0 #{$stripeOne},
         $orangeLine #{$stripeOne} #{$stripeTwo},
         $sageLine #{$stripeTwo} 100%);
