@@ -31,12 +31,17 @@ $sage: #868f59;      // hue 69, the odd one out, and the lightest of the three
 }
 
 /*
- * Dark. The page becomes the poster's other colour and the cream becomes the ink, so the two
- * swap places. The ribbon cannot: the navy is darker than the page it would sit on, so every
- * stripe is lifted the same 25% towards the cream - the least that keeps the darkest of the
- * three legible (3.0:1) - which holds the three hues in the relation they have in the light.
- * The titles the ribbon carries turn dark for the same reason: white on the lifted sage is
- * 2.6:1, the page's own dark on it is 7.0:1.
+ * Dark. The page becomes the poster's other colour and the cream becomes the ink.
+ *
+ * The ribbon follows it. The three lines are one set of colours laid over the page at
+ * $railAlpha, so a tenth and a half of whatever is behind them shows through and the ribbon
+ * picks up the page it is lying on. They are still written out as solid values rather than
+ * given a real alpha, because an alpha would double up at the hairline overlaps where one
+ * piece of the ribbon meets the next and print a darker seam at every junction - these are
+ * the same composite, worked out once per theme.
+ *
+ * The line colours on the cream are unchanged by this: the source colours were made more
+ * saturated by exactly as much as the alpha came down, so the two cancel.
  */
 :root[data-theme="dark"] {
     --paper: #1d1010;       // the poster's dark, exactly
@@ -46,12 +51,12 @@ $sage: #868f59;      // hue 69, the odd one out, and the lightest of the three
     --accent: #6ca6d0;      // the navy at its own hue, lifted to 7.1:1
     --accent-dark: #d1722e; // the orange likewise, 5.4:1
 
-    --navy-line: #4f6572;   // 3.0:1 against the page
-    --orange-line: #c48351; // 5.9:1
-    --sage-line: #9fa376;   // 7.0:1
+    --navy-line: #112d44;   // the same three sources over the dark page instead of the cream
+    --orange-line: #9e511c;
+    --sage-line: #717848;
 
-    --title-ink: #1d1010;   // 3.0:1 on the navy, 5.9:1 on the orange, 7.0:1 on the sage
-    --title-shadow: none;   // dark letters on a lit ribbon need no help
+    --title-ink: #fff;      // 14.2:1 on the navy, 5.8:1 on the orange, 4.7:1 on the sage
+    --title-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
 }
 
 $paper: var(--paper);
@@ -86,14 +91,24 @@ $stripeOne: 50%;     // outermost
 $stripeTwo: 80.9%;   // end of the middle one; the innermost is the last 19.1%
 
 /*
- * The lines are drawn at 90% strength. They are mixed against the page rather than given an
- * alpha: the ribbon only ever lies on the page, and a real alpha would double up at the
- * hairline overlaps where one piece of it meets the next and print a darker seam there.
- * Recompute them, and regenerate the SVG turns with turns.py, if the page colour changes.
+ * The ribbon's three lines are one set of colours laid over the page at $railAlpha. Lowering
+ * that alpha and saturating the sources by the same amount leaves the ribbon looking exactly
+ * as it did on the cream, while letting more of the page through, so the ribbon shifts with
+ * the theme instead of ignoring it. 0.85 is close to the floor: the navy's red channel runs
+ * out at 0.796, below which no source colour can hold the cream result.
  *
- * On the cream: white on the navy is 9.0:1, on the orange 3.8:1, on the sage 3.1:1, so the
- * titles clear the 3:1 a line of that size is held to on all three.
+ *   source          on the cream #eae0cb   on the dark #1d1010
+ *   navy   #0f324d  #304c60                #112d44
+ *   orange #b55c1e  #bd7038                #9e511c
+ *   sage   #808a52  #909764                #717848
+ *
+ * They are written out composited rather than given a real alpha: an alpha would double up
+ * at the hairline overlaps between one piece of the ribbon and the next and print a darker
+ * seam at every junction. Recompute them, and regenerate the SVG turns with turns.py, if
+ * either page colour changes.
  */
+$railAlpha: 0.85;
+
 $navyLine: var(--navy-line);
 $orangeLine: var(--orange-line);
 $sageLine: var(--sage-line);
