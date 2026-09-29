@@ -40,9 +40,10 @@
     // band, held to the section titles' blue rather than pushed past it.
     var SMALL = { size: 20, faint: 0.25, mid: 0.35, deep: 0.45 };
     var LARGE = { size: 32, faint: 0.45, mid: 0.55, deep: 0.7 };
-    var BAND_AT_LARGE = 2;      // px of band on a 32px title, held to that fraction elsewhere
-
-    var made = {};
+    // The band is this much of the type, whatever the type is: 2px on a 32px title, and the
+    // same fraction of anything else. Nothing here is a pixel count, so a title that grows
+    // and shrinks with the window carries a band that grows and shrinks with it.
+    var BAND_EM = 2 / 32;
 
     function between(from, to, t) {
         return from + (to - from) * t;
@@ -50,7 +51,7 @@
 
     function scale(fontSize) {
         var t = (fontSize - SMALL.size) / (LARGE.size - SMALL.size);
-        var out = { width: fontSize * BAND_AT_LARGE / LARGE.size };
+        var out = { width: fontSize * BAND_EM };
 
         t = Math.max(0, Math.min(1, t));
         STRENGTHS.forEach(function (name) {
@@ -76,37 +77,25 @@
         return svg;
     }
 
-    // One set of filters per whole pixel of type size, so titles of a size share them and a
-    // title that resizes with the window only ever adds a handful.
-    function filterFor(fontSize, strength) {
-        var key = Math.round(fontSize);
-        var id = "ink-" + key + "-" + strength;
-        var filter;
-        var step;
+    function build(svg, id, width, alpha) {
+        var filter = document.createElementNS(NS, "filter");
 
-        if (!made[id]) {
-            step = scale(key);
-            filter = document.createElementNS(NS, "filter");
-            filter.setAttribute("id", id);
-            filter.setAttribute("x", "-25%");
-            filter.setAttribute("y", "-25%");
-            filter.setAttribute("width", "150%");
-            filter.setAttribute("height", "150%");
-            filter.setAttribute("color-interpolation-filters", "sRGB");
+        filter.setAttribute("id", id);
+        filter.setAttribute("x", "-25%");
+        filter.setAttribute("y", "-25%");
+        filter.setAttribute("width", "150%");
+        filter.setAttribute("height", "150%");
+        filter.setAttribute("color-interpolation-filters", "sRGB");
 
-            // Flood the letters, take the same letters shifted left away from that flood, and
-            // the sliver left over is a band the width of the shift down every stroke
-            filter.innerHTML =
-                '<feFlood flood-color="' + INK + '" flood-opacity="' + step[strength].toFixed(3) + '"/>' +
-                '<feComposite in2="SourceAlpha" operator="in" result="ink"/>' +
-                '<feOffset in="SourceAlpha" dx="-' + step.width.toFixed(2) + '" dy="0" result="shifted"/>' +
-                '<feComposite in="ink" in2="shifted" operator="out"/>';
+        // Flood the letters, take the same letters shifted left away from that flood, and the
+        // sliver left over is a band the width of the shift down every stroke
+        filter.innerHTML =
+            '<feFlood flood-color="' + INK + '" flood-opacity="' + alpha.toFixed(3) + '"/>' +
+            '<feComposite in2="SourceAlpha" operator="in" result="ink"/>' +
+            '<feOffset in="SourceAlpha" dx="-' + width.toFixed(3) + '" dy="0" result="shifted"/>' +
+            '<feComposite in="ink" in2="shifted" operator="out"/>';
 
-            sheet().appendChild(filter);
-            made[id] = true;
-        }
-
-        return "url(#" + id + ")";
+        svg.appendChild(filter);
     }
 
     // The same word always draws the same strength. A plain string hash is enough to scatter
@@ -154,16 +143,38 @@
     }
 
     function measure() {
+        var wanted = {};
+        var jobs = [];
+        var svg;
+
         Array.prototype.forEach.call(document.querySelectorAll(TITLES), function (title) {
             var fontSize = parseFloat(window.getComputedStyle(title).fontSize);
+            var step;
 
             if (!fontSize) {
                 return;
             }
 
+            step = scale(fontSize);
             Array.prototype.forEach.call(title.querySelectorAll(".ink__word"), function (word) {
-                word.style.setProperty("--ink", filterFor(fontSize, word.dataset.strength));
+                var strength = word.dataset.strength;
+                var id = "ink-" + step.width.toFixed(3).replace(".", "-") + "-" + strength;
+
+                wanted[id] = { width: step.width, alpha: step[strength] };
+                jobs.push({ word: word, id: id });
             });
+        });
+
+        // Built fresh each time from the sizes actually on the page, so a window dragged
+        // across a fluid title leaves nothing behind it
+        svg = sheet();
+        svg.textContent = "";
+        Object.keys(wanted).forEach(function (id) {
+            build(svg, id, wanted[id].width, wanted[id].alpha);
+        });
+
+        jobs.forEach(function (job) {
+            job.word.style.setProperty("--ink", "url(#" + job.id + ")");
         });
     }
 
