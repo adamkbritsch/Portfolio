@@ -814,6 +814,24 @@ a:focus-visible {
   margin: 0 0 0.9rem;
 }
 
+/*
+ * No picture is taller than the screen it is on. A figure you have to scroll through in two
+ * goes is not showing you the whole of anything, so the width still leads and the height
+ * only pulls a picture in when it would otherwise run off the bottom. The room the sticky
+ * header takes comes off the top: an image exactly one viewport tall could never be seen
+ * whole. svh rather than vh so a phone's toolbars cannot push it over, and so it does not
+ * resize while you scroll.
+ *
+ * Only pictures in a figure: the prototype's screen is sized by its own phone.
+ */
+figure img {
+  width: -webkit-fit-content;
+  width: fit-content;
+  max-height: calc(100vh - 5rem);
+  max-height: calc(100svh - 5rem);
+  margin-inline: auto;
+}
+
 .shot {
   border: 1px solid var(--rule);
   border-radius: 4px;
