@@ -1177,13 +1177,15 @@ a:focus-visible {
   .home main::after {
     display: none;
   }
-  .home .wrap {
+  .home .site-header .wrap,
+  .home .site-footer .wrap {
     padding-right: 16px;
   }
   .section {
     border-top: 1px solid var(--rule);
   }
-  .intro,
+  .home .intro,
+  .home .section > .wrap,
   .section > .wrap {
     position: relative;
     padding-right: 6.5rem;

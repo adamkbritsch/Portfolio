@@ -61,7 +61,12 @@ h1 {
     display: none;
 }
 
-.home .wrap {
+// The home page gives up a lane on the right for the phone's ribbon. From here up the full
+// rail takes over, so the header and the footer take their gutters back, and the content
+// takes its own two lanes - written with .home so it outranks the phone's rule rather than
+// only outlasting it.
+.home .site-header .wrap,
+.home .site-footer .wrap {
     padding-right: $gutter;
 }
 
@@ -70,7 +75,8 @@ h1 {
     border-top: 1px solid $rule;
 }
 
-.intro,
+.home .intro,
+.home .section > .wrap,
 .section > .wrap {
     position: relative;
     padding-right: $railLane;
