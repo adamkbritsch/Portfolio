@@ -198,3 +198,33 @@ $figureWidth: 60rem;
         $outer calc(#{$r} + #{$t} * #{$second}) calc(#{$r} + #{$t}),
         transparent calc(#{$r} + #{$t}));
 }
+
+/*
+ * WHICH WAY THE RIBBON RUNS
+ *
+ * None of this is written into the markup. Where a section sits on the page is what decides
+ * which way the ribbon travels through it: sections alternate, so an odd one carries its
+ * title back to the left and an even one carries it right, and the last one is where the
+ * ribbon ends. A piece alternates the same way inside its section, starting on the side the
+ * ribbon came in on. Put a section anywhere and everything after it turns the other way on
+ * its own, so there is nothing to set when one is added and nothing to keep in step.
+ *
+ * Every <section> in <main> is one of these - the introduction is a div - and every <article>
+ * in a section is a piece, so counting them is counting the ribbon's own stops.
+ */
+$railBack: ".section:nth-child(odd of .section)";
+$railFwd: ".section:nth-child(even of .section)";
+$railLast: ".section:nth-last-child(1 of .section)";
+
+// A section showing pieces is one that has pieces in it
+$railPieces: ".section:has(.project)";
+$railBackPieces: ".section:nth-child(odd of .section):has(.project)";
+$railFwdPieces: ".section:nth-child(even of .section):has(.project)";
+
+// A piece runs east when it is an odd piece of a section running back, or an even piece of one
+// running forward, and west the other way about
+$pieceOdd: ".project:nth-child(odd of .project)";
+$pieceEven: ".project:nth-child(even of .project)";
+$isFirst: ":nth-child(1 of .project)";
+$isLast: ":nth-last-child(1 of .project)";
+$pieceLast: ".project:nth-last-child(1 of .project)";

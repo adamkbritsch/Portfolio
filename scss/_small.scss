@@ -475,7 +475,9 @@ a {
 .project {
     margin-bottom: 3.75rem;
 
-    &:last-child {
+    // Counted among the pieces rather than among everything in the column: the section also
+    // carries the corner that ends the ribbon, and that would otherwise be the last child
+    &#{$isLast} {
         margin-bottom: 0;
     }
 
